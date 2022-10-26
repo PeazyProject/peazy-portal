@@ -1,5 +1,6 @@
-<div>
-  <span><a href="/login">Login</a></span>
-  <span><a href="/register">Register</a></span>
+<div class="flex justify-content-center">
+  <a class="pl-1 pr-1" [routerLink]="['/login']" routerLinkActive="router-link-active" ><p-button label="Login"></p-button></a>
+  <a class="pl-1 pr-1" [routerLink]="['/register']" routerLinkActive="router-link-active" ><p-button label="Register"></p-button></a>
 </div>
+<br>
 <router-outlet></router-outlet>
