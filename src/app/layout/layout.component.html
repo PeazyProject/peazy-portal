@@ -1,0 +1,8 @@
+<peazy-header></peazy-header>
+<div class="layout-main">
+  <peazy-side-menu></peazy-side-menu>
+  <div class="layout-content" [class.menu-hide]="!isMenuVisible">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<peazy-footer></peazy-footer>

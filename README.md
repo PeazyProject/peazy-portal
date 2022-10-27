@@ -25,3 +25,9 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Angular與Primeng安裝
+npm i @angular/cli@13.3.9 --legacy-peer-deps
+npm i primeng-lts --legacy-peer-deps
+npm install --legacy-peer-deps
+npm install tslib --legacy-peer-deps

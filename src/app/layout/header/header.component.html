@@ -1,0 +1,50 @@
+<div class="layout-topbar">
+    <div class="left-block">
+        <a class="icon" (click)="toggleSideMenu()">
+            <i class="fas fa-bars"></i>
+        </a>
+        <a href="index.html"><img class="logo p-d-none p-d-lg-inline-block p-d-md-inline-block" src="assets/images/logo.png" /></a>
+    </div>
+    <div class="right-block item-block">
+        <div class="item p-d-none p-d-lg-inline-block p-d-md-inline-block" (click)="userInfoPanel.toggle($event)">
+            <a class="icon"><span class="user-name">{{userName}}</span><i class="fas fa-user"></i></a>
+        </div>
+        <div class="item p-d-none p-d-lg-inline-block p-d-md-inline-block" (click)="notificationPanel.toggle($event)">
+            <a class="icon"><i class="fas fa-bell"></i></a>
+        </div>
+        <div class="item">
+            <p-dropdown [(ngModel)]="facility" [options]="facilityOptions" (onChange)="facilityChange($event)" optionLabel="optionDesc" optionValue="optionCode" [style]="{ 'min-width': '15vw' }"></p-dropdown>
+        </div>
+        <div class="item">
+            <p-dropdown [(ngModel)]="language" [options]="languageOptions" (onChange)="languageChange($event)"></p-dropdown>
+        </div>
+        <div class="item">
+            <a class="icon" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </div>
+</div>
+
+<p-overlayPanel #userInfoPanel>
+    <div><b>User Name: </b><i>{{userName}}</i></div>
+    <div><b>Email : </b><i>{{email}}</i></div>
+</p-overlayPanel>
+
+<p-overlayPanel #notificationPanel [style]="{width: '450px'}">
+    <ng-template pTemplate>
+        <p-dataView [value]="notifications" [rows]="9" sortField="time" layout="list">
+            <ng-template let-notification pTemplate="listItem">
+                <div class="p-col-12">
+                    <div class="notification-list-item">
+                        <div class="notification-list-detail">
+                            <div class="notification-title">{{notification.title}}</div>
+                            <div>{{notification.content}}</div>
+                        </div>
+                        <div class="notification-list-action">
+                            <span>{{ notification.time | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dataView>
+    </ng-template>
+</p-overlayPanel>
