@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng-lts/button';
+import { CheckboxModule } from 'primeng-lts/checkbox';
+import { StyleClassModule } from 'primeng-lts/styleclass';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,7 +18,9 @@ import { RegisterComponent } from './features/register/register.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ButtonModule
+    ButtonModule,
+    CheckboxModule,
+    StyleClassModule
   ],
   providers: [],
   bootstrap: [AppComponent]
