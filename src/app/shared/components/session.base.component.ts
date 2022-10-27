@@ -13,12 +13,13 @@ import { BaseComponent } from './base.component';
 })
 // OnLogout
 export class SessionBaseComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy  {
+  @Input() userProfile: any;
 
   async ngOnDestroy(): Promise<void> {
   }
-  async ngAfterViewInit(): Promise<void> {
+  ngAfterViewInit(): void {
   }
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
   }
 
   // TODO 等待之後Login做好再打開
