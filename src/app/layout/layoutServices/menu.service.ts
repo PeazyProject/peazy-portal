@@ -18,15 +18,16 @@ export class MenuService {
     private routeStateService: RouteStateService) {
     this.toggleMenuBar = new BehaviorSubject<any>(null);
     this.menuItems = new BehaviorSubject<any[]>([]);
-    this.getMenuData()
-      .subscribe({
-        next: (menus: any[]) => {
-          const root = menus.find(x => x.nodeType === 'Root');
-          const menuTree = this.convertToMenuItems(root, menus);
-          const menuItems = isNullOrEmpty(menuTree) ? [] : menuTree.items as any[];
-          this.menuItems.next(menuItems);
-        }
-      });
+    // TODO 之後做Menu再打開
+    // this.getMenuData()
+    //   .subscribe({
+    //     next: (menus: any[]) => {
+    //       const root = menus.find(x => x.nodeType === 'Root');
+    //       const menuTree = this.convertToMenuItems(root, menus);
+    //       const menuItems = isNullOrEmpty(menuTree) ? [] : menuTree.items as any[];
+    //       this.menuItems.next(menuItems);
+    //     }
+    //   });
   }
 
   convertToMenuItems(node: any, menuRawData: any[]): any {

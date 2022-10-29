@@ -33,7 +33,7 @@ export class BaseComponent {
   }
 
   toastErrorMessage(err: any): void {
-    this.logger.error(err);
+    // this.logger.error(err);
     if(isNullOrEmpty(err)) {
       throw new Error('No defined error.');
     }

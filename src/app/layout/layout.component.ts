@@ -15,7 +15,8 @@ export class LayoutComponent extends BaseComponent implements OnInit, OnDestroy 
 
   constructor(
     injector: Injector,
-    private menuDataService: MenuService) {
+    private menuDataService: MenuService
+    ) {
     super(injector);
     this.isMenuVisible = true;
     this.isShowLoader = false;

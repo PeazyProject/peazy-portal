@@ -114,4 +114,4 @@ const primengModules = [
     OptionsMappingPipe
   ]
 })
-export class LaaSSharedModule { }
+export class PeazySharedModule { }

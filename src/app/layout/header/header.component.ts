@@ -46,7 +46,7 @@ export class HeaderComponent extends SessionBaseComponent implements OnInit {
   //     this.email = this.userProfile.email;
   //     this.language = this.peazySetting.language;
   //     this.translateService.use(this.language);
-      
+
   //     this.initCacheData(this.language);
   //     const userRefreshToken:UserRefreshToken = {
   //       language:  this.peazySetting.language
@@ -57,9 +57,9 @@ export class HeaderComponent extends SessionBaseComponent implements OnInit {
   //   }
   // }
 
-  // toggleSideMenu(): void {
-  //   this.menuService.toggleMenuBar.next(true);
-  // }
+  toggleSideMenu(): void {
+    this.menuService.toggleMenuBar.next(true);
+  }
 
   // languageChange(event: any): void {
   //   this.peazySetting.language = this.language;

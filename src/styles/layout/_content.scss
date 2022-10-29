@@ -1,0 +1,38 @@
+@import "../variables.scss";
+
+.layout-wrapper {
+  .layout-main {
+    .layout-content {
+      padding-top: $header-height;
+      transition: all 0.3s;
+      transform: translateX(250px);
+      width: calc(100% - 250px);
+
+      &.menu-hide {
+        transform: translateX(0px);
+        width: 100%;
+      }
+
+      .page-title .icon {
+        font-size: inherit;
+        cursor: inherit;
+        padding-left: 0;
+      }
+    }
+
+    .layout-footer {
+      width: 100%;
+      padding: 1em 1.5em;
+      background-color: $footer-bg-color;
+      border-top: 2px dotted $footer-border-color;
+
+      .footer-text-right {
+        margin-top: 0.5em;
+
+        span {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,9 @@
 <div class="layout-topbar">
     <div class="left-block">
-        <a href="index.html"><img class="logo p-d-none p-d-lg-inline-block p-d-md-inline-block" src="assets/images/logo.png" /></a>
+      <a class="icon" (click)="toggleSideMenu()">
+        <i class="fas fa-bars"></i>
+      </a>
+        <a href="index.html"><img class="logo p-d-none p-d-lg-inline-block p-d-md-inline-block" src="assets/images/peazyLogo.png" /></a>
     </div>
     <div class="right-block item-block">
         <div class="item p-d-none p-d-lg-inline-block p-d-md-inline-block" (click)="userInfoPanel.toggle($event)">

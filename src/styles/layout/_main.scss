@@ -1,0 +1,80 @@
+@import '../variables.scss';
+
+html, body {
+  height: 100%;
+  // zoom: 95%;
+}
+
+body {
+  font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
+  font-size: $font-size;
+  color: $text-color;
+  -webkit-font-smoothing: antialiased;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+* {
+  @include box-sizing(border-box);
+}
+
+.layout-wrapper {
+  background-color: $bg-color;
+  min-height: 100%;
+}
+
+.icon {
+  font-size: 20px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.container {
+  margin: 1rem;
+}
+
+.loader {
+  position: fixed;
+  z-index: 1100;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.loader:before {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.hidden {
+  display: none;
+}
+
+p-table.datatable {
+  th {
+    min-width: 10rem;
+  }
+  td > div {
+    // max-width: 10vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    &:hover {
+      white-space: pre-line;
+      word-break: break-all;
+    }
+  }
+}

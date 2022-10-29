@@ -1,0 +1,10 @@
+@import "../variables.scss";
+
+.layout-wrapper {
+  .layout-sidebar {
+    margin-top: $header-height;
+    padding: 0;
+    height: calc(100% - #{$header-height});
+    overflow-y: auto;
+  }
+}

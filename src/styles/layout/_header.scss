@@ -1,0 +1,63 @@
+@import "../variables.scss";
+
+.layout-wrapper {
+  .layout-topbar {
+    display: flex;
+    justify-content: space-between;
+    height: $header-height;
+    background-color: $header-bg-color;
+    padding: 1em;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+
+    .item-block {
+      display: flex;
+      align-items: center;
+
+      // .item {
+      //   padding: 0.5em;
+      // }
+    }
+
+    .user-name {
+      padding: 0 5px;
+    }
+
+    // .menu-btn {
+    //   display: inline-block;
+    //   vertical-align: middle;
+
+    //   i {
+    //     font-size: 1.5em;
+    //   }
+    // }
+
+    .logo {
+      margin-left: 1.25em;
+      display: inline-block;
+      vertical-align: middle;
+      height: 50px;
+    }
+
+    .topbar-button {
+      @include border-radius(20px);
+      border: 2px dotted $header-button-border-color;
+      background: $header-button-bg-color;
+      color: $header-button-text-color;
+      height: 2em;
+      min-width: 2em;
+      float: right;
+      display: block;
+      font-size: 1em;
+
+      .ui-button-icon-right {
+        width: 1em;
+        height: 1em;
+      }
+    }
+  }
+}
