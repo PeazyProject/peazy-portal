@@ -25,7 +25,7 @@ export class SideMenuComponent extends SessionBaseComponent implements OnInit, A
     this.items = [];
   }
 
-  async ngOnInit(): Promise<void> {
+  override async ngOnInit(): Promise<void> {
     await super.ngOnInit();
 
     if (window.innerWidth <= 667) {
@@ -40,7 +40,7 @@ export class SideMenuComponent extends SessionBaseComponent implements OnInit, A
       });
   }
 
-  ngAfterViewInit(): void {
+  override ngAfterViewInit(): void {
     this.menuDataService.toggleMenuBar
       .subscribe({
         next: result => {
@@ -51,7 +51,7 @@ export class SideMenuComponent extends SessionBaseComponent implements OnInit, A
       });
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     this.menuDataService.toggleMenuBar.observers.forEach(el => el.complete());
     this.menuDataService.menuItems.observers.forEach(el => el.complete());
   }

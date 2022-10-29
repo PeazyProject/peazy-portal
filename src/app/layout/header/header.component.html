@@ -1,8 +1,5 @@
 <div class="layout-topbar">
     <div class="left-block">
-        <a class="icon" (click)="toggleSideMenu()">
-            <i class="fas fa-bars"></i>
-        </a>
         <a href="index.html"><img class="logo p-d-none p-d-lg-inline-block p-d-md-inline-block" src="assets/images/logo.png" /></a>
     </div>
     <div class="right-block item-block">
@@ -13,13 +10,7 @@
             <a class="icon"><i class="fas fa-bell"></i></a>
         </div>
         <div class="item">
-            <p-dropdown [(ngModel)]="facility" [options]="facilityOptions" (onChange)="facilityChange($event)" optionLabel="optionDesc" optionValue="optionCode" [style]="{ 'min-width': '15vw' }"></p-dropdown>
-        </div>
-        <div class="item">
-            <p-dropdown [(ngModel)]="language" [options]="languageOptions" (onChange)="languageChange($event)"></p-dropdown>
-        </div>
-        <div class="item">
-            <a class="icon" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
+            <a class="icon"><i class="fas fa-sign-out-alt"></i></a>
         </div>
     </div>
 </div>
@@ -31,7 +22,7 @@
 
 <p-overlayPanel #notificationPanel [style]="{width: '450px'}">
     <ng-template pTemplate>
-        <p-dataView [value]="notifications" [rows]="9" sortField="time" layout="list">
+        <!-- <p-dataView [value]="notifications" [rows]="9" sortField="time" layout="list">
             <ng-template let-notification pTemplate="listItem">
                 <div class="p-col-12">
                     <div class="notification-list-item">
@@ -45,6 +36,6 @@
                     </div>
                 </div>
             </ng-template>
-        </p-dataView>
+        </p-dataView> -->
     </ng-template>
 </p-overlayPanel>

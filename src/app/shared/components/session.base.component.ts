@@ -15,12 +15,18 @@ import { BaseComponent } from './base.component';
 export class SessionBaseComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy  {
   @Input() userProfile: any;
 
-  async ngOnDestroy(): Promise<void> {
+  constructor(injector: Injector) {
+    super(injector);
+  }
+
+  async ngOnInit(): Promise<void> {
   }
   ngAfterViewInit(): void {
   }
-  ngOnInit(): void {
+  ngOnDestroy(): void {
   }
+
+
 
   // TODO 等待之後Login做好再打開
 
@@ -46,7 +52,6 @@ export class SessionBaseComponent extends BaseComponent implements OnInit, After
   //   this.permssionCodes = [];
   //   this.dataScope = {
   //     tenantCodes: [],
-  //     facilityCodes: [],
   //     forwarderCodes: [],
   //     customerCodes: [],
   //     dataScopes: []
@@ -85,10 +90,6 @@ export class SessionBaseComponent extends BaseComponent implements OnInit, After
   //     .reduce((c: any, i: any) => c.concat(i.scopes), []) as any).map((x: any) => {
   //       return x.tenantCode;
   //     });
-  //   this.dataScope.facilityCodes = (Object.values(this.userProfile.roles)
-  //     .reduce((c: any, i: any) => c.concat(i.scopes), []) as any).map((x: any) => {
-  //       return x.facilityCode;
-  //     });
   //   this.dataScope.forwarderCodes = (Object.values(this.userProfile.roles)
   //     .reduce((c: any, i: any) => c.concat(i.scopes), []) as any).map((x: any) => {
   //       return x.forwarderCode;
@@ -103,7 +104,6 @@ export class SessionBaseComponent extends BaseComponent implements OnInit, After
   //         tenant: x.tenantCode === '' ? null : x.tenantCode,
   //         dept: x.dept === '' ? null : x.dept,
   //         customer: x.customer === '' ? null : x.customer,
-  //         facility: x.facilityCode === '' ? null : x.facilityCode,
   //         orgId: x.orgId === '' ? null : x.orgId,
   //         brand: x.brand === '' ? null : x.brand,
   //         forwarder: x.forwarderCode === '' ? null : x.forwarderCode

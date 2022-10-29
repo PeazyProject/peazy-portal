@@ -17,7 +17,7 @@ export class BaseComponent {
   toastService: ToastService;
   loader: LoaderService;
   translateService: TranslateService;
-  laasSetting: PeazySettingService;
+  peazySetting: PeazySettingService;
   confirmationService: ConfirmationService;
   cacheService: CacheService;
 
@@ -27,7 +27,7 @@ export class BaseComponent {
     this.toastService = injector.get(ToastService);
     this.loader = injector.get(LoaderService);
     this.translateService = injector.get(TranslateService);
-    this.laasSetting = injector.get(PeazySettingService);
+    this.peazySetting = injector.get(PeazySettingService);
     this.confirmationService = injector.get(ConfirmationService);
     this.cacheService = injector.get(CacheService);
   }
