@@ -1,0 +1,8 @@
+:host::ng-deep {
+  div.p-toast-detail {
+      white-space: pre-line;
+  }
+  span.p-confirm-dialog-message {
+    white-space: pre-line;
+  }
+}

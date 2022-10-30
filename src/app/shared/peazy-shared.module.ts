@@ -1,50 +1,51 @@
-import { PasswordModule } from 'primeng-lts/password';
+import { PasswordModule } from 'primeng/password';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CalendarModule } from 'primeng-lts/calendar';
-import { DropdownModule } from 'primeng-lts/dropdown';
-import { InputTextModule } from 'primeng-lts/inputtext';
-import { ButtonModule } from 'primeng-lts/button';
-import { TableModule } from 'primeng-lts/table';
-import { ToastModule } from 'primeng-lts/toast';
-import { BlockUIModule } from 'primeng-lts/blockui';
-import { ProgressSpinnerModule } from 'primeng-lts/progressspinner';
-import { SidebarModule } from 'primeng-lts/sidebar';
-import { PanelMenuModule } from 'primeng-lts/panelmenu';
-import { OverlayPanelModule } from 'primeng-lts/overlaypanel';
-import { PanelModule } from 'primeng-lts/panel';
-import { DataViewModule } from 'primeng-lts/dataview';
-import { CardModule } from 'primeng-lts/card';
-import { RippleModule } from 'primeng-lts/ripple';
-import { DialogModule } from 'primeng-lts/dialog';
-import { AccordionModule } from 'primeng-lts/accordion';
-import { ListboxModule } from 'primeng-lts/listbox';
-import { RadioButtonModule } from 'primeng-lts/radiobutton';
-import { CheckboxModule } from 'primeng-lts/checkbox';
-import { MultiSelectModule } from 'primeng-lts/multiselect';
-import { StepsModule } from 'primeng-lts/steps';
-import { InputNumberModule } from 'primeng-lts/inputnumber';
-import { ChipsModule } from 'primeng-lts/chips';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { BlockUIModule } from 'primeng/blockui';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SidebarModule } from 'primeng/sidebar';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { PanelModule } from 'primeng/panel';
+import { DataViewModule } from 'primeng/dataview';
+import { CardModule } from 'primeng/card';
+import { RippleModule } from 'primeng/ripple';
+import { DialogModule } from 'primeng/dialog';
+import { AccordionModule } from 'primeng/accordion';
+import { ListboxModule } from 'primeng/listbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CheckboxModule } from 'primeng/checkbox';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { StepsModule } from 'primeng/steps';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ChipsModule } from 'primeng/chips';
 import { TranslateModule } from '@ngx-translate/core';
-import { InputSwitchModule } from 'primeng-lts/inputswitch';
-import { ConfirmDialogModule } from 'primeng-lts/confirmdialog';
-import { FileUploadModule } from 'primeng-lts/fileupload'
-import { InputTextareaModule } from 'primeng-lts/inputtextarea';
-import { TagModule } from 'primeng-lts/tag';
-import { TooltipModule } from 'primeng-lts/tooltip';
-import { PickListModule } from 'primeng-lts/picklist';
-import { ConfirmPopupModule } from 'primeng-lts/confirmpopup';
-import { ToolbarModule } from 'primeng-lts/toolbar';
-import { MenubarModule } from 'primeng-lts/menubar';
-import { TimelineModule } from 'primeng-lts/timeline';
-import { EditorModule } from 'primeng-lts/editor';
-import { TabMenuModule } from 'primeng-lts/tabmenu';
-import { GalleriaModule } from 'primeng-lts/galleria';
-import { TabViewModule } from 'primeng-lts/tabview';
-import { AutoCompleteModule } from 'primeng-lts/autocomplete';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { FileUploadModule } from 'primeng/fileupload'
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TagModule } from 'primeng/tag';
+import { TooltipModule } from 'primeng/tooltip';
+import { PickListModule } from 'primeng/picklist';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ToolbarModule } from 'primeng/toolbar';
+import { MenubarModule } from 'primeng/menubar';
+import { TimelineModule } from 'primeng/timeline';
+import { EditorModule } from 'primeng/editor';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { GalleriaModule } from 'primeng/galleria';
+import { TabViewModule } from 'primeng/tabview';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ReplaceNullWithPipe } from './pipes/replace-null-with.pipe';
 import { OptionsMappingPipe } from './pipes/options-mapping.pipe';
+import { DataTableSettingDirective } from './directives/data-table-setting.directive';
 
 
 const primengModules = [
@@ -95,7 +96,8 @@ const primengModules = [
 @NgModule({
   declarations: [
     ReplaceNullWithPipe,
-    OptionsMappingPipe
+    OptionsMappingPipe,
+    DataTableSettingDirective
   ],
   imports: [
     CommonModule,
@@ -111,7 +113,8 @@ const primengModules = [
     TranslateModule,
     ...primengModules,
     ReplaceNullWithPipe,
-    OptionsMappingPipe
+    OptionsMappingPipe,
+    DataTableSettingDirective
   ]
 })
 export class PeazySharedModule { }

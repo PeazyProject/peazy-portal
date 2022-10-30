@@ -1,6 +1,6 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
-import { MessageService } from 'primeng-lts/api';
+import { MessageService } from 'primeng/api';
 
 /**
  * Toast service class

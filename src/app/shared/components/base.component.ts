@@ -6,7 +6,7 @@ import { PeazySettingService } from 'src/app/layout/layoutServices/peazy-setting
 import { RouteStateService } from 'src/app/layout/layoutServices/route-state.service';
 import { ToastService } from 'src/app/layout/layoutServices/toast.service';
 import { LoaderService } from 'src/app/layout/layoutServices/loader.service';
-import { ConfirmationService } from 'primeng-lts/api';
+import { ConfirmationService } from 'primeng/api';
 import { CacheService } from 'src/app/layout/layoutServices/cache.service';
 import { PeazyConstants } from 'src/app/core/constants/peazy-constants.constant';
 

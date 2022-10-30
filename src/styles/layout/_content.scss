@@ -5,12 +5,12 @@
     .layout-content {
       padding-top: $header-height;
       transition: all 0.3s;
-      transform: translateX(250px);
-      width: calc(100% - 250px);
+      transform: translateX(270px);
+      width: calc(98% - 250px);
 
       &.menu-hide {
         transform: translateX(0px);
-        width: 100%;
+        width: 105%;
       }
 
       .page-title .icon {

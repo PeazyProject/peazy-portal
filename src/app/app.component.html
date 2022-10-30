@@ -6,3 +6,13 @@
 <div class="layout-wrapper">
   <router-outlet></router-outlet>
 </div>
+<div [class.hidden]="!isShowLoader" class="loader">
+  <p-progressSpinner></p-progressSpinner>
+</div>
+<p-toast position="bottom-right" [baseZIndex]="10000"></p-toast>
+<p-confirmDialog header="{{ 'Common.Button.Confirm' | translate }}" rejectButtonStyleClass="p-button-text" [baseZIndex]="10000" #cd>
+  <p-footer>
+    <button type="button" pButton [icon]="cd.option('acceptIcon')" [label]="cd.acceptButtonLabel" (click)="cd.accept()" [ngClass]="'p-confirm-dialog-accept'" [class]="cd.option('acceptButtonStyleClass')" *ngIf="cd.option('acceptVisible')" [attr.aria-label]="cd.acceptAriaLabel"></button>
+    <button type="button" pButton [icon]="cd.option('rejectIcon')" [label]="cd.rejectButtonLabel" (click)="cd.reject()" [ngClass]="'p-confirm-dialog-reject'" [class]="cd.option('rejectButtonStyleClass')" *ngIf="cd.option('rejectVisible')" [attr.aria-label]="cd.rejectAriaLabel"></button>
+  </p-footer>
+</p-confirmDialog>

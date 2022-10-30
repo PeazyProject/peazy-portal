@@ -49,6 +49,6 @@ export class GlobalConstants {
       ['city', 'fas fa-city'],
       ['fa-bullhorn', 'fas fa-bullhorn'],
       ['question', 'far fa-question-circle']
+
     ]);
   }
-  

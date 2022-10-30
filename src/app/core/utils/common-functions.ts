@@ -109,6 +109,37 @@ export function peazyFormatString(str: string, _array: string[]){
   return str;
 }
 
+export function onChanges(changes: SimpleChanges, selectedCols: any): any {
+  console.log('OnChanges');
+  console.log(changes);
+  if (!isNullOrEmpty(changes['defaultColumns'])) {
+    changes['defaultColumns'].currentValue?.forEach((x: any) => {
+      if (isNullOrEmpty(x.sort)) {
+        x.sort = false;
+      }
+      if (isNullOrEmpty(x.display)) {
+        x.display = true;
+      }
+    });
+
+    if (!isNullOrEmpty(changes['defaultColumns'].currentValue)) {
+      const screenWidth = window.screen.width;
+      const displayColumn = changes['defaultColumns'].currentValue.filter(
+        (x: any) => x.display
+      );
+      const totalColumnDisplay = displayColumn.length;
+      const width = screenWidth / totalColumnDisplay;
+      const columnMinWidth = width < 100 ? 100 : width;
+      changes['defaultColumns'].currentValue.forEach((x: any) => {
+        if (isNullOrEmpty(x.width)) {
+          x.width = columnMinWidth;
+        }
+      });
+      selectedCols = displayColumn;
+    }
+  }
+}
+
 export function columnReordered(columns: any, defaultColumns: any[]): void {
   const newColumnOrderList: string[] = [];
   columns.forEach((col: any) => {

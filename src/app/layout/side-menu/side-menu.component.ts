@@ -1,7 +1,7 @@
 import { isNullOrEmpty } from 'src/app/core/utils/common-functions';
 import { Component, OnInit, AfterViewInit, OnDestroy, Injector } from '@angular/core';
 import { SessionBaseComponent } from 'src/app/shared/components/session.base.component';
-import { MenuItem } from 'primeng-lts/api';
+import { MenuItem } from 'primeng/api';
 import { MenuService } from '../layoutServices/menu.service';
 
 @Component({
