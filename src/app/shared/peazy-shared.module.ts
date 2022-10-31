@@ -46,6 +46,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ReplaceNullWithPipe } from './pipes/replace-null-with.pipe';
 import { OptionsMappingPipe } from './pipes/options-mapping.pipe';
 import { DataTableSettingDirective } from './directives/data-table-setting.directive';
+import {RatingModule} from 'primeng/rating';
 
 
 const primengModules = [
@@ -90,7 +91,8 @@ const primengModules = [
   GalleriaModule,
   TabViewModule,
   TimelineModule,
-  AutoCompleteModule
+  AutoCompleteModule,
+  RatingModule
 ];
 
 @NgModule({

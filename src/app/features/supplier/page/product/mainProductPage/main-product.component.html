@@ -1,63 +1,94 @@
-<div class="container">
-  <div class="page-title">
-    <h1><span class="icon"><i class="fas fa-box"></i></span>商品畫面
-      <i #displayBigPic class="fas fa-list" (click)="changeDisplayModeToDetail()"
-      [class.icon-enable]="displayMode == 'DETAIL'"
-      [class.icon-disable]="displayMode == 'PIC'"></i>
+<div class="card">
+  <p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="name"
+      [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+      <ng-template pTemplate="header">
+          <div class="flex flex-column md:flex-row md:justify-content-between">
+            <div style="text-align:right; padding-bottom: 15px;">
+              <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+            </div>
+            <p-accordion (onOpen)="accordionTabOpen()" >
+              <p-accordionTab header="查詢表單" [selected]="isSearchFormOpen">
+                <form [formGroup]="searchForm">
+                  <div class="p-fluid p-formgrid p-grid">
 
-      <i #displayDetail class="fas fa-image" (click)="changeDisplayModeToPic()"
-      style="padding-right: 10px;"
-      [class.icon-enable]="displayMode == 'PIC'"
-      [class.icon-disable]="displayMode == 'DETAIL'"></i>
-      </h1>
-  </div>
+                    <div class="p-field p-col-4">
+                        <label>商品名稱</label>
+                        <p-chips formControlName="productNameList" [(ngModel)]="searchParams.productNameList" separator=","
+                        (onAdd)="chipsAdd($event, 'productNameList')"></p-chips>
+                    </div>
 
-   <p-card>
-    <p-accordion (onOpen)="accordionTabOpen()">
-      <p-accordionTab header=查詢表單 [selected]="isSearchFormOpen">
-          <form [formGroup]="searchForm">
-              <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col-4">
+                      <label>SKU</label>
+                      <p-chips formControlName="skuList" [(ngModel)]="searchParams.skuList" separator=","
+                      (onAdd)="chipsAdd($event, 'skuList')"></p-chips>
+                    </div>
 
-                <div class="p-field p-col-4">
-                    <label>商品名稱</label>
-                    <p-chips formControlName="productNameList" [(ngModel)]="searchParams.productNameList" separator=","
-                    (onAdd)="chipsAdd($event, 'productNameList')"></p-chips>
-                </div>
+                    <div class="p-field p-col-4">
+                      <label>是否尚有庫存</label>
+                      <p-chips formControlName="inStock" [(ngModel)]="searchParams.inStock" separator=","
+                      (onAdd)="chipsAdd($event, 'inStock')"></p-chips>
+                    </div>
 
-                <div class="p-field p-col-4">
-                  <label>SKU</label>
-                  <p-chips formControlName="skuList" [(ngModel)]="searchParams.skuList" separator=","
-                  (onAdd)="chipsAdd($event, 'skuList')"></p-chips>
-                </div>
+                    <div class="p-field p-col-4">
+                      <label>商品狀態</label>
+                      <p-chips formControlName="inStock" [(ngModel)]="searchParams.inStock" separator=","
+                      (onAdd)="chipsAdd($event, 'inStock')"></p-chips>
+                    </div>
 
-                <div class="p-field p-col-4">
-                  <label>是否尚有庫存</label>
-                  <p-chips formControlName="inStock" [(ngModel)]="searchParams.inStock" separator=","
-                  (onAdd)="chipsAdd($event, 'inStock')"></p-chips>
-                </div>
+                  </div>
 
-                <div class="p-field p-col-4">
-                  <label>商品狀態</label>
-                  <p-chips formControlName="inStock" [(ngModel)]="searchParams.inStock" separator=","
-                  (onAdd)="chipsAdd($event, 'inStock')"></p-chips>
-                </div>
+                  <div class="p-grid">
+                      <div class="p-col">
+                          <button pButton pRipple label="查詢" (click)="searchBtnClick()"></button>
+                          <button pButton pRipple label="重製" class="p-button-secondary p-ml-2" (click)="resetBtnClick()" ></button>
+                          <button pButton pRipple label="新增產品 " class="p-button-secondary p-ml-2" (click)="insertProduct()" ></button>
+                      </div>
+                  </div>
+                </form>
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+      </ng-template>
 
-              </div>
-
-              <div class="p-grid">
-                  <div class="p-col">
-                      <button pButton pRipple label="查詢" (click)="searchBtnClick()"></button>
-                      <button pButton pRipple label="重製" class="p-button-secondary p-ml-2" (click)="resetBtnClick()" ></button>
-                      <button pButton pRipple label="新增產品 " class="p-button-secondary p-ml-2" (click)="insertProduct()" ></button>
+      <ng-template let-product pTemplate="listItem">
+          <div class="p-col-12">
+              <div class="product-list-item">
+                  <div class="product-list-detail">
+                      <div class="product-name">{{product.name}}</div>
+                      <div class="product-description">{{product.description}}</div>
+                      <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+                      <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{product.category}}</span>
+                  </div>
+                  <div class="product-list-action">
+                      <span class="product-price">${{product.price}}</span>
+                      <p-button icon="pi pi-shopping-cart" label="Add to Cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button>
+                      <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
                   </div>
               </div>
-          </form>
-      </p-accordionTab>
-    </p-accordion>
-    <div class="p-mt-2">
-      <div [hidden]="displayMode == 'PIC'">
-        <display-product-detail></display-product-detail>
-      </div>
-    </div>
-  </p-card>
+          </div>
+      </ng-template>
+
+      <ng-template let-product pTemplate="gridItem">
+          <div class="col-12 md:col-4">
+              <div class="product-grid-item card">
+                  <div class="product-grid-item-top">
+                      <div>
+                          <i class="pi pi-tag product-category-icon"></i>
+                          <span class="product-category">{{product.category}}</span>
+                      </div>
+                      <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                  </div>
+                  <div class="product-grid-item-content">
+                      <div class="product-name">{{product.name}}</div>
+                      <div class="product-description">{{product.description}}</div>
+                      <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+                  </div>
+                  <div class="product-grid-item-bottom">
+                      <span class="product-price">${{product.price}}</span>
+                      <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button>
+                  </div>
+              </div>
+          </div>
+      </ng-template>
+  </p-dataView>
 </div>
