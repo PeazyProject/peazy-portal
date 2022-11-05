@@ -63,7 +63,8 @@
                 </div>
                 <div class="product-list-action">
                     <span class="product-price">${{productList.price}}</span>
-                    <p-button icon="pi pi-shopping-cart" label="加入購物車"></p-button>
+                    <!-- <p-button icon="pi pi-shopping-cart" label="加入購物車"></p-button> -->
+                    <p-button icon="pi pi-pencil" label="編輯"></p-button>
                     <div *ngIf="productList.productStatus == 'AVAILABLE' && productList.productQty > 0">
                       <p-tag severity="success">有現貨</p-tag>
                     </div>
@@ -104,7 +105,8 @@
                   </div>
                   <div class="product-grid-item-bottom">
                       <span class="product-price">${{productList.price}}</span>
-                      <p-button icon="pi pi-shopping-cart" [disabled]="productList.productStatus == 'OUT_OF_STOCK'"></p-button>
+                      <p-button icon="pi pi-pencil" [disabled]="productList.productStatus == 'OUT_OF_STOCK'"></p-button>
+                      <!-- <p-button icon="pi pi-shopping-cart" [disabled]="productList.productStatus == 'OUT_OF_STOCK'"></p-button> -->
                   </div>
               </div>
           </div>

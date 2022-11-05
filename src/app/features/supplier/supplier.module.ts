@@ -4,10 +4,12 @@ import { PeazySharedModule } from 'src/app/shared/peazy-shared.module';
 import { MainProductComponent } from './page/product/mainProductPage/main-product.component';
 import { SupplierRoutingModule } from './supplier-routing.module';
 import { TableModule } from 'primeng/table';
+import { EditProductComponent } from './page/product/editProductPage/edit-product.component';
 
 @NgModule({
   declarations: [
-    MainProductComponent
+    MainProductComponent,
+    EditProductComponent
   ],
   imports: [
     SupplierRoutingModule,

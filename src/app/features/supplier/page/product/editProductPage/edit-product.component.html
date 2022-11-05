@@ -1,0 +1,76 @@
+<div class="container">
+  <h1 class="page-title"><span class="icon"><i class="fas fa-pen"></i></span>商品編輯</h1>
+</div>
+
+<p-card>
+  <form [formGroup]="searchForm">
+    <div class="p-fluid p-formgrid p-grid">
+
+      <div class="p-field p-col-12 p-md-6 p-lg-3">
+          <label>商品名稱</label>
+          <input pInputText type="text" formControlName="productName" />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6 p-lg-3">
+        <label>SKU</label>
+        <p-chips formControlName="skuList" separator=","
+        (onAdd)="chipsAdd($event, 'skuList')"></p-chips>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6 p-lg-3">
+        <label>SIZE</label>
+        <p-multiSelect [options]="isStockOption" formControlName="inStockList" placeholder="請選擇"></p-multiSelect>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6 p-lg-3">
+        <label>顏色</label>
+        <p-multiSelect [options]="isStockOption" formControlName="inStockList" placeholder="請選擇"></p-multiSelect>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6 p-lg-3">
+        <label>成本</label>
+        <input pInputText type="text" formControlName="productName" />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6 p-lg-3">
+        <label>價格</label>
+        <input pInputText type="text" formControlName="productName" />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6 p-lg-3">
+        <label>類別</label>
+        <p-multiSelect [options]="isStockOption" formControlName="inStockList" placeholder="請選擇"></p-multiSelect>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6 p-lg-3">
+        <label>商品狀態</label>
+        <div class="p-col-8 column-value">
+          <p-radioButton formControlName="isAvailable" name="isAvailable" value="AVAILABLE" label="可購買"></p-radioButton>
+          <p-radioButton formControlName="isAvailable" name="isAvailable" value="OUT_OF_STOCK" label="已斷貨" class="p-ml-2"></p-radioButton>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6 p-lg-3">
+        <label>類別</label>
+        <p-multiSelect [options]="isStockOption" formControlName="inStockList" placeholder="請選擇"></p-multiSelect>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6 p-lg-3">
+        <label>商品介紹</label>
+        <textarea pInputTextarea [autoResize]="true" formControlName="inStockList"></textarea>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12 p-lg-6">
+        <label>圖片區</label>
+        <textarea pInputTextarea [autoResize]="true" formControlName="inStockList"></textarea>
+      </div>
+
+    </div>
+
+    <div class="p-grid">
+        <div class="p-col">
+            <button pButton pRipple label="新增產品 " class="p-button-success p-ml-2" (click)="insertProduct()" ></button>
+        </div>
+    </div>
+  </form>
+</p-card>
