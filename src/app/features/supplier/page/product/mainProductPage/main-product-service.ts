@@ -11,13 +11,18 @@ export class ProductService {
 
     constructor(private http: HttpClient) { }
 
-    queryProduct(): Observable<any> {
+    queryProduct(param: any): Observable<any> {
       const url = `${environment.supplierApiUrl}/product/queryProduct`;
-      return this.http.post(url, null);
+      return this.http.post(url, param);
     }
 
     getImgUrl(sn: string): string{
       return `${environment.supplierApiUrl}/product/getImgUrl/${sn}`;
+    }
+
+    getDropDownList(mainCategory: string, subCategory: string): Observable<any> {
+      const url = `${environment.supplierApiUrl}/supplierCommon/getDropDownList/${mainCategory}/${subCategory}`;
+    return this.http.get(url);
     }
 
 }

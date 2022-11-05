@@ -14,7 +14,7 @@ import { BaseComponent } from 'src/app/shared/components/base.component';
   styleUrls: ['./main-product.component.scss']
 })
 export class MainProductComponent extends BaseComponent {
-[x: string]: any;
+
     sortOptions: SelectItem[] = [];
     sortOrder!: number;
     sortField!: string;
@@ -24,6 +24,7 @@ export class MainProductComponent extends BaseComponent {
     searchParams: any;
     isLoading: boolean = false;
     productList: any[] = [];
+    isStockOption: any[] = [];
 
     constructor(
       injector: Injector,
@@ -33,25 +34,28 @@ export class MainProductComponent extends BaseComponent {
 
         super(injector);
 
-        this.searchParams = {
-          productNameList: [],
-          skuList: [],
-          inStock: []
-        };
-
         this.searchForm = this.fb.group({
-          productNameList: [],
+          productName: '',
           skuList: [],
-          inStock: []
+          inStockList: [],
+          isAvailable: 'AVAILABLE'
         });
      }
 
     ngOnInit() {
+
+      this.productService.getDropDownList("DropDownList", "IsStockOption").subscribe({
+        next: (result: any) => {
+          this.isStockOption = result
+        }
+      });
+
       this.searchBtnClick();
-        this.sortOptions = [
-            {label: 'Price High to Low', value: '!price'},
-            {label: 'Price Low to High', value: 'price'}
-        ];
+      this.sortOptions = [
+          {label: 'Price High to Low', value: '!price'},
+          {label: 'Price Low to High', value: 'price'}
+      ];
+
     }
 
     onSortChange(event: { value: any; }) {
@@ -84,7 +88,7 @@ export class MainProductComponent extends BaseComponent {
       this.isLoading = true;
       this.isSearchFormOpen = false;
 
-      this.productService.queryProduct()
+      this.productService.queryProduct(this.searchForm.value)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: result => {
