@@ -45,9 +45,8 @@ import { TabViewModule } from 'primeng/tabview';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ReplaceNullWithPipe } from './pipes/replace-null-with.pipe';
 import { OptionsMappingPipe } from './pipes/options-mapping.pipe';
-import { DataTableSettingDirective } from './directives/data-table-setting.directive';
 import {RatingModule} from 'primeng/rating';
-
+import { ImagePipe } from './pipes/image.pipe';
 
 const primengModules = [
   CalendarModule,
@@ -99,7 +98,7 @@ const primengModules = [
   declarations: [
     ReplaceNullWithPipe,
     OptionsMappingPipe,
-    DataTableSettingDirective
+    ImagePipe
   ],
   imports: [
     CommonModule,
@@ -116,7 +115,7 @@ const primengModules = [
     ...primengModules,
     ReplaceNullWithPipe,
     OptionsMappingPipe,
-    DataTableSettingDirective
+    ImagePipe
   ]
 })
 export class PeazySharedModule { }

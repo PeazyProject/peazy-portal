@@ -21,7 +21,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { LoggerModule } from 'ngx-logger';
 import { environment } from 'src/environments/environment';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { DatePipe, DecimalPipe } from '@angular/common';
+import { DatePipe, DecimalPipe, CommonModule } from '@angular/common';
 import { OptionsMappingPipe } from './shared/pipes/options-mapping.pipe';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
@@ -46,6 +46,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     CheckboxModule,
     StyleClassModule,
     PeazySharedModule,
+    CommonModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

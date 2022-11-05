@@ -1,19 +1,20 @@
-import {Component} from '@angular/core';
-import { Product } from './product';
+import {Component, Injector} from '@angular/core';
 import {SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { ProductService } from './main-product-service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { isNullOrEmpty } from 'src/app/core/utils/common-functions';
+import { finalize } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { BaseComponent } from 'src/app/shared/components/base.component';
 
 @Component({
   selector: 'main-product',
   templateUrl: './main-product.component.html',
   styleUrls: ['./main-product.component.scss']
 })
-export class MainProductComponent {
+export class MainProductComponent extends BaseComponent {
 [x: string]: any;
-    products: Product[] = [];
     sortOptions: SelectItem[] = [];
     sortOrder!: number;
     sortField!: string;
@@ -22,12 +23,16 @@ export class MainProductComponent {
     searchForm: FormGroup;
     searchParams: any;
     isLoading: boolean = false;
-    searchResults: any[] = [];
+    productList: any[] = [];
 
     constructor(
+      injector: Injector,
       private productService: ProductService,
       private primengConfig: PrimeNGConfig,
       private fb: FormBuilder) {
+
+        super(injector);
+
         this.searchParams = {
           productNameList: [],
           skuList: [],
@@ -42,14 +47,11 @@ export class MainProductComponent {
      }
 
     ngOnInit() {
-      this.products =  this.productService.getProducts();
-
+      this.searchBtnClick();
         this.sortOptions = [
             {label: 'Price High to Low', value: '!price'},
             {label: 'Price Low to High', value: 'price'}
         ];
-
-        this.primengConfig.ripple = true;
     }
 
     onSortChange(event: { value: any; }) {
@@ -81,8 +83,26 @@ export class MainProductComponent {
 
       this.isLoading = true;
       this.isSearchFormOpen = false;
-      this.searchResults = [];
-      this.isLoading = false
+
+      this.productService.queryProduct()
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: result => {
+          this.isSearchFormOpen = false;
+          this.productList = result.queryProductList;
+        },
+        error: (err: HttpErrorResponse) => {
+          this.toastErrorMessage(err.error);
+        }
+      });
+    }
+
+    getImgUrl(snCode: string): string {
+      if (isNullOrEmpty(snCode)) {
+        return "";
+      } else {
+        return this.productService.getImgUrl(snCode);
+      }
 
     }
 

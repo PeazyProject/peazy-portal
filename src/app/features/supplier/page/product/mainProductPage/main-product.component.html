@@ -1,5 +1,5 @@
 <div class="card">
-  <p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="name"
+  <p-dataView #dv [value]="productList" [paginator]="true" [rows]="9" filterBy="name"
       [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
       <ng-template pTemplate="header">
           <div class="flex flex-column md:flex-row md:justify-content-between">
@@ -50,42 +50,60 @@
           </div>
       </ng-template>
 
-      <ng-template let-product pTemplate="listItem">
+      <ng-template let-productList pTemplate="listItem">
           <div class="p-col-12">
               <div class="product-list-item">
-                  <div class="product-list-detail">
-                      <div class="product-name">{{product.name}}</div>
-                      <div class="product-description">{{product.description}}</div>
-                      <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
-                      <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{product.category}}</span>
-                  </div>
-                  <div class="product-list-action">
-                      <span class="product-price">${{product.price}}</span>
-                      <p-button icon="pi pi-shopping-cart" label="Add to Cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button>
-                      <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                <img [src]="getImgUrl(productList.snCode) | image | async" alt="Product photo"/>
+                <div class="product-list-detail">
+                    <div class="product-name">{{productList.productName}}</div>
+                    <div class="product-description">{{productList.sku}}</div>
+                    <div class="product-description">上架日期：{{productList.createDt | date:'yyyy-MM-dd'}}</div>
+                    <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{productList.category}}</span>
+                </div>
+                <div class="product-list-action">
+                    <span class="product-price">${{productList.price}}</span>
+                    <p-button icon="pi pi-shopping-cart" label="加入購物車"></p-button>
+                    <div *ngIf="productList.productStatus == 'AVAILABLE' && productList.productQty > 0">
+                      <p-tag severity="success">有現貨</p-tag>
+                    </div>
+                    <div *ngIf="productList.productStatus == 'AVAILABLE' && productList.productQty == 0">
+                      <p-tag severity="warning">需預購</p-tag>
+                    </div>
+                    <div *ngIf="productList.productStatus == 'OUT_OF_STOCK'">
+                      <p-tag severity="danger">斷貨</p-tag>
+                    </div>
                   </div>
               </div>
           </div>
       </ng-template>
 
-      <ng-template let-product pTemplate="gridItem">
+      <ng-template let-productList pTemplate="gridItem">
           <div class="col-12 md:col-4">
               <div class="product-grid-item card">
                   <div class="product-grid-item-top">
                       <div>
                           <i class="pi pi-tag product-category-icon"></i>
-                          <span class="product-category">{{product.category}}</span>
+                          <span class="product-category">{{productList.category}}</span>
                       </div>
-                      <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                      <div *ngIf="productList.productStatus == 'AVAILABLE' && productList.productQty > 0">
+                        <p-tag severity="success">現貨</p-tag>
+                      </div>
+                      <div *ngIf="productList.productStatus == 'AVAILABLE' && productList.productQty == 0">
+                        <p-tag severity="warning">預購</p-tag>
+                      </div>
+                      <div *ngIf="productList.productStatus == 'OUT_OF_STOCK'">
+                        <p-tag severity="danger">斷貨</p-tag>
+                      </div>
                   </div>
                   <div class="product-grid-item-content">
-                      <div class="product-name">{{product.name}}</div>
-                      <div class="product-description">{{product.description}}</div>
-                      <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+                    <img [src]="getImgUrl(productList.snCode) | image | async" alt="Product photo"/>
+                    <div class="product-name">{{productList.productName}}</div>
+                    <div class="product-description">{{productList.sku}}</div>
+                    <div class="product-description">上架日期：{{productList.createDt | date:'yyyy-MM-dd'}}</div>
                   </div>
                   <div class="product-grid-item-bottom">
-                      <span class="product-price">${{product.price}}</span>
-                      <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button>
+                      <span class="product-price">${{productList.price}}</span>
+                      <p-button icon="pi pi-shopping-cart" [disabled]="productList.productStatus == 'OUT_OF_STOCK'"></p-button>
                   </div>
               </div>
           </div>
