@@ -90,6 +90,29 @@
   }
 }
 
+.float-label-padding {
+  padding-bottom: 20px;
+}
+
+.edit-button-width {
+  width: 15%;
+  display: inline;
+}
+
+.edit-main-img-border {
+  border: 2px solid red;
+  width:250px;
+  height:300px;
+  margin-left: 3px;
+}
+
+.edit-img-border {
+  border: 1px solid gray;
+  width:250px;
+  height:300px;
+  margin-left: 3px;
+}
+
 .card {
   padding: 2rem;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);

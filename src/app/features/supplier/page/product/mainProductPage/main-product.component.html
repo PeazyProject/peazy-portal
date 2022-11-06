@@ -8,28 +8,31 @@
             </div>
             <p-accordion (onOpen)="accordionTabOpen()" >
               <p-accordionTab header="查詢表單" [selected]="isSearchFormOpen">
-                <form [formGroup]="searchForm">
+                <form [formGroup]="searchForm" style="padding-top: 10px;">
                   <div class="p-fluid p-formgrid p-grid">
 
-                    <div class="p-field p-col-4">
-                        <label>商品名稱</label>
-                        <input pInputText type="text" formControlName="productName" />
+                    <div class="p-field p-col-12 p-md-6 p-lg-4">
+                      <span class="p-float-label">
+                        <input pInputText type="text" formControlName="productName" id="float-input" />
+                        <label for="float-input">商品名稱</label>
+                      </span>
                     </div>
 
-                    <div class="p-field p-col-4">
-                      <label>SKU</label>
-                      <p-chips formControlName="skuList" separator=","
-                      (onAdd)="chipsAdd($event, 'skuList')"></p-chips>
+                    <div class="p-field p-col-12 p-md-6 p-lg-4">
+                      <span class="p-float-label">
+                        <p-chips formControlName="skuList" separator=","
+                        (onAdd)="chipsAdd($event, 'skuList')" id="float-input"></p-chips>
+                        <label for="float-input">SKU</label>
+                      </span>
                     </div>
 
-                    <div class="p-field p-col-4">
-                      <label>是否尚有庫存</label>
-                      <p-multiSelect [options]="isStockOption" formControlName="inStockList" placeholder="請選擇"></p-multiSelect>
+                    <div class="p-field p-col-12 p-md-6 p-lg-4">
+                      <p-multiSelect [options]="isStockOption" formControlName="inStockList" placeholder="是否尚有庫存"></p-multiSelect>
                     </div>
 
-                    <div class="p-field p-col-4">
+                    <div class="p-field p-col-12 p-md-6 p-lg-4">
                       <label>商品狀態</label>
-                      <div class="p-col-8 column-value">
+                      <div class="p-field p-col-12 column-value">
                         <p-radioButton formControlName="isAvailable" name="isAvailable" value="AVAILABLE" label="可購買"></p-radioButton>
                         <p-radioButton formControlName="isAvailable" name="isAvailable" value="OUT_OF_STOCK" label="已斷貨" class="p-ml-2"></p-radioButton>
                         <p-radioButton formControlName="isAvailable" name="isAvailable" value="ALL" label="全部" class="p-ml-2"></p-radioButton>

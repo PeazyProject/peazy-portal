@@ -20,12 +20,14 @@ export class EditProductComponent extends BaseComponent {
     sortOrder!: number;
     sortField!: string;
 
+    isEditMode = false;
     isSearchFormOpen: boolean = false;
     searchForm: FormGroup;
     searchParams: any;
     isLoading: boolean = false;
     productList: any[] = [];
     isStockOption: any[] = [];
+    multiple: boolean = true;
 
     constructor(
       injector: Injector,
@@ -38,9 +40,16 @@ export class EditProductComponent extends BaseComponent {
 
         this.searchForm = this.fb.group({
           productName: '',
-          skuList: [],
-          inStockList: [],
-          isAvailable: 'AVAILABLE'
+          sku: '',
+          sizeList: [],
+          colorList: [],
+          cost: 0,
+          price: 0,
+          cartegory: '',
+          productStatus: 'AVAILABLE',
+          productDesc: '',
+          productMainPic: null,
+          productPic: []
         });
      }
 
@@ -52,7 +61,6 @@ export class EditProductComponent extends BaseComponent {
         }
       });
 
-      this.searchBtnClick();
       this.sortOptions = [
           {label: 'Price High to Low', value: '!price'},
           {label: 'Price Low to High', value: 'price'}
@@ -85,23 +93,23 @@ export class EditProductComponent extends BaseComponent {
       this.searchForm.reset();
     }
 
-    searchBtnClick(): void {
+    // searchBtnClick(): void {
 
-      this.isLoading = true;
-      this.isSearchFormOpen = false;
+    //   this.isLoading = true;
+    //   this.isSearchFormOpen = false;
 
-      this.productService.queryProduct(this.searchForm.value)
-      .pipe(finalize(() => this.isLoading = false))
-      .subscribe({
-        next: result => {
-          this.isSearchFormOpen = false;
-          this.productList = result.queryProductList;
-        },
-        error: (err: HttpErrorResponse) => {
-          this.toastErrorMessage(err.error);
-        }
-      });
-    }
+    //   this.productService.queryProduct(this.searchForm.value)
+    //   .pipe(finalize(() => this.isLoading = false))
+    //   .subscribe({
+    //     next: result => {
+    //       this.isSearchFormOpen = false;
+    //       this.productList = result.queryProductList;
+    //     },
+    //     error: (err: HttpErrorResponse) => {
+    //       this.toastErrorMessage(err.error);
+    //     }
+    //   });
+    // }
 
     getImgUrl(snCode: string): string {
       if (isNullOrEmpty(snCode)) {
