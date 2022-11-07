@@ -1,14 +1,14 @@
 <div class="flex justify-content-center">
   <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6 ">
-    <div class="text-center mb-5">
-        <!-- <img src="assets/images/blocks/logos/hyper.svg" alt="Image" height="50" class="mb-3"> -->
+    <br><br><br>
+    <!-- <div class="text-center mb-5">
         <i class="pi pi-apple mb-3" style="font-size: 2rem"></i>
         <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
         <span class="text-600 font-medium line-height-3">Don't have an account?</span>
         <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
-    </div>
+    </div> -->
 
-    <div>
+    <!-- <div>
         <label for="email1" class="block text-900 font-medium mb-2">Email</label>
         <input id="email1" type="text" pInputText class="w-full mb-3">
 
@@ -24,6 +24,73 @@
         </div>
 
         <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+    </div> -->
+
+
+    <div class="">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <hr>
+
+        <div class="m-3 p-3">
+          <div class="p-float-label">
+            <input id="username" type="text" formControlName="username" pInputText/>
+            <label for="username">Username</label>
+          </div>
+        </div>
+
+        <br><br><br>
+
+        <div class="p-float-label">
+          <input id="password" type="text" formControlName="password" pPassword/>
+          <label for="password">Password</label>
+        </div>
+
+        <br><br><br>
+
+        <button class="btn btn-primary" class="p-button p-component">
+          <!-- <span *ngIf="loading" class="p-button-label"></span> -->
+          Login
+        </button>
+      </form>
     </div>
+
+    <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      CSS不能用
+      <div class="login-input-wrapper">
+        <label for="username">Username</label>
+        <input type="text" formControlName="username" pinputtext="williamtestaccount1"
+          placeholder="Type your username..." class="p-inputtext p-component"
+          [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+        <i class="pi pi-user"></i>
+        <div *ngIf="submitted && f.username.errors" class="errors">
+          <div *ngIf="f.username.errors.required">Username is required</div>
+        </div>
+      </div>
+      <div class="login-input-wrapper">
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" ppassword="12345" placeholder="Type your password"
+          type="password" class="p-inputtext p-component">
+        <i class="pi pi-lock"></i>
+        <div *ngIf="submitted && f.password.errors" class="errors">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+      </div>
+      <div class="login-input-wrapper">
+        <label for="password">Language</label>
+        <p-dropdown [(ngModel)]="language" [options]="languageOptions" (onChange)="languageChange($event)"
+          class="p-ml-4" [ngModelOptions]="{standalone: true}"></p-dropdown>
+      </div>
+      <button [disabled]="loading" class="btn btn-primary" class="p-button p-component">
+        <span *ngIf="loading" class="p-button-label"></span>
+        Login
+      </button>
+      <div *ngIf="errorMsg" class="alert alert-danger mt-3 mb-0">{{errorMsg}}</div>
+    </form> -->
+
+
+
+
+
+
   </div>
 </div>
