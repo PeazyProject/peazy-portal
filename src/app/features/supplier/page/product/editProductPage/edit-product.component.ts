@@ -28,6 +28,9 @@ export class EditProductComponent extends BaseComponent {
     isLoading: boolean = false;
     productList: any[] = [];
     isStockOption: any[] = [];
+    sizeOption: any[] = [];
+    colorOption: any[] = [];
+    categoryOption: any[] = [];
     multiple: boolean = true;
 
     mainPic: any;
@@ -68,11 +71,24 @@ export class EditProductComponent extends BaseComponent {
 
     ngOnInit() {
 
-      this.productService.getDropDownList("DropDownList", "IsStockOption").subscribe({
+      this.productService.getProductSizeOption().subscribe({
         next: (result: any) => {
-          this.isStockOption = result
+          this.sizeOption = result
         }
       });
+
+      this.productService.getProductColorOption().subscribe({
+        next: (result: any) => {
+          this.colorOption = result
+        }
+      });
+
+      this.productService.getProductCategoryOption().subscribe({
+        next: (result: any) => {
+          this.categoryOption = result
+        }
+      });
+
 
       this.sortOptions = [
           {label: 'Price High to Low', value: '!price'},

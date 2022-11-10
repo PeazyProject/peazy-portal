@@ -5,7 +5,6 @@
 <p-card>
   <form [formGroup]="searchForm">
     <div class="p-fluid p-formgrid p-grid">
-
       <div class="p-field p-col-12 p-md-6 p-lg-3 ">
         <div class="float-label-padding" >
           <span class="p-float-label">
@@ -27,20 +26,20 @@
 
       <div class="p-field p-col-12 p-md-6 p-lg-3">
         <div class="float-label-padding">
-          <p-multiSelect [options]="isStockOption" formControlName="sizeList" placeholder="SIZE"></p-multiSelect>
+          <p-multiSelect [options]="sizeOption" formControlName="sizeList" placeholder="SIZE"></p-multiSelect>
         </div>
       </div>
 
       <div class="p-field p-col-12 p-md-6 p-lg-3">
         <div class="float-label-padding">
-          <p-multiSelect [options]="isStockOption" formControlName="colorList" placeholder="顏色"></p-multiSelect>
+          <p-multiSelect [options]="colorOption" formControlName="colorList" placeholder="顏色"></p-multiSelect>
         </div>
       </div>
 
       <div class="p-field p-col-12 p-md-6 p-lg-3">
         <div class="float-label-padding">
           <span class="p-float-label">
-            <input pInputText type="text" formControlName="cost" id="float-input"/>
+            <p-inputNumber formControlName="cost" id="float-input"></p-inputNumber>
             <label for="float-input">成本</label>
           </span>
         </div>
@@ -49,7 +48,7 @@
       <div class="p-field p-col-12 p-md-6 p-lg-3">
         <div class="float-label-padding">
           <span class="p-float-label">
-            <input pInputText type="text" formControlName="price" id="float-input"/>
+            <p-inputNumber formControlName="price" id="float-input"></p-inputNumber>
             <label for="float-input">價格</label>
           </span>
         </div>
@@ -57,7 +56,7 @@
 
       <div class="p-field p-col-12 p-md-6 p-lg-3">
         <div class="float-label-padding">
-          <p-multiSelect [options]="isStockOption" formControlName="cartegory" placeholder="類別"></p-multiSelect>
+          <p-multiSelect [options]="categoryOption" formControlName="cartegory" placeholder="類別"></p-multiSelect>
         </div>
       </div>
 
@@ -80,8 +79,17 @@
 
       <div class="p-field p-col-12 p-md-6 p-lg-6">
         <label>圖片區</label> <br/>
+        <!-- 回頭優化這邊改成，可以刪除修改第幾張圖片 -->
+        <!-- <div style="position: relative; " class="edit-main-img-border">
+          <span class="btn-remove-image">X</span>
+          <img [src]="mainPic" style="width:200px; height:220px;" onerror="this.src='assets/images/noImage.png'"/>
+        </div>
+
+        <div style="position: relative; " class="edit-img-border">
+          <span class="btn-remove-image">X</span>
+        </div> -->
         <img class="edit-main-img-border" [src]="mainPic" onerror="this.src='assets/images/noImage.png'"/>
-        <img class="edit-img-border" [src]="pic1" onerror="this.src='assets/images/noImage.png'"/>
+        <img class="edit-img-border" [src]="pic2" onerror="this.src='assets/images/noImage.png'"/>
         <img class="edit-img-border" [src]="pic2" onerror="this.src='assets/images/noImage.png'"/>
         <img class="edit-img-border" [src]="pic3" onerror="this.src='assets/images/noImage.png'"/>
         <img class="edit-img-border" [src]="pic4" onerror="this.src='assets/images/noImage.png'"/>
@@ -93,19 +101,22 @@
 
       <div class="p-col-12 p-md-6 p-lg-6">
         <div style="padding-top: 30px;">
-            <button *ngIf="!isEditMode" pButton label="新增產品" class="p-button-success edit-button-width" (click)="insertProduct()"></button>
-            <button *ngIf="isEditMode" pButton label="編輯產品" class="p-button-success edit-button-width" (click)="insertProduct()"></button>
-            <button pButton label="編輯數量" class="p-button-warning p-ml-2 edit-button-width" (click)="insertProduct()"></button>
-            <!-- TODO 明天來優化這個按鈕 -->
-            <!-- <button pButton class="p-ml-2 edit-button-width" label="上傳圖片"></button> -->
+          <button *ngIf="!isEditMode" pButton label="新增產品" class="p-button-success edit-button-width" (click)="insertProduct()"></button>
+          <button *ngIf="isEditMode" pButton label="編輯產品" class="p-button-success edit-button-width" (click)="insertProduct()"></button>
+
+          <!-- TODO 下次先弄編輯數量的畫面，把資料傳過去，做完再開始做後端 -->
+          <button pButton label="編輯數量" class="p-button-warning p-ml-2 edit-button-width" (click)="insertProduct()"></button>
+
+          <a class="monkeyb-cust-file p-ml-2">
+            <span>選擇檔案</span>
             <input
               type="file"
               [multiple]="true"
               (change)="previewPic($event)">
+          </a>
 
-          </div>
+        </div>
       </div>
-
     </div>
 
     <!-- <div class="p-grid">

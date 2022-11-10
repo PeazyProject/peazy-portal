@@ -25,4 +25,19 @@ export class ProductService {
     return this.http.get(url);
     }
 
+    getProductSizeOption(): Observable<any> {
+      const url = `${environment.supplierApiUrl}/product/getProductSizeOption`;
+      return this.http.get(url);
+    }
+
+    getProductColorOption(): Observable<any> {
+      const url = `${environment.supplierApiUrl}/product/getProductColorOption`;
+      return this.http.get(url);
+    }
+
+    getProductCategoryOption(): Observable<any> {
+      const url = `${environment.supplierApiUrl}/product/getProductCategoryOption`;
+      return this.http.get(url);
+    }
+
 }
