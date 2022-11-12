@@ -78,7 +78,7 @@
       </div>
 
       <div class="p-field p-col-12 p-md-6 p-lg-6">
-        <label>圖片區</label> <br/>
+        <!-- <label>圖片區</label> <br/> -->
         <!-- 回頭優化這邊改成，可以刪除修改第幾張圖片 -->
         <!-- <div style="position: relative; " class="edit-main-img-border">
           <span class="btn-remove-image">X</span>
@@ -88,23 +88,17 @@
         <div style="position: relative; " class="edit-img-border">
           <span class="btn-remove-image">X</span>
         </div> -->
-        <img class="edit-main-img-border" [src]="mainPic" onerror="this.src='assets/images/noImage.png'"/>
-        <img class="edit-img-border" [src]="pic2" onerror="this.src='assets/images/noImage.png'"/>
-        <img class="edit-img-border" [src]="pic2" onerror="this.src='assets/images/noImage.png'"/>
-        <img class="edit-img-border" [src]="pic3" onerror="this.src='assets/images/noImage.png'"/>
-        <img class="edit-img-border" [src]="pic4" onerror="this.src='assets/images/noImage.png'"/>
-        <img class="edit-img-border" [src]="pic5" onerror="this.src='assets/images/noImage.png'"/>
-        <img class="edit-img-border" [src]="pic6" onerror="this.src='assets/images/noImage.png'"/>
-        <img class="edit-img-border" [src]="pic7" onerror="this.src='assets/images/noImage.png'"/>
-        <img class="edit-img-border" [src]="pic8" onerror="this.src='assets/images/noImage.png'"/>
+        <img class="edit-main-img-border" [src]="mainPicture" onerror="this.src='assets/images/noImage.png'"/>
+        <img *ngFor="let picture of pictureList"
+        class="edit-img-border"
+        [src]="picture"
+        onerror="this.src='assets/images/noImage.png'"/>
       </div>
 
       <div class="p-col-12 p-md-6 p-lg-6">
         <div style="padding-top: 30px;">
           <button *ngIf="!isEditMode" pButton label="新增產品" class="p-button-success edit-button-width" (click)="insertProduct()"></button>
           <button *ngIf="isEditMode" pButton label="編輯產品" class="p-button-success edit-button-width" (click)="insertProduct()"></button>
-
-          <!-- TODO編輯的所有畫面OK，開始做後端並且串接，然後微調畫面 -->
           <button pButton label="編輯數量" class="p-button-warning p-ml-2 edit-button-width" (click)="editProductQty()"></button>
 
           <a class="monkeyb-cust-file p-ml-2">

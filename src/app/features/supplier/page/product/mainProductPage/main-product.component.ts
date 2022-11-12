@@ -19,7 +19,7 @@ export class MainProductComponent extends BaseComponent {
     sortOrder!: number;
     sortField!: string;
 
-    isSearchFormOpen: boolean = false;
+    isSearchFormOpen: boolean;
     searchForm: FormGroup;
     searchParams: any;
     isLoading: boolean = false;
@@ -40,6 +40,8 @@ export class MainProductComponent extends BaseComponent {
           inStockList: [],
           isAvailable: 'AVAILABLE'
         });
+
+        this.isSearchFormOpen = true;
      }
 
     ngOnInit() {
@@ -50,7 +52,7 @@ export class MainProductComponent extends BaseComponent {
         }
       });
 
-      this.searchBtnClick();
+      this.searchBtnClick(true);
       this.sortOptions = [
           {label: 'Price High to Low', value: '!price'},
           {label: 'Price Low to High', value: 'price'}
@@ -83,16 +85,25 @@ export class MainProductComponent extends BaseComponent {
       this.searchForm.reset();
     }
 
-    searchBtnClick(): void {
+    searchBtnClick(isInit: boolean): void {
 
       this.isLoading = true;
-      this.isSearchFormOpen = false;
+
+      if (isInit) {
+        this.isSearchFormOpen = true;
+      } else {
+        this.isSearchFormOpen = false;
+      }
 
       this.productService.queryProduct(this.searchForm.value)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: result => {
-          this.isSearchFormOpen = false;
+          if (isInit) {
+            this.isSearchFormOpen = true;
+          } else {
+            this.isSearchFormOpen = false;
+          }
           this.productList = result.queryProductList;
         },
         error: (err: HttpErrorResponse) => {
@@ -110,7 +121,8 @@ export class MainProductComponent extends BaseComponent {
 
     }
 
-    insertProduct(): void {
+    editProduct(productSeqNo: String): void {
+      this.routeStateService.navigateTo('/supplier/EditProduct', {productSeqNo});
 
     }
 

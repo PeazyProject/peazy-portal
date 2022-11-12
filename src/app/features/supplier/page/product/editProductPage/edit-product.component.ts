@@ -35,15 +35,10 @@ export class EditProductComponent extends BaseComponent {
     multiple: boolean = true;
     isShowEditProductQty = false;
 
-    mainPic: any;
-    pic1: any;
-    pic2: any;
-    pic3: any;
-    pic4: any;
-    pic5: any;
-    pic6: any;
-    pic7: any;
-    pic8: any;
+    // TODO 明天拿productSeqNo開始做Query這個產品的編輯內容
+    productSeqNo: String = this.routeStateService.getCurrent().data.productSeqNo;
+    mainPicture: any;
+    pictureList: any[] = ['', '', '', '', '', '', '', ''];
 
 
     constructor(
@@ -55,7 +50,6 @@ export class EditProductComponent extends BaseComponent {
       private fb: FormBuilder) {
 
         super(injector);
-
         this.editForm = this.fb.group({
           productName: '',
           sku: '',
@@ -148,7 +142,7 @@ export class EditProductComponent extends BaseComponent {
     }
 
     insertProduct(): void {
-      // TODO 下此來處理這邊，要記得導回產品主畫面
+
     }
 
     editProductQty(): void {
@@ -160,21 +154,22 @@ export class EditProductComponent extends BaseComponent {
     }
 
     previewPic(event: any): void {
-      this.mainPic = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
-      this.pic1 = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[1]));
-      this.pic2 = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[2]));
-      this.pic3 = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[3]));
-      this.pic4 = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[4]));
-      this.pic5 = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[5]));
-      this.pic6 = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[6]));
-      this.pic7 = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[7]));
-      this.pic8 = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[8]));
+      this.mainPicture = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
 
+      for (let i = 1; i <= 8; i ++) {
+        if (event.target.files[i] != null) {
+          this.pictureList[i - 1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[i]));
+        }
+      }
     }
 
     updateProductQty(colorSizeModel: ColorSizeModel[]): void {
       this.isShowEditProductQty = false;
       console.log("LOOK colorSizeModel = " + colorSizeModel[0].color);
+
+      this.routeStateService.navigateTo(
+        '/supplier/MainProduct',
+        {  });
     }
 
 
