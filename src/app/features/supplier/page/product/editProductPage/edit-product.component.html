@@ -3,7 +3,7 @@
 </div>
 
 <p-card>
-  <form [formGroup]="searchForm">
+  <form [formGroup]="editForm">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12 p-md-6 p-lg-3 ">
         <div class="float-label-padding" >
@@ -104,8 +104,8 @@
           <button *ngIf="!isEditMode" pButton label="新增產品" class="p-button-success edit-button-width" (click)="insertProduct()"></button>
           <button *ngIf="isEditMode" pButton label="編輯產品" class="p-button-success edit-button-width" (click)="insertProduct()"></button>
 
-          <!-- TODO 下次先弄編輯數量的畫面，把資料傳過去，做完再開始做後端 -->
-          <button pButton label="編輯數量" class="p-button-warning p-ml-2 edit-button-width" (click)="insertProduct()"></button>
+          <!-- TODO編輯的所有畫面OK，開始做後端並且串接，然後微調畫面 -->
+          <button pButton label="編輯數量" class="p-button-warning p-ml-2 edit-button-width" (click)="editProductQty()"></button>
 
           <a class="monkeyb-cust-file p-ml-2">
             <span>選擇檔案</span>
@@ -118,13 +118,11 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="p-grid">
-        <div class="p-col">
-            <button *ngIf="!isEditMode" pButton pRipple label="新增產品" class="p-button-success p-ml-2" (click)="insertProduct()" ></button>
-            <button *ngIf="isEditMode" pButton pRipple label="編輯產品" class="p-button-success p-ml-2" (click)="insertProduct()" ></button>
-            <button pButton pRipple label="編輯數量" class="p-button-warning p-ml-2" (click)="insertProduct()" ></button>
-        </div>
-    </div> -->
   </form>
 </p-card>
+
+<p-dialog header="編輯產品數量" appendTo="body" [(visible)]="isShowEditProductQty" [modal]="true" [draggable]="false"
+[resizable]="false" [style]="{ width: '50%' }">
+  <edit-product-qty *ngIf="isShowEditProductQty" (updateProductQty)="updateProductQty($event)"></edit-product-qty>
+  <!-- (DOImported)="DOScanModalImported($event)" -->
+</p-dialog>

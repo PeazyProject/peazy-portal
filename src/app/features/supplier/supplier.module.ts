@@ -5,11 +5,13 @@ import { MainProductComponent } from './page/product/mainProductPage/main-produc
 import { SupplierRoutingModule } from './supplier-routing.module';
 import { TableModule } from 'primeng/table';
 import { EditProductComponent } from './page/product/editProductPage/edit-product.component';
+import { EditProductQtyComponent } from './page/product/components/editProductQty/edit-product-qty.component';
 
 @NgModule({
   declarations: [
     MainProductComponent,
-    EditProductComponent
+    EditProductComponent,
+    EditProductQtyComponent
   ],
   imports: [
     SupplierRoutingModule,

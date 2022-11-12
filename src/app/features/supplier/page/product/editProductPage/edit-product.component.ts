@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from 'src/app/shared/components/base.component';
 import { ProductService } from '../mainProductPage/main-product-service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ColorSizeModel } from 'src/app/core/models/product/color-size-model';
 
 @Component({
   selector: 'edit-product',
@@ -23,7 +24,7 @@ export class EditProductComponent extends BaseComponent {
 
     isEditMode = false;
     isSearchFormOpen: boolean = false;
-    searchForm: FormGroup;
+    editForm: FormGroup;
     searchParams: any;
     isLoading: boolean = false;
     productList: any[] = [];
@@ -32,6 +33,7 @@ export class EditProductComponent extends BaseComponent {
     colorOption: any[] = [];
     categoryOption: any[] = [];
     multiple: boolean = true;
+    isShowEditProductQty = false;
 
     mainPic: any;
     pic1: any;
@@ -54,7 +56,7 @@ export class EditProductComponent extends BaseComponent {
 
         super(injector);
 
-        this.searchForm = this.fb.group({
+        this.editForm = this.fb.group({
           productName: '',
           sku: '',
           sizeList: [],
@@ -113,13 +115,9 @@ export class EditProductComponent extends BaseComponent {
     chipsAdd(event: any, fromControlName: any): void {
       const value: string = event.value;
       const parsedValues: string[] = value.split('\r\n').filter(x => isNullOrEmpty(x) === false && x !== '\r\n');
-      const formControl = this.searchForm.get(fromControlName);
+      const formControl = this.editForm.get(fromControlName);
       formControl?.value.splice(formControl?.value.indexOf(value));
       formControl?.setValue(formControl?.value.concat(parsedValues));
-    }
-
-    resetBtnClick() {
-      this.searchForm.reset();
     }
 
     // searchBtnClick(): void {
@@ -150,7 +148,11 @@ export class EditProductComponent extends BaseComponent {
     }
 
     insertProduct(): void {
+      // TODO 下此來處理這邊，要記得導回產品主畫面
+    }
 
+    editProductQty(): void {
+      this.isShowEditProductQty = !this.isShowEditProductQty;
     }
 
     accordionTabOpen(): void {
@@ -169,5 +171,11 @@ export class EditProductComponent extends BaseComponent {
       this.pic8 = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[8]));
 
     }
+
+    updateProductQty(colorSizeModel: ColorSizeModel[]): void {
+      this.isShowEditProductQty = false;
+      console.log("LOOK colorSizeModel = " + colorSizeModel[0].color);
+    }
+
 
 }
