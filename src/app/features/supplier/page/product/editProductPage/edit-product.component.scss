@@ -1,8 +1,4 @@
 :host ::ng-deep {
-  .p-dropdown {
-      width: 14rem;
-      font-weight: normal;
-  }
 
   .product-name {
       font-size: 1.5rem;
@@ -95,7 +91,7 @@
 }
 
 .edit-button-width {
-  width: 15%;
+  width: 115px;
   display: inline;
 }
 
@@ -163,7 +159,7 @@
 
 .monkeyb-cust-file{
   overflow: hidden;
-  position: absolute;
+  position: relative;
   display: inline-block;
   background-color:rgb(46, 134, 222);
   color:#fff;
@@ -172,9 +168,10 @@
   font-size:17px;
   font-family:Arial;
   width: 115px;
-  height: 38px;
+  height: 40px;
   line-height: 40px;
   cursor: pointer;
+  border: 0px;
 }
 .monkeyb-cust-file input{
   position: absolute;

@@ -121,7 +121,8 @@ export class MainProductComponent extends BaseComponent {
 
     }
 
-    editProduct(productSeqNo: String): void {
+    editProduct(productSeqNo: any): void {
+      console.log(productSeqNo);
       this.routeStateService.navigateTo('/supplier/EditProduct', {productSeqNo});
 
     }

@@ -36,7 +36,7 @@ export class EditProductComponent extends BaseComponent {
     isShowEditProductQty = false;
 
     // TODO 明天拿productSeqNo開始做Query這個產品的編輯內容
-    productSeqNo: String = this.routeStateService.getCurrent().data.productSeqNo;
+    productSeqNo: string = this.routeStateService.getCurrent().data.productSeqNo;
     mainPicture: any;
     pictureList: any[] = ['', '', '', '', '', '', '', ''];
 
@@ -90,6 +90,8 @@ export class EditProductComponent extends BaseComponent {
           {label: 'Price High to Low', value: '!price'},
           {label: 'Price Low to High', value: 'price'}
       ];
+
+
 
     }
 
