@@ -31,35 +31,29 @@ export class AuthenticationService {
         // const jwtResp = await this.getToken(username, password, loginType).toPromise();
         const jwtResp = await lastValueFrom(this.getToken(username, password, loginType));
         console.log("jwtResp\t", JSON.stringify(jwtResp));
-        this.router.navigateByUrl("/");
+
         if (jwtResp) {
+          this.currentToken = jwtResp.token;
+          const userProfile = await lastValueFrom(this.userService.getUserProfile());
+          console.log("userProfile = " + userProfile.userProfile);
+          console.log("userProfile.userType = " + userProfile.userProfile.userType);
+          const user: User = {
+            id: userProfile.userProfile.uuid,
+            name: userProfile.userProfile.userName,
+            email: userProfile.userProfile.email,
+            type: userProfile.userProfile.userType
+          };
+
+          console.log("user.userType = " + user.type);
+          this.userService.userInfo = user;
+
+          const userPreference = await lastValueFrom(this.userService.getUserPreference());
+
+          console.log(userPreference);
+
+          // this.userService.preference = isNullOrEmpty(userPreference) ? new UserPreference() : userPreference;
           this.router.navigateByUrl("/");
-          // if (isNullOrEmpty(jwtResp.redirectUrl)) {
-          //   console.log("Second login");
-          //   this.currentToken = jwtResp.token;
-          //   const userProfile = await this.userService.getUserProfile().toPromise();
-          //   console.log("userProfile = " + userProfile.userProfile);
-          //   console.log("userProfile.userType = " + userProfile.userProfile.userType);
-          //   const user: User = {
-          //     id: userProfile.userProfile.uuid,
-          //     name: userProfile.userProfile.userName,
-          //     email: userProfile.userProfile.email,
-          //     type: userProfile.userProfile.userType
-          //   };
 
-          //   // console.log("user.userType = " + user.userType);
-          //   // this.userService.userInfo = user;
-
-          //   // const userPreference = await this.userService.getUserPreferences().toPromise();
-
-          //   // console.log(userPreference);
-
-          //   // this.userService.preference = isNullOrEmpty(userPreference) ? new UserPreference() : userPreference;
-          //   this.router.navigateByUrl("/");
-          // } else {
-          //   console.log("First login");
-          //   this.router.navigateByUrl(jwtResp.redirectUrl);
-          // }
           resolve();
         } else {
           reject(new Error('jwt authenticaton fail...'));

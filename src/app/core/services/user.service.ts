@@ -28,8 +28,23 @@ export class UserService {
     return isNullOrEmpty(userData) ? new User() : userData;
   }
 
+  set userInfo(value: User) {
+    this.localStorageService.setIten(GlobalConstants.currentUser, value);
+    this.user.next(value);
+  }
+
+  // get userPrefernce(): User {
+
+  // }
+
   getUserProfile(): Observable<any> {
-    return this.http.get<any>(`${environment.authUrl}/authorization`);
+    const url = `${environment.authUrl}/authorization`;
+    return this.http.get<any>(url);
+  }
+
+  getUserPreference(): Observable<any> {
+    const url = `/api/userpreference/${this.userInfo.id}`;
+    return this.http.get(url);
   }
 
 }
