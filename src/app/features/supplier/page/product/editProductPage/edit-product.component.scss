@@ -26,7 +26,7 @@
       width: 100%;
 
       img {
-          width: 125px;
+          width: 150px;
           height: 150px;
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
           margin-right: 2rem;
@@ -69,7 +69,7 @@
       }
 
       img {
-          width: 230px;
+          width: 300px;
           height: 300px;
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
           margin: 2rem 0;
@@ -84,6 +84,37 @@
           font-weight: 600;
       }
   }
+}
+
+.float-label-padding {
+  padding-bottom: 20px;
+}
+
+.edit-button-width {
+  width: 115px;
+  display: inline;
+}
+
+.edit-fileUpload-width {
+  width: 20%;
+  display: inline-block;
+}
+
+.edit-main-img-border {
+  border: 2px solid red;
+  width:200px;
+  height:250px;
+  margin-left: 3px;
+  display: inline-block;
+
+}
+
+.edit-img-border {
+  border: 1px solid gray;
+  width:200px;
+  height:250px;
+  margin-left: 3px;
+  display: inline-block;
 }
 
 .card {
@@ -124,4 +155,47 @@
     width: 100%;
   }
 }
+}
+
+.monkeyb-cust-file{
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  background-color:rgb(46, 134, 222);
+  color:#fff;
+  text-align:center;
+  border-radius:3px;
+  font-size:17px;
+  font-family:Arial;
+  width: 115px;
+  height: 40px;
+  line-height: 40px;
+  cursor: pointer;
+  border: 0px;
+}
+.monkeyb-cust-file input{
+  position: absolute;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  top: 0;
+  right: 0;
+  width:100%;
+  height:100%;
+  cursor: pointer;
+}
+
+.monkeyb-cust-file:hover {
+  background: #2d7fb1;
+  border-color: #2d7fb1;
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-remove-image {
+  position: absolute;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
+  text-align: center;
 }

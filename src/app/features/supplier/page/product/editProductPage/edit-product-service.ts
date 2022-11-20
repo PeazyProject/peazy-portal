@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class EditProductService {
 
     constructor(private http: HttpClient) { }
 
@@ -23,21 +23,6 @@ export class ProductService {
     getDropDownList(mainCategory: string, subCategory: string): Observable<any> {
       const url = `${environment.supplierApiUrl}/supplierCommon/getDropDownList/${mainCategory}/${subCategory}`;
     return this.http.get(url);
-    }
-
-    getProductSizeOption(): Observable<any> {
-      const url = `${environment.supplierApiUrl}/product/getProductSizeOption`;
-      return this.http.get(url);
-    }
-
-    getProductColorOption(): Observable<any> {
-      const url = `${environment.supplierApiUrl}/product/getProductColorOption`;
-      return this.http.get(url);
-    }
-
-    getProductCategoryOption(): Observable<any> {
-      const url = `${environment.supplierApiUrl}/product/getProductCategoryOption`;
-      return this.http.get(url);
     }
 
 }

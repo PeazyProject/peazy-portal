@@ -1,0 +1,75 @@
+<div class="p-mt-1">
+  <div *ngFor="let colorSizeModel of colorSizeModelList">
+    <div *ngFor="let sizeQty of colorSizeModel.sizeQtyModelList">
+
+      <div style="padding-bottom: 20px; font-weight:bold;">
+        {{colorSizeModel.color}} - {{sizeQty.size}}
+      </div>
+
+      <div class="p-fluid p-formgrid p-grid">
+
+        <div class="p-field p-col-4 p-md-3 p-lg-2">
+          <div class="float-label-padding">
+            <span class="p-float-label">
+              <p-inputNumber id="float-input" [(ngModel)]="sizeQty.qty"></p-inputNumber>
+              <label for="float-input">未叫貨數量</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="p-field p-col-4 p-md-3 p-lg-2">
+          <div class="float-label-padding">
+            <span class="p-float-label">
+              <p-inputNumber id="float-input"></p-inputNumber>
+              <label for="float-input">已叫貨數量</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="p-field p-col-4 p-md-3 p-lg-2">
+          <div class="float-label-padding">
+            <span class="p-float-label">
+              <p-inputNumber id="float-input"></p-inputNumber>
+              <label for="float-input">已點收數量</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="p-field p-col-4 p-md-3 p-lg-2">
+          <div class="float-label-padding">
+            <span class="p-float-label">
+              <p-inputNumber id="float-input"></p-inputNumber>
+              <label for="float-input">已配貨數量</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="p-field p-col-4 p-md-3 p-lg-2">
+          <div class="float-label-padding">
+            <span class="p-float-label">
+              <p-inputNumber id="float-input"></p-inputNumber>
+              <label for="float-input">可交貨數量</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="p-field p-col-4 p-md-3 p-lg-2">
+          <div class="float-label-padding">
+            <span class="p-float-label">
+              <p-inputNumber id="float-input"></p-inputNumber>
+              <label for="float-input">已完成數量</label>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="p-grid p-mt-2" style="text-align:center;">
+    <div class="p-col p-text-center" style="text-align:center;">
+      <button pRipple pButton label="編輯完成" (click)="finishEdit()"></button>
+    </div>
+  </div>
+
+</div>
