@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { StyleClassModule } from 'primeng/styleclass';
 import { PeazySharedModule } from './shared/peazy-shared.module';
+import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader, TranslatePipe } from '@ngx-translate/core';
 
@@ -46,6 +47,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     CheckboxModule,
     StyleClassModule,
     PeazySharedModule,
+    CoreModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

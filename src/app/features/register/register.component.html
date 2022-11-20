@@ -1,1 +1,32 @@
-<p>register works!</p>
+<div class="container">
+  <h2>Register-Test</h2>
+    <form [formGroup]="formParams" (ngSubmit)="onSubmit()">
+      <div class="p-formgrid">
+        <div class="m-3 p-3">
+          <div class="p-float-label">
+            <input id="user-account" type="text" formControlName="userAccount" pInputText/>
+            <label for="user-account">Account</label>
+          </div>
+        </div>
+        <br><br>
+        <div class="m-3 p-3">
+          <div class="p-float-label">
+            <input id="username" type="text" formControlName="userName" pInputText/>
+            <label for="username">Username</label>
+          </div>
+        </div>
+        <br><br>
+        <div class="m-3 p-3">
+          <div class="p-float-label">
+            <input id="password" type="text" formControlName="userPassword" pInputText/>
+            <label for="password">Password</label>
+          </div>
+        </div>
+        <button class="btn btn-primary" class="p-button p-component">
+          Submit
+        </button>
+      </div>
+    </form>
+</div>
+
+

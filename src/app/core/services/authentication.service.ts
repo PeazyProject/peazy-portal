@@ -24,17 +24,17 @@ export class AuthenticationService {
     this.onLogout = new EventEmitter;
   }
 
-  public login(username: string, password: string, loginType: string): Observable<any> {
+  login(username: string, password: string, loginType: string): Observable<any> {
 
     const promise = new Promise<void>(async (resolve, reject) => {
       try {
-        // const jwtResp = await this.getToken(username, password, loginType).toPromise();
-        const jwtResp = await lastValueFrom(this.getToken(username, password, loginType));
-        console.log("jwtResp\t", JSON.stringify(jwtResp));
-
-        if (jwtResp) {
-          this.currentToken = jwtResp.token;
-          const userProfile = await lastValueFrom(this.userService.getUserProfile());
+        // const resp = await this.getToken(username, password, loginType).toPromise();
+        const resp = await lastValueFrom(this.getToken(username, password, loginType));
+        if (resp) {
+          this.currentToken = resp.jwtToken;
+          console.log("this.currentToken\t", JSON.stringify(this.currentToken));
+          const userProfile = await this.userService.getUserProfile().toPromise();
+          // const userProfile = await lastValueFrom(this.userService.getUserProfile());
           console.log("userProfile = " + userProfile.userProfile);
           console.log("userProfile.userType = " + userProfile.userProfile.userType);
           const user: User = {
@@ -53,7 +53,7 @@ export class AuthenticationService {
 
           // this.userService.preference = isNullOrEmpty(userPreference) ? new UserPreference() : userPreference;
           this.router.navigateByUrl("/");
-
+          console.log('after router');
           resolve();
         } else {
           reject(new Error('jwt authenticaton fail...'));

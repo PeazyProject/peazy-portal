@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -33,10 +33,6 @@ export class UserService {
     this.user.next(value);
   }
 
-  // get userPrefernce(): User {
-
-  // }
-
   getUserProfile(): Observable<any> {
     const url = `${environment.authUrl}/authorization`;
     return this.http.get<any>(url);
@@ -45,6 +41,12 @@ export class UserService {
   getUserPreference(): Observable<any> {
     const url = `/api/userpreference/${this.userInfo.id}`;
     return this.http.get(url);
+  }
+
+
+  createCustomerUser(params: any): Observable<any> {
+    const url = `${environment.authUrl}/user/createCustomerUser`;
+    return this.http.post(url, params);
   }
 
 }
