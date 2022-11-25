@@ -1,4 +1,5 @@
 import { SimpleChanges } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 export function isNumeric(value: any): boolean {
   return isNaN(Number(value)) === false;
@@ -169,4 +170,13 @@ export function columnReordered(columns: any, defaultColumns: any[]): void {
       defaultColumns[idx].order = index;
     }
   });
+}
+
+export function copyFormControl<T>(form: FormGroup, bean: T): T {
+  for (var attr in bean) {
+    if (form.controls[attr]) {
+      bean[attr] = form.controls[attr].value;
+    }
+  }
+  return bean;
 }

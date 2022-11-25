@@ -7,8 +7,8 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
 import { isNullOrEmpty } from '../utils/common-functions';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

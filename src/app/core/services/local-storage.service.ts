@@ -8,7 +8,7 @@ export class LocalStorageService {
 
   constructor() { }
 
-  setIten(key: string, value: any): any {
+  setItem(key: string, value: any): any {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
@@ -20,6 +20,10 @@ export class LocalStorageService {
     }
 
     return isJSON(value as string) ? JSON.parse(value as string) : value;
+  }
+
+  removeItem(key: string): void {
+    localStorage.removeItem(key);
   }
 
 }

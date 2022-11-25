@@ -4,8 +4,13 @@ import { Route, Router } from '@angular/router';
 import { from, lastValueFrom, Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
+import { GlobalConstants } from '../constants/globalConstants';
 import { User } from '../models/user';
 import { isNullOrEmpty } from '../utils/common-functions';
+import { CacheService } from './cache.service';
+import { LocalStorageService } from './local-storage.service';
+import { RouteStateService } from './route-state.service';
+import { SessionStorageService } from './session-storage.service';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -14,14 +19,29 @@ import { UserService } from './user.service';
 export class AuthenticationService {
 
   public onLogout: EventEmitter<void>;
-  currentToken: any;
 
   constructor(
     private http: HttpClient,
     private userService: UserService,
+    private cacheService: CacheService,
+    private routeStateService: RouteStateService,
+    private sessionStorageService: SessionStorageService,
+    private localStorageService: LocalStorageService,
     private router: Router
   ) {
     this.onLogout = new EventEmitter;
+  }
+
+  get currentUserInfo(): User {
+    return this.userService.userInfo;
+  }
+
+  get currentToken(): string {
+    return this.localStorageService.getItem(GlobalConstants.currentToken);
+  }
+
+  set currentToken(token: string) {
+    this.localStorageService.setItem(GlobalConstants.currentToken, token);
   }
 
   login(username: string, password: string, loginType: string): Observable<any> {
@@ -33,8 +53,8 @@ export class AuthenticationService {
         if (resp) {
           this.currentToken = resp.jwtToken;
           console.log("this.currentToken\t", JSON.stringify(this.currentToken));
-          const userProfile = await this.userService.getUserProfile().toPromise();
-          // const userProfile = await lastValueFrom(this.userService.getUserProfile());
+          // const userProfile = await this.userService.getUserProfile().toPromise();
+          const userProfile = await lastValueFrom(this.userService.getUserProfile());
           console.log("userProfile = " + userProfile.userProfile);
           console.log("userProfile.userType = " + userProfile.userProfile.userType);
           const user: User = {
@@ -47,12 +67,13 @@ export class AuthenticationService {
           console.log("user.userType = " + user.type);
           this.userService.userInfo = user;
 
-          const userPreference = await lastValueFrom(this.userService.getUserPreference());
 
-          console.log(userPreference);
+          // const userPreference = await lastValueFrom(this.userService.getUserPreference());
+
+          // console.log(userPreference);
 
           // this.userService.preference = isNullOrEmpty(userPreference) ? new UserPreference() : userPreference;
-          this.router.navigateByUrl("/");
+          this.router.navigateByUrl("");
           console.log('after router');
           resolve();
         } else {
@@ -65,6 +86,19 @@ export class AuthenticationService {
     return from(promise);
   }
 
+  logout(): void {
+    this.onLogout.emit();
+    this.clear();
+    this.userService.logout();
+    this.cacheService.clear();
+    this.routeStateService.clear();
+    this.sessionStorageService.clear();
+  }
+
+  clear(): void {
+    this.localStorageService.removeItem(GlobalConstants.currentToken);
+  }
+
   private getToken(username: string, password: string, loginType: string): Observable<any> {
       return loginType === 'loginWithUserName' ?
       this.http.post<any>(`${environment.authUrl}/authentication`, {
@@ -75,6 +109,10 @@ export class AuthenticationService {
         userEmail: username,
         userName: null,
         userPassword: password });
+  }
+
+  register(request: any) {
+    return this.userService.createCustomerUser(request);
   }
 
 }

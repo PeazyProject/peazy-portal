@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -29,7 +29,17 @@ export class UserService {
   }
 
   set userInfo(value: User) {
-    this.localStorageService.setIten(GlobalConstants.currentUser, value);
+    this.localStorageService.setItem(GlobalConstants.currentUser, value);
+    this.user.next(value);
+  }
+
+  get userProfile(): any {
+    const userProfile = this.localStorageService.getItem("userProfile");
+    return isNullOrEmpty(userProfile) ? null : userProfile;
+  }
+
+  set userProfile(value: any) {
+    this.localStorageService.setItem("userProfile", value);
     this.user.next(value);
   }
 
@@ -43,10 +53,25 @@ export class UserService {
     return this.http.get(url);
   }
 
+  logout(): void {
+    this.localStorageService.removeItem(GlobalConstants.currentUser);
+    this.localStorageService.removeItem(GlobalConstants.userPreference);
+    this.logoutAction().subscribe({
+      next: () => {},
+      error: (err: HttpErrorResponse) => {
+        this.logger.error(JSON.stringify(err));
+      }
+    });
+  }
 
-  createCustomerUser(params: any): Observable<any> {
-    const url = `${environment.authUrl}/user/createCustomerUser`;
-    return this.http.post(url, params);
+  private logoutAction(): Observable<any> {
+    const url = '/api/logout';
+    return this.http.get(url);
+  }
+
+  createCustomerUser(request: any): Observable<any> {
+    const url = `${environment.authUrl}/registerCustomerUser`;
+    return this.http.post(url, request);
   }
 
 }

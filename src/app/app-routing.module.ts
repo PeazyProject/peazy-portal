@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
 import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
@@ -11,18 +12,20 @@ const routes: Routes = [
   //   import('src/app/features/supplier/supplier.module')
   //     .then(module => module.SupplierModule)
   // },
-  { path: '',
+  {
+    path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'supplier',
+        canActivate: [AuthGuard],
         loadChildren: () =>
-        import('src/app/features/supplier/supplier.module')
-          .then(module => module.SupplierModule)
+          import('src/app/features/supplier/supplier.module')
+            .then(module => module.SupplierModule)
       }
     ]
   },
-  // { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent }
 

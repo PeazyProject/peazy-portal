@@ -71,10 +71,10 @@ export class HeaderComponent extends SessionBaseComponent implements OnInit {
   //   })
   // }
 
-  // logout(): void {
-  //   this.authenticationService.logout();
-  //   window.location.reload();
-  // }
+  logout(): void {
+    this.authenticationService.logout();
+    window.location.reload();
+  }
 
   // private initCacheData(language: string): Observable<any> {
   //   const promise = new Promise<void>((resolve, reject) => {

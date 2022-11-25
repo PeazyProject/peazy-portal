@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Injector, Input, OnDestroy, OnInit, Renderer2, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataDetailTablePreference, DataTablePreference } from 'src/app/core/models/user-preference';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 // import { AuthenticationService, OnLogout } from 'src/app/core/services/authentication-service.service';
 // import { OperationLogService } from 'src/app/core/services/operation-log.service';
 // import { SessionServiceService } from 'src/app/core/services/session-service.service';
@@ -14,9 +15,11 @@ import { BaseComponent } from './base.component';
 // OnLogout
 export class SessionBaseComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy  {
   @Input() userProfile: any;
+  authenticationService: AuthenticationService;
 
   constructor(injector: Injector) {
     super(injector);
+    this.authenticationService = injector.get(AuthenticationService);
   }
 
   async ngOnInit(): Promise<void> {
