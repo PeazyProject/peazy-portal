@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # PeazyPortal
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.9.
@@ -31,3 +32,6 @@ npm i @angular/cli@13.3.9 --legacy-peer-deps
 npm i primeng-lts --legacy-peer-deps
 npm install --legacy-peer-deps
 npm install tslib --legacy-peer-deps
+=======
+# peazy-portal
+>>>>>>> 0d7f259c136b8b52bafadf6a3cb141921ccad10b
