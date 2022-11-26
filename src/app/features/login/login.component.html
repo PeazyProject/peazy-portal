@@ -1,7 +1,71 @@
-<div class="flex justify-content-center">
-  <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6 ">
-    <br><br><br>
-    <!-- <div class="text-center mb-5">
+<div class="login-body layout-light" style="background-color: #efe7da; background-image: url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80');">
+  <div class="login-content">
+    <div class="login-panel">
+      <div class="login-mask"></div>
+      <div class="login-panel-content" style="">
+        <h1>Peazy <span style="color: red;">{{ isProd ? '' : '(Test)' }} </span></h1>
+        <p>Login Here</p>
+        <div class="forms" style="border-color: burlywood;">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="login-input-wrapper">
+                <i class="pi pi-user"></i>
+              <input type="text" formControlName="username" pinputtext="williamtestaccount1"
+                placeholder="Email" class="p-inputtext p-component" />
+            </div>
+            <div class="login-input-wrapper">
+              <i class="pi pi-lock-open"></i>
+              <input type="text" formControlName="password" pinputtext="williamtestaccount1" placeholder="Password"
+                class="p-inputtext p-component" />
+            </div>
+            <div class="login-submit">
+              <button [disabled]="loading" class="btn btn-primary" class="p-button p-component">
+                <span *ngIf="loading" class="p-button-label"></span>
+                Login
+              </button>
+              <a href="/register">register</a>
+            </div>
+
+            <div *ngIf="errorMsg" class="alert alert-danger mt-3 mb-0">{{errorMsg}}</div>
+          </form>
+        </div>
+      </div>
+      </div>
+  </div>
+
+</div>
+
+
+<!-- supplement -->
+<!-- <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6 ">
+  <br><br><br>
+  <div class="">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <hr>
+      <div class="m-3 p-3">
+        <div class="p-float-label">
+          <input id="username" type="text" formControlName="username" pInputText/>
+          <label for="username">Username</label>
+        </div>
+      </div>
+      <br><br><br>
+      <div class="p-float-label">
+        <input id="password" type="text" formControlName="password" pPassword/>
+        <label for="password">Password</label>
+      </div>
+      <br><br><br>
+      <button class="btn btn-primary" class="p-button p-component">
+        Login
+      </button>
+    </form>
+  </div>
+</div> -->
+
+
+
+
+
+<!--  -->
+   <!-- <div class="text-center mb-5">
         <i class="pi pi-apple mb-3" style="font-size: 2rem"></i>
         <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
         <span class="text-600 font-medium line-height-3">Don't have an account?</span>
@@ -25,35 +89,6 @@
 
         <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
     </div> -->
-
-
-    <div class="">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <hr>
-
-        <div class="m-3 p-3">
-          <div class="p-float-label">
-            <input id="username" type="text" formControlName="username" pInputText/>
-            <label for="username">Username</label>
-          </div>
-        </div>
-
-        <br><br><br>
-
-        <div class="p-float-label">
-          <input id="password" type="text" formControlName="password" pPassword/>
-          <label for="password">Password</label>
-        </div>
-
-        <br><br><br>
-
-        <button class="btn btn-primary" class="p-button p-component">
-          <!-- <span *ngIf="loading" class="p-button-label"></span> -->
-          Login
-        </button>
-      </form>
-    </div>
-
     <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       CSS不能用
       <div class="login-input-wrapper">
@@ -86,11 +121,3 @@
       </button>
       <div *ngIf="errorMsg" class="alert alert-danger mt-3 mb-0">{{errorMsg}}</div>
     </form> -->
-
-
-
-
-
-
-  </div>
-</div>

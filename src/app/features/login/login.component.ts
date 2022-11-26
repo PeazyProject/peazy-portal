@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { BaseComponent } from 'src/app/shared/components/base.component';
 
 import { environment } from './../../../environments/environment';
 
@@ -10,22 +11,26 @@ import { environment } from './../../../environments/environment';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends BaseComponent  implements OnInit {
 
   loginForm!: FormGroup;
   isProd: boolean;
-  errorMsg: any;
-  toastService: any;
-  logger: any;
+  errorMsg: string = "";
+  loading: boolean = false;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService
   ) {
+    super(injector);
     this.isProd = environment.production;
   }
 
   ngOnInit(): void {
+    if (this.authenticationService.currentUserInfo) {
+      this.routeStateService.navigateTo('/');
+    }
     this.loginForm = this.formBuilder.group({
       username: [this.isProd ? '' : 'Jay', Validators.required],
       password: [this.isProd ? '' : 'password', Validators.required]
@@ -70,9 +75,4 @@ export class LoginComponent implements OnInit {
         }
       });
   }
-
-  toastErrorMessage(error: any) {
-    throw new Error('Method not implemented.');
-  }
-
 }

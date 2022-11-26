@@ -1,5 +1,429 @@
+@import "../../../styles/variables.scss";
 body {
   font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.login-body .login-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position:relative;
+}
+
+// .login-body .login-content .night-switch {
+//   position: absolute;
+//   right: 20px;
+//   top: 10px;
+// }
+
+// .login-body .login-content .night-switch .p-button {
+//   background-color: transparent;
+//   border-color: transparent;
+//   -webkit-box-shadow: none;
+//   -moz-box-shadow: none;
+//   box-shadow: none;
+//   width: 60px;
+//   height: 60px;
+//   -moz-border-radius: 50%;
+//   -webkit-border-radius: 50%;
+//   border-radius: 50%;
+//   position: relative;
+//   outline: none;
+//   z-index: 101;
+// }
+
+// .login-body .login-content .night-switch .p-button .pi {
+//   width: 32px;
+//   height: 32px;
+//   font-size: 32px;
+//   font-weight: bold;
+//   position: absolute;
+//   left: 50%;
+//   top: 50%;
+//   margin-top: -16px;
+//   margin-left: -16px;
+// }
+
+// .login-body .login-content .night-switch .p-button .p-button-label {
+//   display: none;
+// }
+
+// .login-body .login-content .night-switch .p-button:enabled:hover {
+//   border: none;
+//   opacity: 0.7;
+//   -moz-transition: opacity 0.15s;
+//   -o-transition: opacity 0.15s;
+//   -webkit-transition: opacity 0.15s;
+//   transition: opacity 0.15s;
+// }
+
+.login-body .login-content .login-panel .login-mask {
+  display: block;
+  background-color: #fff;
+  position:absolute;
+  height: 300px;
+  width: 50%;
+  padding: 0 6%;
+  opacity: 70%;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  border-radius: 25px;
+}
+
+.login-body .login-content .login-panel {
+  width: 80%;
+  height: 100vh;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.login-body .login-content .login-panel .login-panel-content {
+  z-index: 100;
+  width: 100%;
+  padding: 0 6%;
+  text-align: center;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+// .login-body .login-content .login-panel .login-panel-content .logo {
+//   width: 100%;
+//   display: -webkit-box;
+//   display: -ms-flexbox;
+//   display: flex;
+//   -webkit-box-pack: center;
+//   -ms-flex-pack: center;
+//   justify-content: center;
+//   -webkit-box-align: center;
+//   -ms-flex-align: center;
+//   align-items: center;
+// }
+
+// .login-body .login-content .login-panel .login-panel-content .logo img {
+//   width: 80px;
+// }
+
+// .login-body .login-content .login-panel .login-panel-content h1 {
+//   font-size: 42px;
+//   font-weight: 100;
+//   letter-spacing: 1px;
+//   margin: 20px 0;
+//   color: #ffffff;
+// }
+
+// .login-body .login-content .login-panel .login-panel-content p {
+//   margin-top: 10px;
+//   font-size: 16px;
+//   color: #d8dee9;
+// }
+
+.login-body .login-content .login-panel .login-panel-content .forms {
+  margin: 0px;
+  padding: 12px 72px;
+}
+
+.login-body .login-content .login-panel .login-panel-content .forms .login-input-wrapper {
+  width: 70%;
+  position: relative;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 5px transparent;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.login-body .login-content .login-panel .login-panel-content .forms .login-input-wrapper i {
+  padding: 12px;
+  position: absolute;
+  color: #106da5;
+  font-size: 24px;
+  // top: 50%;
+  left: 12px;
+  // margin-top: 3px;
+  // background-color: aqua;
+  margin: 6px;
+}
+
+.login-body .login-content .login-panel .login-panel-content .forms .login-input-wrapper input {
+  width: 100%;
+  margin: 6px 12px;
+  padding-left: 48px;
+  background-color: transparent;
+  // -moz-border-radius: 4px;
+  // -webkit-border-radius: 4px;
+  // border-radius: 4px;
+  // border: solid 1px #c3ccdd;
+  color: #106da5;
+  // margin-top: 6px;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  border-radius: 25px;
+}
+
+.login-body .login-content .login-panel .login-panel-content .forms .login-input-wrapper .p-inputtext {
+  border: 2px solid #106da5;
+}
+
+
+.login-body .login-content .login-panel .login-panel-content .forms .p-checkbox.p-component {
+  margin-left: -6px;
+}
+
+// .login-body .login-content .login-panel .login-panel-content .forms label {
+//   color: #c3ccdd;
+// }
+
+// .login-body .login-content .login-panel .login-panel-content .buttons {
+//   display: -webkit-box;
+//   display: -ms-flexbox;
+//   display: flex;
+//   -webkit-box-align: center;
+//   -ms-flex-align: center;
+//   align-items: center;
+//   -webkit-box-pack: justify;
+//   -ms-flex-pack: justify;
+//   justify-content: space-between;
+// }
+
+// .login-body .login-content .login-panel .login-panel-content .buttons .p-button {
+//   margin-top: 15px;
+//   background-color: #bd69ae;
+//   border: none;
+//   min-width: 100px;
+// }
+
+// .login-body .login-content .login-panel .login-panel-content .buttons a.secondary-button {
+//   background-color: transparent;
+//   border: none;
+//   color: #c3ccdd;
+//   padding: 2px 0;
+//   text-decoration: underline;
+// }
+
+// .login-body .login-content .desert {
+//   width: 100%;
+//   height: 30vh;
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   position: absolute;
+//   bottom: 0;
+//   //background-image: url("../../images/pages/asset-desert.svg");
+// }
+
+// .login-body.layout-light {
+//   background-color: #eceff4;
+// }
+
+// .login-body.layout-light .login-content .night-switch .p-button {
+//   color: $bg-color;
+//   border: none;
+// }
+
+// .login-body.layout-light .login-content .night-switch .p-button.light-switch {
+//   display: none;
+// }
+
+// .login-body.layout-light .login-content .night-switch .p-button.dark-switch {
+//   display: block;
+// }
+
+// .login-body.layout-light .login-content .login-panel {
+//   background-color: $primary-color-gray;
+// }
+
+// .login-body.layout-light .login-content .login-panel .login-panel-content h1 {
+//   color: $bg-color;
+// }
+
+// .login-body.layout-light .login-content .login-panel .login-panel-content p {
+//   color: $bg-color;
+// }
+
+// .login-body.layout-light .login-content .login-panel .login-panel-content .forms .login-input-wrapper input {
+//   border: solid 1px #cccccc;
+//   background-color: #ffffff;
+//   color: #9199a9;
+// }
+
+// .login-body.layout-light .login-content .login-panel .login-panel-content .forms .login-input-wrapper i {
+//   color: #9199a9;
+// }
+
+// .login-body.layout-light .login-content .login-panel .login-panel-content .forms label {
+//   color: $bg-color;
+// }
+
+// .login-body.layout-light .login-content .login-panel .login-panel-content .buttons button,
+// .login-body.layout-light .login-content .login-panel .login-panel-content .buttons a {
+//   background-color: #5e81ac;
+// }
+
+// .login-body.layout-light .login-content .login-panel .login-panel-content .buttons button.secondary-button,
+// .login-body.layout-light .login-content .login-panel .login-panel-content .buttons a.secondary-button {
+//   background-color: transparent;
+//   color: #9199a9;
+// }
+
+// .login-body.layout-light .login-content .login-panel .login-panel-content .buttons button.secondary-button:enabled:hover,
+// .login-body.layout-light .login-content .login-panel .login-panel-content .buttons a.secondary-button:enabled:hover {
+//   background-color: transparent;
+//   color: #636975;
+//   -moz-transition: color 0.15s;
+//   -o-transition: color 0.15s;
+//   -webkit-transition: color 0.15s;
+//   transition: color 0.15s;
+// }
+
+// .login-body.layout-light .login-content .login-panel .login-panel-content .buttons button:enabled:hover,
+// .login-body.layout-light .login-content .login-panel .login-panel-content .buttons a:enabled:hover {
+//   background-color: #76a1d6;
+//   -moz-transition: background-color 0.15s;
+//   -o-transition: background-color 0.15s;
+//   -webkit-transition: background-color 0.15s;
+//   transition: background-color 0.15s;
+// }
+
+// .login-body.layout-light .login-content .desert {
+//   display: block;
+// }
+
+// .login-body.layout-dark {
+//   //background-image: url("../../images/pages/asset-login-bg@3x.jpg");
+//   background-repeat: no-repeat;
+//   background-size: cover;
+// }
+
+// .login-body.layout-dark .login-content .night-switch .p-button {
+//   color: #ffffff;
+// }
+
+// .login-body.layout-dark .login-content .night-switch .p-button.dark-switch {
+//   display: none;
+// }
+
+// .login-body.layout-dark .login-content .night-switch .p-button.light-switch {
+//   display: block;
+// }
+
+// .login-body.layout-dark .login-content .login-panel {
+//   background-color: $bg-color;
+// }
+
+// .login-body.layout-dark .login-content .login-panel .login-panel-content h1 {
+//   color: #ffffff;
+// }
+
+// .login-body.layout-dark .login-content .login-panel .login-panel-content p {
+//   color: #d8dee9;
+// }
+
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .forms .login-input-wrapper input {
+//   border: solid 1px #c3ccdd;
+//   color: #d8dee9;
+// }
+
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .forms .login-input-wrapper i {
+//   color: #d8dee9;
+// }
+
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .forms label {
+//   color: #c3ccdd;
+// }
+
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .buttons button,
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .buttons a {
+//   background-color: #bd69ae;
+// }
+
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .buttons button.secondary-button,
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .buttons a.secondary-button {
+//   background-color: transparent;
+//   color: #c3ccdd;
+// }
+
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .buttons button.secondary-button:enabled:hover,
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .buttons a.secondary-button:enabled:hover {
+//   background-color: transparent;
+//   color: #ffffff;
+//   -moz-transition: color 0.15s;
+//   -o-transition: color 0.15s;
+//   -webkit-transition: color 0.15s;
+//   transition: color 0.15s;
+// }
+
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .buttons button:enabled:hover,
+// .login-body.layout-dark .login-content .login-panel .login-panel-content .buttons a:enabled:hover {
+//   background-color: #e27dd0;
+//   -moz-transition: background-color 0.15s;
+//   -o-transition: background-color 0.15s;
+//   -webkit-transition: background-color 0.15s;
+//   transition: background-color 0.15s;
+// }
+
+// .login-body.layout-dark .login-content .desert {
+//   display: none;
+// }
+
+// @media (max-width: 740px) {
+//   .login-body .login-content .login-panel {
+//     width: 100%;
+//   }
+
+//   .login-body .login-content .login-panel .login-panel-content {
+//     width: 85%;
+//     padding: 20px 15px 50px;
+//   }
+
+//   .login-body .login-content .login-panel .login-panel-content h1 {
+//     font-size: 18px;
+//   }
+
+//   .login-body .login-content .login-panel .login-panel-content P {
+//     font-size: 16px;
+//   }
+
+  // .login-body .login-content .desert {
+  //   background-position: right;
+  // }
+
+//   .login-body .login-content .login-panel .login-panel-content .errors {
+//     font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif, 'primeicons';
+//     font-style: normal;
+//     font-weight: normal;
+//     font-variant: normal;
+//     text-transform: none;
+//     line-height: 1;
+//     display: inline-block;
+//     -webkit-font-smoothing: antialiased;
+//     -moz-osx-font-smoothing: grayscale;
+//     color: $primary-color-orange;
+//   }
+
+//   .login-body.layout-dark .login-content .login-panel .login-panel-content .forms .login-input-wrapper .is-invalid {
+//     border: solid 1px #FFB5B5;
+//     color: #d8dee9;
+//   }
+// }
+
