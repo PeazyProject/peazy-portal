@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { EditProductQtyComponent } from './page/product/components/editProductQty/edit-product-qty.component';
 import { EditProductComponent } from './page/product/editProductPage/edit-product.component';
 import { MainProductComponent } from './page/product/mainProductPage/main-product.component';
+import { CheckOrderComponent } from './page/product/checkOrderPage/check-order.component';
+import { CheckOrderItemComponent } from './page/product/checkOrderItem/check-order-item.component';
 
 const routes: Routes = [
   {
@@ -16,7 +18,15 @@ const routes: Routes = [
   {
     path: 'EditProductQty',
     component: EditProductQtyComponent
-  }
+  },
+  {
+    path: 'CheckOrder',
+    component: CheckOrderComponent
+  },
+  {
+    path: 'CheckOrderItem',
+    component: CheckOrderItemComponent
+  },
 ];
 
 @NgModule({

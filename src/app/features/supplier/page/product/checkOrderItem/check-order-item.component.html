@@ -1,0 +1,66 @@
+<div class="p-mt-1">
+
+    <div class="p-text-center">
+        <h1>{{productItem.productName}}-{{productItem.sku}}</h1>
+    </div>
+
+    <div *ngFor="let productItem of productItem.colorSizeModelList">
+        <div *ngFor="let size of productItem.sizeQtyModelList">
+            <div class="p-col-12">
+                <div class="order-check-item">
+                    <div class="p-col-3">
+                        <img [src]="'../../../../../../assets/images/noImage.png'" />
+                    </div>
+
+                    <div class="order-check-item-detail p-col-9">
+                        <div class="p-grid p-mt-2">
+                            <div class="float-label-padding p-col">
+                                <span class="p-float-label">
+                                    <p-inputNumber [disabled]="true" id="float-input"></p-inputNumber>
+                                    <label for="float-input">{{productItem.color}}</label>
+                                </span>
+                            </div>
+
+                            <div class="float-label-padding p-col">
+                                <span class="p-float-label">
+                                    <p-inputNumber [disabled]="true" id="float-input"></p-inputNumber>
+                                    <label>{{size.size}}</label>
+                                </span>
+                            </div>
+
+                            <div class="float-label-padding p-col">
+                                <span class="p-float-label">
+                                    <p-inputNumber id="float-input"></p-inputNumber>
+                                    <label for="float-input">已點收數量</label>
+                                </span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="p-grid p-mt-2" style="text-align:center;">
+
+    <div class="p-col-8 p-text-center" style="text-align:center;">
+    </div>
+
+    <div class="p-col-4">
+        <div class="p-grid order-check-item-detail">
+            <div class="p-col">
+                總未點收數量 : Qty
+            </div>
+            <div class="p-col p-mt-2">
+                <button (click)="confirmCheckOrderData($event)" pRipple pButton label="點收完成" class="p-button-raised p-ml-2"></button>
+                <button (click)="onClose()" pRipple pButton label="關閉視窗"
+                    class="p-button-secondary p-button-raised p-ml-2"></button>
+            </div>
+        </div>
+    </div>
+
+</div>
