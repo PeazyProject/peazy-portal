@@ -1,15 +1,14 @@
 import {Component, Injector} from '@angular/core';
 import {SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
-import { EditProductService } from './edit-product-service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { isNullOrEmpty } from 'src/app/core/utils/common-functions';
 import { finalize } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from 'src/app/shared/components/base.component';
-import { ProductService } from '../mainProductPage/main-product-service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ColorSizeModel } from 'src/app/core/models/product/color-size-model';
+import { ProductService } from '../product-service';
 
 @Component({
   selector: 'edit-product',
@@ -44,7 +43,6 @@ export class EditProductComponent extends BaseComponent {
     constructor(
       injector: Injector,
       private productService: ProductService,
-      private editProductService: EditProductService,
       private primengConfig: PrimeNGConfig,
       private sanitizer: DomSanitizer,
       private fb: FormBuilder) {

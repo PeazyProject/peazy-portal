@@ -1,7 +1,7 @@
 import {Component, Injector} from '@angular/core';
 import {SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
-import { ProductService } from './main-product-service';
+import { ProductService } from '../product-service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { isNullOrEmpty } from 'src/app/core/utils/common-functions';
 import { finalize } from 'rxjs';

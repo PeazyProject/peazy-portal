@@ -5,8 +5,9 @@
 export const environment = {
   production: false,
   loggingLevel: 0,
-  authUrl: 'http://localhost:8080/auth',
-  // supplierApiUrl: 'http://localhost:8080/supplier',
+  authUrl: 'https://peazy-auth.onrender.com/auth',
+  // authUrl: 'http://localhost:8080/auth',
+  // supplierApiUrl: 'http://localhost:8082/supplier',
   supplierApiUrl: 'https://peazy-supplier.onrender.com/supplier',
 };
 
