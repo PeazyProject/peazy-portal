@@ -19,8 +19,8 @@ export class CheckOrderService {
   ) { }
 
   queryProductBySeqNo(seqNo: any): Observable<any> {
-    const url = `${environment.supplierApiUrl}/product/queryProduct/${seqNo}`;
-    return this.http.post(url, seqNo);
+    const url = `${environment.supplierApiUrl}/product/queryProductBySeqNo/${seqNo}`;
+    return this.http.get(url, seqNo);
   }
 
   queryProduct(param: any): Observable<any> {
@@ -28,9 +28,13 @@ export class CheckOrderService {
     return this.http.post(url, param);
   }
 
-  queryCheckOrderItem(): Observable<any> {
-    const url = `${environment.supplierApiUrl}/product/queryCheckOrderItem`;
+  queryCheckOrder(): Observable<any> {
+    const url = `${environment.supplierApiUrl}/checkOrder/queryCheckOrder`;
     return this.http.post(url, null);
   }
-  
+
+  queryCheckOrderItemBySeqNo(seqNo: any): Observable<any> {
+    const url = `${environment.supplierApiUrl}/checkOrder/queryCheckOrderItemBySeqNo/${seqNo}`;
+    return this.http.get(url, seqNo);
+  }
 }

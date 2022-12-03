@@ -46,7 +46,7 @@
         <ng-template let-checkOrderList pTemplate="listItem">
 
 
-            <div class="p-col-12 product-list-item-hover" (click)="checkOrderItem(checkOrderList.seqNo)">
+            <div class="p-col-12 product-list-item-hover" (click)="checkOrderItem(checkOrderList)">
                 <div class="product-list-item">
                     <img [src]="getImgUrl(checkOrderList.snCode) | image | async" alt="Product photo" />
                     <div class="product-list-detail">
@@ -67,5 +67,5 @@
 
 <p-dialog header="點貨" appendTo="body" [(visible)]="isShowCheckOrderItem" [closable]="false" [resizable]="false" [draggable]="false"
     [style]="{ width: '75vw' }" [modal]="true">
-    <check-order-item #checkOrder (closeDialog)="closeDialog($event)"></check-order-item>
+    <check-order-item #checkOrder [totalCheckOrderCnt]="totalCheckOrderCnt" (closeDialog)="closeDialog($event)"></check-order-item>
 </p-dialog>

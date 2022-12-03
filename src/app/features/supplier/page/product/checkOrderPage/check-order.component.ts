@@ -12,10 +12,9 @@ import { CheckOrderService } from '../services/check-order.service';
 @Component({
   selector: 'app-check-order',
   templateUrl: './check-order.component.html',
-  styleUrls: ['./check-order.component.scss']
+  styleUrls: ['./check-order.component.scss'],
 })
 export class CheckOrderComponent extends BaseComponent {
-
   searchForm: FormGroup;
   checkOrderList: any;
   accordionTabOpen: any;
@@ -29,9 +28,14 @@ export class CheckOrderComponent extends BaseComponent {
   @ViewChild('checkOrder') checkOrder!: CheckOrderItemComponent;
   isShowCheckOrderItem: boolean = false;
 
-  checkOrderItemSeqNo: any;
+  totalCheckOrderCnt: number;
 
-  constructor(injector: Injector, private fb: FormBuilder, private checkorderService: CheckOrderService, private productService: ProductService) {
+  constructor(
+    injector: Injector,
+    private fb: FormBuilder,
+    private checkorderService: CheckOrderService,
+    private productService: ProductService
+  ) {
     super(injector);
 
     this.searchForm = this.fb.group({
@@ -40,37 +44,24 @@ export class CheckOrderComponent extends BaseComponent {
     });
 
     this.checkOrderList = [];
+    this.totalCheckOrderCnt = 0;
   }
 
   ngOnInit(): void {
-    this.checkorderService.queryCheckOrderItem().subscribe({
-
-      next: result => {
-        console.log("queryCheckOrderItem")
-        console.log(result)
-        this.checkOrderList = result.queryCheckOrderItemBeanList;
-      },
-      error: (err: HttpErrorResponse) => {
-        this.toastErrorMessage(err.error);
-      }
-
-    });
-
+    this.queryCheckOrder();
     this.sortOptions = [
       { label: 'Qty High to Low', value: '!productOrderedCnt' },
-      { label: 'Qty Low to High', value: 'productOrderedCnt' }
+      { label: 'Qty Low to High', value: 'productOrderedCnt' },
     ];
-
   }
 
-  onSortChange(event: { value: any; }) {
+  onSortChange(event: { value: any }) {
     let value = event.value;
 
     if (value.indexOf('!') === 0) {
       this.sortOrder = -1;
       this.sortField = value.substring(1, value.length);
-    }
-    else {
+    } else {
       this.sortOrder = 1;
       this.sortField = value;
     }
@@ -78,34 +69,58 @@ export class CheckOrderComponent extends BaseComponent {
 
   onFilter(event: any) {
     console.log(event);
-    this.dv.filter((event.target.value));
+    this.dv.filter(event.target.value);
   }
 
-  searchBtnClick(flag: Boolean) {
-
+  queryCheckOrder() {
+    this.checkorderService.queryCheckOrder().subscribe({
+      next: (result) => {
+        console.log('queryCheckOrderItem');
+        console.log(result);
+        this.checkOrderList = result.queryCheckOrderList;
+        this.initTotalCheckOrderCnt(this.checkOrderList);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.toastErrorMessage(err.error);
+      },
+    });
   }
 
-  showDialog(event: Event): void {
-  }
+  searchBtnClick(flag: Boolean) {}
 
-  checkOrderItem(orderItem: string) {
-    console.log("checkOrderItem");
+  showDialog(event: Event): void {}
+
+  checkOrderItem(orderItem: any) {
+    console.log('checkOrderItem');
     console.log(orderItem);
-    this.checkOrderItemSeqNo = orderItem;
     this.isShowCheckOrderItem = true;
     this.checkOrder.queryCheckOrderItem(orderItem);
   }
 
   getImgUrl(snCode: string): string {
     if (isNullOrEmpty(snCode)) {
-      return "";
+      return '';
     } else {
       return this.productService.getImgUrl(snCode);
     }
-
   }
 
   closeDialog(display: any) {
     this.isShowCheckOrderItem = display;
+    this.checkOrderList = [];
+    this.queryCheckOrder();
+  }
+
+  initTotalCheckOrderCnt(checkOrderList: any) {
+    console.log('totalCheckOrderCnt1');
+    console.log(this.totalCheckOrderCnt);
+    checkOrderList.forEach((element: any) => {
+      console.log(element.productOrderedCnt);
+
+      this.totalCheckOrderCnt =
+        this.totalCheckOrderCnt + element.productOrderedCnt;
+    });
+    console.log('totalCheckOrderCnt2');
+    console.log(this.totalCheckOrderCnt);
   }
 }
