@@ -48,7 +48,7 @@ export class CheckOrderComponent extends BaseComponent {
   }
 
   ngOnInit(): void {
-    this.queryCheckOrder();
+    this.queryAllCheckOrder();
     this.sortOptions = [
       { label: 'Qty High to Low', value: '!productOrderedCnt' },
       { label: 'Qty Low to High', value: 'productOrderedCnt' },
@@ -68,15 +68,12 @@ export class CheckOrderComponent extends BaseComponent {
   }
 
   onFilter(event: any) {
-    console.log(event);
     this.dv.filter(event.target.value);
   }
 
-  queryCheckOrder() {
-    this.checkorderService.queryCheckOrder().subscribe({
+  queryAllCheckOrder() {
+    this.checkorderService.queryAllCheckOrder().subscribe({
       next: (result) => {
-        console.log('queryCheckOrderItem');
-        console.log(result);
         this.checkOrderList = result.queryCheckOrderList;
         this.initTotalCheckOrderCnt(this.checkOrderList);
       },
@@ -86,7 +83,12 @@ export class CheckOrderComponent extends BaseComponent {
     });
   }
 
-  searchBtnClick(flag: Boolean) {}
+  searchBtnClick(event: any) {
+    this.queryCheckOrder(
+      this.searchForm.value.productName,
+      this.searchForm.value.sku
+    );
+  }
 
   showDialog(event: Event): void {}
 
@@ -108,19 +110,24 @@ export class CheckOrderComponent extends BaseComponent {
   closeDialog(display: any) {
     this.isShowCheckOrderItem = display;
     this.checkOrderList = [];
-    this.queryCheckOrder();
+    this.queryAllCheckOrder();
   }
 
   initTotalCheckOrderCnt(checkOrderList: any) {
-    console.log('totalCheckOrderCnt1');
-    console.log(this.totalCheckOrderCnt);
     checkOrderList.forEach((element: any) => {
-      console.log(element.productOrderedCnt);
-
       this.totalCheckOrderCnt =
         this.totalCheckOrderCnt + element.productOrderedCnt;
     });
-    console.log('totalCheckOrderCnt2');
-    console.log(this.totalCheckOrderCnt);
+  }
+
+  queryCheckOrder(productName: string, sku: string) {
+    this.checkorderService.queryCheckOrder(productName, sku).subscribe({
+      next: (result) => {
+        this.checkOrderList = result.queryCheckOrderList;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.toastErrorMessage(err.error);
+      },
+    });
   }
 }
