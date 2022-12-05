@@ -122,9 +122,7 @@ export class MainProductComponent extends BaseComponent {
     }
 
     editProduct(productSeqNo: any): void {
-      console.log(productSeqNo);
       this.routeStateService.navigateTo('/supplier/EditProduct', {productSeqNo});
-
     }
 
     accordionTabOpen(): void {

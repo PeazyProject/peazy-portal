@@ -1,13 +1,7 @@
-import {Component, EventEmitter, Injector, Output} from '@angular/core';
-import {SelectItem} from 'primeng/api';
-import { PrimeNGConfig } from 'primeng/api';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { isNullOrEmpty } from 'src/app/core/utils/common-functions';
-import { finalize } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Component, EventEmitter, Injector, Input, Output, OnInit } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/components/base.component';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ColorSizeModel } from 'src/app/core/models/product/color-size-model';
+import { ProductColorSizeBean } from 'src/app/core/models/product/product-color-size-bean';
+import { ProductService } from '../../product-service';
 
 @Component({
   selector: 'edit-product-qty',
@@ -17,29 +11,35 @@ import { ColorSizeModel } from 'src/app/core/models/product/color-size-model';
 export class EditProductQtyComponent extends BaseComponent {
 
     @Output() updateProductQty: EventEmitter<any>;
+    @Input() productColorSizeList: ProductColorSizeBean[] = [];
 
-    colorSizeModelList: ColorSizeModel[] = []
+    sizeOption: any[] = [];
+    colorOption: any[] = [];
 
     constructor(
       injector: Injector,
-      private primengConfig: PrimeNGConfig,
-      private sanitizer: DomSanitizer,
-      private fb: FormBuilder) {
-
+      private productService: ProductService) {
         super(injector);
-        this.colorSizeModelList =
-        [{color:"黑", sizeQtyModelList: [{size:"S", qty: 1}, {size:"M", qty: 2}, {size:"L", qty: 3}]},
-        {color:"白", sizeQtyModelList: [{size:"S", qty: 4}, {size:"M", qty: 5}, {size:"L", qty: 6}]},
-        {color:"灰", sizeQtyModelList: [{size:"S", qty: 0}, {size:"M", qty: 0}, {size:"L", qty: 0}]}
-      ];
+        this.productColorSizeList = [];
+        this.updateProductQty = new EventEmitter<any>();
+     }
 
-      this.updateProductQty = new EventEmitter<any>();
+     ngOnInit(): void {
+      this.productService.getProductSizeOption().subscribe({
+        next: (result: any) => {
+          this.sizeOption = result
+        }
+      });
 
-
+      this.productService.getProductColorOption().subscribe({
+        next: (result: any) => {
+          this.colorOption = result
+        }
+      });
      }
 
     finishEdit() {
-      this.updateProductQty.emit(this.colorSizeModelList);
+      this.updateProductQty.emit(this.productColorSizeList);
     }
 
 }

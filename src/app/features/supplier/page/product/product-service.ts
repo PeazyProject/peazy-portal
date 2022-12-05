@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { QueryProductBySeqNoParam } from 'src/app/core/models/product/query-product-by-seq-no-param';
 
 import { environment } from 'src/environments/environment';
 
@@ -38,6 +39,16 @@ export class ProductService {
     getProductCategoryOption(): Observable<any> {
       const url = `${environment.supplierApiUrl}/product/getProductCategoryOption`;
       return this.http.get(url);
+    }
+
+    queryProductBySeqNo(seqNo: string): Observable<any> {
+      const url = `${environment.supplierApiUrl}/product/queryProductBySeqNo/${seqNo}`;
+    return this.http.get(url);
+    }
+
+    editProduct(param: any): Observable<any> {
+      const url = `${environment.supplierApiUrl}/product/editProduct`;
+      return this.http.post(url, param);
     }
 
 }
