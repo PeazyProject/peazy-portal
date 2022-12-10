@@ -16,13 +16,17 @@ export class EditProductComponent extends BaseComponent {
     sizeOption: any[] = [];
     colorOption: any[] = [];
     categoryOption: any[] = [];
+    vendorOption: any[] = [];
     isShowEditProductQty = false;
     queryProductBySeqNoParam: QueryProductBySeqNoParam;
 
     productSeqNo: string = this.routeStateService.getCurrent().data.productSeqNo;
     isEditMode = false;
+    mainPictureUrl: any;
+    pictureUrlList: any[] = ['', '', '', '', '', '', '', ''];
     mainPicture: any;
     pictureList: any[] = ['', '', '', '', '', '', '', ''];
+    isPicUpload = false;
 
     constructor(
       injector: Injector,
@@ -30,6 +34,7 @@ export class EditProductComponent extends BaseComponent {
       private sanitizer: DomSanitizer) {
         super(injector);
         this.queryProductBySeqNoParam = {
+          productSeqNo: "",
           productName: "",
           skuList: [],
           mpnList: [],
@@ -42,7 +47,9 @@ export class EditProductComponent extends BaseComponent {
           productDesc: "",
           mainPic: "",
           picList: [],
-          productColorSizeList: []
+          productColorSizeList: [],
+          userId: "",
+          vendorSeqNo: ""
         }
      }
 
@@ -67,6 +74,12 @@ export class EditProductComponent extends BaseComponent {
       this.productService.getProductCategoryOption().subscribe({
         next: (result: any) => {
           this.categoryOption = result
+        }
+      });
+
+      this.productService.getProductVendorOption().subscribe({
+        next: (result: any) => {
+          this.vendorOption = result;
         }
       });
 
@@ -101,10 +114,19 @@ export class EditProductComponent extends BaseComponent {
     }
 
     editProduct(): void {
-      this.productService.editProduct(this.queryProductBySeqNoParam)
+      this.queryProductBySeqNoParam.userId = 'AlanLee';
+      if (isNullOrEmpty(this.mainPicture) || isNullOrEmpty(this.pictureList)) {
+          if (isNullOrEmpty(this.queryProductBySeqNoParam.mainPic) && isNullOrEmpty(this.queryProductBySeqNoParam.picList)) {
+            this.toastService.warn("請上傳圖片");
+          }
+        return;
+      }
+      // TODO 需要做一隻API For不更新圖片的
+      this.productService.editProduct(this.queryProductBySeqNoParam, this.mainPicture, this.pictureList)
       .subscribe({
         next: () => {
-          this.routeStateService.navigateTo('/supplier/MainProduct',{});
+          // TODO 下面記得打開
+          // this.routeStateService.navigateTo('/supplier/MainProduct',{});
         }
       })
     }
@@ -114,13 +136,17 @@ export class EditProductComponent extends BaseComponent {
     }
 
     previewPic(event: any): void {
-      this.mainPicture = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
+      this.mainPictureUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
+      this.mainPicture = event.target.files[0];
 
       for (let i = 1; i <= 8; i ++) {
         if (event.target.files[i] != null) {
-          this.pictureList[i - 1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[i]));
+          this.pictureUrlList[i - 1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[i]));
+          this.pictureList[i - 1] = event.target.files[i];
         }
       }
+
+      this.isPicUpload = true;
     }
 
     updateProductQty(productColorSizeList: ProductColorSizeBean[]): void {

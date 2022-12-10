@@ -1,6 +1,7 @@
 import { ProductColorSizeBean } from "./product-color-size-bean";
 
 export interface QueryProductBySeqNoParam {
+  productSeqNo: string;
   productName: string;
   skuList: any[];
   mpnList: any[];
@@ -11,8 +12,9 @@ export interface QueryProductBySeqNoParam {
   category: string;
   productStatus: string;
   productDesc: string;
-  mainPic: string;
+  mainPic: any;
   picList: any[];
   productColorSizeList: ProductColorSizeBean[];
-
+  userId: String;
+  vendorSeqNo: String;
 }

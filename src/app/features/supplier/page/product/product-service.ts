@@ -41,14 +41,26 @@ export class ProductService {
       return this.http.get(url);
     }
 
+    getProductVendorOption(): Observable<any> {
+      const url = `${environment.supplierApiUrl}/product/getProductVendorOption`;
+      return this.http.get(url);
+    }
+
     queryProductBySeqNo(seqNo: string): Observable<any> {
       const url = `${environment.supplierApiUrl}/product/queryProductBySeqNo/${seqNo}`;
     return this.http.get(url);
     }
 
-    editProduct(param: any): Observable<any> {
+    editProduct(param: any, mainPicture: any, pictureList: any): Observable<any> {
       const url = `${environment.supplierApiUrl}/product/editProduct`;
-      return this.http.post(url, param);
+      const formData: FormData = new FormData();
+
+      formData.append('queryProductBySeqNoParam', JSON.stringify(param));
+      formData.append('mainPicFile', mainPicture);
+      formData.append('picFiles', pictureList);
+
+
+      return this.http.post(url, formData, { reportProgress: true, observe: 'events' });
     }
 
 }
