@@ -6,6 +6,7 @@ import { from, lastValueFrom, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { GlobalConstants } from '../constants/globalConstants';
 import { User } from '../models/user';
+import { UserRefreshToken } from '../models/user-refreshToken';
 import { isNullOrEmpty } from '../utils/common-functions';
 import { CacheService } from './cache.service';
 import { LocalStorageService } from './local-storage.service';
@@ -52,19 +53,14 @@ export class AuthenticationService {
         const resp = await lastValueFrom(this.getToken(username, password, loginType));
         if (resp) {
           this.currentToken = resp.jwtToken;
-          console.log("this.currentToken\t", JSON.stringify(this.currentToken));
           // const userProfile = await this.userService.getUserProfile().toPromise();
           const userProfile = await lastValueFrom(this.userService.getUserProfile());
-          console.log("userProfile = " + userProfile.userProfile);
-          console.log("userProfile.userType = " + userProfile.userProfile.userType);
           const user: User = {
             id: userProfile.userProfile.uuid,
             name: userProfile.userProfile.userName,
             email: userProfile.userProfile.email,
             type: userProfile.userProfile.userType
           };
-
-          console.log("user.userType = " + user.type);
           this.userService.userInfo = user;
 
 
@@ -97,6 +93,14 @@ export class AuthenticationService {
 
   clear(): void {
     this.localStorageService.removeItem(GlobalConstants.currentToken);
+  }
+
+  async refreshTokenBy(userRefreshToken: UserRefreshToken) {
+    const jwtResp = await this.getToken(
+      this.userService.userInfo.email,
+      'password',
+      'loginWithUserName').toPromise()
+    this.currentToken = jwtResp.token
   }
 
   private getToken(username: string, password: string, loginType: string): Observable<any> {

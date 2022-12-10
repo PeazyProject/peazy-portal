@@ -19,10 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
     // return next.handle(request);
     // add authorization header with jwt token if available
     const token = this.authenticationService.currentToken;
-    console.log(`at interceptor-token state... token: `, token);
-    console.log(`req=`, request);
     if (token) {
-      console.log("do setHeaders");
       request = request.clone({
         setHeaders:{
           "Authorization": `Bearer ${token}`,
@@ -31,13 +28,12 @@ export class JwtInterceptor implements HttpInterceptor {
         }
       });
     }
+    console.log('>>>jwt.interceptor and token=', token, ', Reqest=', request);
     return next.handle(request).pipe(
       tap(event => {
         if (event instanceof HttpResponse) {
-          console.log(`try to get refreshToken...`, event);
           const refreshToken = event.headers.get('RefreshToken');
           if (!isNullOrEmpty(refreshToken)) {
-            console.log('RefreshToken have been got...');
             this.authenticationService.currentToken = refreshToken as string;
           }
         }

@@ -40,7 +40,7 @@ export class LoginComponent extends BaseComponent  implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit(): void {
-    console.log("at onSubmit");
+    console.log("do onSubmit() at login.component");
     // this.submitted = true;
 
     // if (this.loginForm.invalid) {
@@ -49,22 +49,20 @@ export class LoginComponent extends BaseComponent  implements OnInit {
 
     // this.loader.show();
     // this.loading = true;
-    console.log("username", this.f['username'].value);
-    console.log("password", this.f['password'].value);
+    console.log("username=", this.f['username'].value, ", password=", this.f['password'].value);
     this.authenticationService.login(this.f['username'].value, this.f['password'].value, 'loginWithUserName')
       .pipe(
         finalize(() => {
-        console.log("at finalize");
         // this.loader.hide();
         // this.loading = false;
       }))
       .subscribe({
         next: () => {
-          console.log("at next");
+          console.log("do login() next at login.component");
           // this.routeStateService.navigateTo(this.returnUrl);
         },
         error: err => {
-          console.log("at error");
+          console.log("do login() error at login.component");
           // if(err.error){
           //   this.toastErrorMessage(err.error);
           // }else{

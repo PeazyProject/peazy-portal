@@ -15,7 +15,6 @@ export class SideMenuComponent extends SessionBaseComponent implements OnInit, A
   items: MenuItem[];
 
   // TODO 這個後面要放在SessionBaseComponent
-  permssionCodes!: any[];
 
   constructor(
     injector: Injector,

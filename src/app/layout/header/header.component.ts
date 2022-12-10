@@ -39,23 +39,23 @@ export class HeaderComponent extends SessionBaseComponent implements OnInit {
 
   // TODO 下面這邊要再繼續往下做
 
-  // async ngOnInit(): Promise<void> {
-  //   try {
-  //     await super.ngOnInit();
-  //     this.userName = this.userProfile.userName;
-  //     this.email = this.userProfile.email;
-  //     this.language = this.peazySetting.language;
-  //     this.translateService.use(this.language);
+  override async ngOnInit(): Promise<void> {
+    try {
+      await super.ngOnInit();
+      this.userName = this.userProfile.userName;
+      this.email = this.userProfile.email;
+      this.language = this.peazySetting.language;
+      this.translateService.use(this.language);
 
-  //     this.initCacheData(this.language);
-  //     const userRefreshToken:UserRefreshToken = {
-  //       language:  this.peazySetting.language
-  //     }
-  //     this.authenticationService.refreshTokenBy(userRefreshToken)
-  //   } catch (err) {
-  //     console.log('baseSession Error');
-  //   }
-  // }
+      // this.initCacheData(this.language);
+      const userRefreshToken: UserRefreshToken = {
+        language: this.peazySetting.language
+      }
+      this.authenticationService.refreshTokenBy(userRefreshToken);
+    } catch (err) {
+      console.log('baseSession Error');
+    }
+  }
 
   toggleSideMenu(): void {
     this.menuService.toggleMenuBar.next(true);
@@ -63,8 +63,8 @@ export class HeaderComponent extends SessionBaseComponent implements OnInit {
 
   // languageChange(event: any): void {
   //   this.peazySetting.language = this.language;
-  //   const userRefreshToken:UserRefreshToken = {
-  //     language:  this.peazySetting.language
+  //   const userRefreshToken: UserRefreshToken = {
+  //     language: this.peazySetting.language
   //   }
   //   this.authenticationService.refreshTokenBy(userRefreshToken).then(() => {
   //     location.reload()

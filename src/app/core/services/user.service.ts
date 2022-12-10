@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { GlobalConstants } from '../constants/globalConstants';
 import { User } from '../models/user';
+import { UserPreference } from '../models/user-preference';
 import { isNullOrEmpty } from '../utils/common-functions';
 import { LocalStorageService } from './local-storage.service';
 
@@ -33,14 +34,19 @@ export class UserService {
     this.user.next(value);
   }
 
-  get userProfile(): any {
-    const userProfile = this.localStorageService.getItem("userProfile");
-    return isNullOrEmpty(userProfile) ? null : userProfile;
+  get preference(): UserPreference {
+    const preferenceData = this.localStorageService.getItem(GlobalConstants.userPreference);
+    return isNullOrEmpty(preferenceData) ? new UserPreference() : preferenceData;
   }
 
-  set userProfile(value: any) {
-    this.localStorageService.setItem("userProfile", value);
-    this.user.next(value);
+  set preference(value: UserPreference) {
+    this.localStorageService.setItem(GlobalConstants.userPreference, value);
+    this.saveUserPreference().subscribe({
+        next: () => {},
+        error: err => {
+          this.logger.error(JSON.stringify(err));
+        }
+      });
   }
 
   getUserProfile(): Observable<any> {
@@ -67,6 +73,11 @@ export class UserService {
   private logoutAction(): Observable<any> {
     const url = '/api/logout';
     return this.http.get(url);
+  }
+
+  private saveUserPreference(): Observable<any> {
+    const url = `/api/userpreference/${this.userInfo.id}`;
+    return this.http.put(url, { preference: this.preference, userName: this.userInfo.name });
   }
 
   createCustomerUser(request: any): Observable<any> {
