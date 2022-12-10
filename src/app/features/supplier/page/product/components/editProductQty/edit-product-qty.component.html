@@ -1,68 +1,65 @@
 <div class="p-mt-1">
-  <div *ngFor="let colorSizeModel of colorSizeModelList">
-    <div *ngFor="let sizeQty of colorSizeModel.sizeQtyModelList">
+  <div *ngFor="let productColorSizeBean of productColorSizeList">
+    <div style="padding-bottom: 20px; font-weight:bold;">
+      {{ productColorSizeBean.colorSeqNo | optionsMapping:colorOption}} - {{ productColorSizeBean.sizeSeqNo | optionsMapping:sizeOption}}
+    </div>
 
-      <div style="padding-bottom: 20px; font-weight:bold;">
-        {{colorSizeModel.color}} - {{sizeQty.size}}
+    <div class="p-fluid p-formgrid p-grid">
+
+      <div class="p-field p-col-4 p-md-3 p-lg-2">
+        <div class="float-label-padding">
+          <span class="p-float-label">
+            <p-inputNumber id="float-input" [(ngModel)]="productColorSizeBean.notOrderCnt"></p-inputNumber>
+            <label for="float-input">未叫貨數量</label>
+          </span>
+        </div>
       </div>
 
-      <div class="p-fluid p-formgrid p-grid">
-
-        <div class="p-field p-col-4 p-md-3 p-lg-2">
-          <div class="float-label-padding">
-            <span class="p-float-label">
-              <p-inputNumber id="float-input" [(ngModel)]="sizeQty.qty"></p-inputNumber>
-              <label for="float-input">未叫貨數量</label>
-            </span>
-          </div>
+      <div class="p-field p-col-4 p-md-3 p-lg-2">
+        <div class="float-label-padding">
+          <span class="p-float-label">
+            <p-inputNumber id="float-input" [(ngModel)]="productColorSizeBean.orderedCnt"></p-inputNumber>
+            <label for="float-input">已叫貨數量</label>
+          </span>
         </div>
-
-        <div class="p-field p-col-4 p-md-3 p-lg-2">
-          <div class="float-label-padding">
-            <span class="p-float-label">
-              <p-inputNumber id="float-input"></p-inputNumber>
-              <label for="float-input">已叫貨數量</label>
-            </span>
-          </div>
-        </div>
-
-        <div class="p-field p-col-4 p-md-3 p-lg-2">
-          <div class="float-label-padding">
-            <span class="p-float-label">
-              <p-inputNumber id="float-input"></p-inputNumber>
-              <label for="float-input">已點收數量</label>
-            </span>
-          </div>
-        </div>
-
-        <div class="p-field p-col-4 p-md-3 p-lg-2">
-          <div class="float-label-padding">
-            <span class="p-float-label">
-              <p-inputNumber id="float-input"></p-inputNumber>
-              <label for="float-input">已配貨數量</label>
-            </span>
-          </div>
-        </div>
-
-        <div class="p-field p-col-4 p-md-3 p-lg-2">
-          <div class="float-label-padding">
-            <span class="p-float-label">
-              <p-inputNumber id="float-input"></p-inputNumber>
-              <label for="float-input">可交貨數量</label>
-            </span>
-          </div>
-        </div>
-
-        <div class="p-field p-col-4 p-md-3 p-lg-2">
-          <div class="float-label-padding">
-            <span class="p-float-label">
-              <p-inputNumber id="float-input"></p-inputNumber>
-              <label for="float-input">已完成數量</label>
-            </span>
-          </div>
-        </div>
-
       </div>
+
+      <div class="p-field p-col-4 p-md-3 p-lg-2">
+        <div class="float-label-padding">
+          <span class="p-float-label">
+            <p-inputNumber id="float-input" [(ngModel)]="productColorSizeBean.checkOrderCnt"></p-inputNumber>
+            <label for="float-input">已點收數量</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-field p-col-4 p-md-3 p-lg-2">
+        <div class="float-label-padding">
+          <span class="p-float-label">
+            <p-inputNumber id="float-input" [(ngModel)]="productColorSizeBean.allocatedCnt"></p-inputNumber>
+            <label for="float-input">已配貨數量</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-field p-col-4 p-md-3 p-lg-2">
+        <div class="float-label-padding">
+          <span class="p-float-label">
+            <p-inputNumber id="float-input" [(ngModel)]="productColorSizeBean.readyDeliveryCnt"></p-inputNumber>
+            <label for="float-input">可交貨數量</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-field p-col-4 p-md-3 p-lg-2">
+        <div class="float-label-padding">
+          <span class="p-float-label">
+            <p-inputNumber id="float-input" [(ngModel)]="productColorSizeBean.finishCnt"></p-inputNumber>
+            <label for="float-input">已完成數量</label>
+          </span>
+        </div>
+      </div>
+
     </div>
   </div>
 

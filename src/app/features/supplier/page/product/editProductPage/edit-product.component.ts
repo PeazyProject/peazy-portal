@@ -1,14 +1,10 @@
 import {Component, Injector} from '@angular/core';
-import {SelectItem} from 'primeng/api';
-import { PrimeNGConfig } from 'primeng/api';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { isNullOrEmpty } from 'src/app/core/utils/common-functions';
-import { finalize } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from 'src/app/shared/components/base.component';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ColorSizeModel } from 'src/app/core/models/product/color-size-model';
+import { ProductColorSizeBean } from 'src/app/core/models/product/product-color-size-bean';
 import { ProductService } from '../product-service';
+import { QueryProductBySeqNoParam } from 'src/app/core/models/product/query-product-by-seq-no-param';
 
 @Component({
   selector: 'edit-product',
@@ -17,53 +13,51 @@ import { ProductService } from '../product-service';
 })
 export class EditProductComponent extends BaseComponent {
 
-    sortOptions: SelectItem[] = [];
-    sortOrder!: number;
-    sortField!: string;
-
-    isEditMode = false;
-    isSearchFormOpen: boolean = false;
-    editForm: FormGroup;
-    searchParams: any;
-    isLoading: boolean = false;
-    productList: any[] = [];
-    isStockOption: any[] = [];
     sizeOption: any[] = [];
     colorOption: any[] = [];
     categoryOption: any[] = [];
-    multiple: boolean = true;
+    vendorOption: any[] = [];
     isShowEditProductQty = false;
+    queryProductBySeqNoParam: QueryProductBySeqNoParam;
 
-    // TODO 明天拿productSeqNo開始做Query這個產品的編輯內容
     productSeqNo: string = this.routeStateService.getCurrent().data.productSeqNo;
+    isEditMode = false;
+    mainPictureUrl: any;
+    pictureUrlList: any[] = ['', ''];
     mainPicture: any;
-    pictureList: any[] = ['', '', '', '', '', '', '', ''];
-
+    pictureList: any[] = ['', ''];
+    isPicUpload = false;
 
     constructor(
       injector: Injector,
       private productService: ProductService,
-      private primengConfig: PrimeNGConfig,
-      private sanitizer: DomSanitizer,
-      private fb: FormBuilder) {
-
+      private sanitizer: DomSanitizer) {
         super(injector);
-        this.editForm = this.fb.group({
-          productName: '',
-          sku: '',
+        this.queryProductBySeqNoParam = {
+          productSeqNo: "",
+          productName: "",
+          skuList: [],
+          mpnList: [],
           sizeList: [],
           colorList: [],
           cost: 0,
           price: 0,
-          cartegory: '',
-          productStatus: 'AVAILABLE',
-          productDesc: '',
-          productMainPic: null,
-          productPic: []
-        });
+          category: "",
+          productStatus: "",
+          productDesc: "",
+          mainPic: "",
+          picList: [],
+          productColorSizeList: [],
+          userId: "",
+          vendorSeqNo: ""
+        }
      }
 
     ngOnInit() {
+
+      if (this.productSeqNo != '') {
+        this.isEditMode = true;
+      }
 
       this.productService.getProductSizeOption().subscribe({
         next: (result: any) => {
@@ -83,54 +77,33 @@ export class EditProductComponent extends BaseComponent {
         }
       });
 
+      this.productService.getProductVendorOption().subscribe({
+        next: (result: any) => {
+          this.vendorOption = result;
+        }
+      });
 
-      this.sortOptions = [
-          {label: 'Price High to Low', value: '!price'},
-          {label: 'Price Low to High', value: 'price'}
-      ];
-
-
+      this.productService.queryProductBySeqNo(this.productSeqNo).subscribe({
+        next: (result: any) => {
+          this.queryProductBySeqNoParam = result;
+        }
+      });
 
     }
 
-    onSortChange(event: { value: any; }) {
-        let value = event.value;
-
-        if (value.indexOf('!') === 0) {
-            this.sortOrder = -1;
-            this.sortField = value.substring(1, value.length);
-        }
-        else {
-            this.sortOrder = 1;
-            this.sortField = value;
-        }
-    }
-
-    chipsAdd(event: any, fromControlName: any): void {
+    skuChipsAdd(event: any): void {
       const value: string = event.value;
       const parsedValues: string[] = value.split('\r\n').filter(x => isNullOrEmpty(x) === false && x !== '\r\n');
-      const formControl = this.editForm.get(fromControlName);
-      formControl?.value.splice(formControl?.value.indexOf(value));
-      formControl?.setValue(formControl?.value.concat(parsedValues));
+      this.queryProductBySeqNoParam.skuList.splice(this.queryProductBySeqNoParam.skuList.indexOf(value));
+      this.queryProductBySeqNoParam.skuList = this.queryProductBySeqNoParam.skuList.concat(parsedValues);
     }
 
-    // searchBtnClick(): void {
-
-    //   this.isLoading = true;
-    //   this.isSearchFormOpen = false;
-
-    //   this.productService.queryProduct(this.searchForm.value)
-    //   .pipe(finalize(() => this.isLoading = false))
-    //   .subscribe({
-    //     next: result => {
-    //       this.isSearchFormOpen = false;
-    //       this.productList = result.queryProductList;
-    //     },
-    //     error: (err: HttpErrorResponse) => {
-    //       this.toastErrorMessage(err.error);
-    //     }
-    //   });
-    // }
+    mpnChipsAdd(event: any): void {
+      const value: string = event.value;
+      const parsedValues: string[] = value.split('\r\n').filter(x => isNullOrEmpty(x) === false && x !== '\r\n');
+      this.queryProductBySeqNoParam.mpnList.splice(this.queryProductBySeqNoParam.mpnList.indexOf(value));
+      this.queryProductBySeqNoParam.mpnList = this.queryProductBySeqNoParam.mpnList.concat(parsedValues);
+    }
 
     getImgUrl(snCode: string): string {
       if (isNullOrEmpty(snCode)) {
@@ -138,39 +111,101 @@ export class EditProductComponent extends BaseComponent {
       } else {
         return this.productService.getImgUrl(snCode);
       }
-
     }
 
-    insertProduct(): void {
+    editProduct(): void {
+      this.queryProductBySeqNoParam.userId = 'AlanLee';
+      if (isNullOrEmpty(this.mainPicture) || isNullOrEmpty(this.pictureList)) {
+          if (isNullOrEmpty(this.queryProductBySeqNoParam.mainPic) && isNullOrEmpty(this.queryProductBySeqNoParam.picList)) {
+            this.toastService.warn("請上傳圖片");
+            return;
+          }
+      }
 
+      this.productService.editProduct(this.queryProductBySeqNoParam, this.mainPicture, this.pictureList, this.isPicUpload)
+      .subscribe({
+        next: () => {
+          // TODO 下面記得打開
+          // this.routeStateService.navigateTo('/supplier/MainProduct',{});
+        }
+      })
     }
 
     editProductQty(): void {
       this.isShowEditProductQty = !this.isShowEditProductQty;
     }
 
-    accordionTabOpen(): void {
-      this.isSearchFormOpen = true;
-    }
-
     previewPic(event: any): void {
-      this.mainPicture = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
+      this.mainPictureUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
+      this.mainPicture = event.target.files[0];
+      this.pictureList[0] = event.target.files[0];
+      this.pictureUrlList[0] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
+      this.pictureList[1] = event.target.files[0];
+      this.pictureUrlList[1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
+      // for (let i = 1; i <= 8; i ++) {
+      //   if (event.target.files[i] != null) {
+      //     this.pictureUrlList[i - 1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[i]));
+      //     this.pictureList[i - 1] = event.target.files[i];
+      //   }
+      // }
 
-      for (let i = 1; i <= 8; i ++) {
-        if (event.target.files[i] != null) {
-          this.pictureList[i - 1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[i]));
-        }
-      }
+      this.isPicUpload = true;
     }
 
-    updateProductQty(colorSizeModel: ColorSizeModel[]): void {
+    updateProductQty(productColorSizeList: ProductColorSizeBean[]): void {
       this.isShowEditProductQty = false;
-      console.log("LOOK colorSizeModel = " + colorSizeModel[0].color);
-
-      this.routeStateService.navigateTo(
-        '/supplier/MainProduct',
-        {  });
+      this.queryProductBySeqNoParam.productColorSizeList = productColorSizeList;
     }
 
+    updateProductSize(event: any): void {
+
+      let sizeSeqNoList = this.queryProductBySeqNoParam.productColorSizeList.map(bean => bean.sizeSeqNo)
+        .filter((x, idx, array) => array.indexOf(x) == idx);
+
+      if (event.value.length > sizeSeqNoList.length) {
+        for (const colorSeqNo of this.queryProductBySeqNoParam.colorList) {
+          const productColorSizeBean = {
+            colorSeqNo: colorSeqNo,
+            sizeSeqNo: event.itemValue,
+            notOrderCnt: 0,
+            orderedCnt: 0,
+            checkOrderCnt: 0,
+            allocatedCnt: 0,
+            readyDeliveryCnt: 0,
+            finishCnt: 0
+          }
+          this.queryProductBySeqNoParam.productColorSizeList.push(productColorSizeBean);
+        }
+      } else {
+        this.queryProductBySeqNoParam.productColorSizeList =
+          this.queryProductBySeqNoParam.productColorSizeList.filter(({sizeSeqNo}) => {return sizeSeqNo != event.itemValue});
+      }
+
+    }
+
+    updateProductColor(event: any): void {
+      let colorSeqNoList = this.queryProductBySeqNoParam.productColorSizeList.map(bean => bean.colorSeqNo)
+        .filter((x, idx, array) => array.indexOf(x) == idx);
+
+      if (event.value.length > colorSeqNoList.length) {
+        for (const sizeSeqNo of this.queryProductBySeqNoParam.sizeList) {
+          const productColorSizeBean = {
+            colorSeqNo: event.itemValue,
+            sizeSeqNo: sizeSeqNo,
+            notOrderCnt: 0,
+            orderedCnt: 0,
+            checkOrderCnt: 0,
+            allocatedCnt: 0,
+            readyDeliveryCnt: 0,
+            finishCnt: 0
+          }
+          this.queryProductBySeqNoParam.productColorSizeList.push(productColorSizeBean);
+        }
+      } else {
+        this.queryProductBySeqNoParam.productColorSizeList =
+          this.queryProductBySeqNoParam.productColorSizeList.filter(({colorSeqNo}) => {return colorSeqNo != event.itemValue});
+      }
+
+    }
 
 }
