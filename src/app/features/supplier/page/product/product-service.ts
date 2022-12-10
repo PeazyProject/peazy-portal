@@ -51,16 +51,25 @@ export class ProductService {
     return this.http.get(url);
     }
 
-    editProduct(param: any, mainPicture: any, pictureList: any): Observable<any> {
-      const url = `${environment.supplierApiUrl}/product/editProduct`;
+    editProduct(param: any, mainPicture: any, pictureList: any[], isPicUpload: boolean): Observable<any> {
       const formData: FormData = new FormData();
-
       formData.append('queryProductBySeqNoParam', JSON.stringify(param));
-      formData.append('mainPicFile', mainPicture);
-      formData.append('picFiles', pictureList);
 
+      let response;
+      if (isPicUpload) {
+        formData.append('mainPicFile', mainPicture);
+        pictureList.forEach(file => formData.append('picFiles', file));
+        
+        console.log("-----")
+        console.log(formData);
+        const url = `${environment.supplierApiUrl}/product/editProduct`;
+        response = this.http.post(url, formData, { reportProgress: true, observe: 'events' });
+      } else {
+        const url = `${environment.supplierApiUrl}/product/editProductWithoutPic`;
+        response = this.http.post(url, formData, { reportProgress: true, observe: 'events' });
+      }
 
-      return this.http.post(url, formData, { reportProgress: true, observe: 'events' });
+      return response;
     }
 
 }

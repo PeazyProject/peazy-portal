@@ -23,9 +23,9 @@ export class EditProductComponent extends BaseComponent {
     productSeqNo: string = this.routeStateService.getCurrent().data.productSeqNo;
     isEditMode = false;
     mainPictureUrl: any;
-    pictureUrlList: any[] = ['', '', '', '', '', '', '', ''];
+    pictureUrlList: any[] = ['', ''];
     mainPicture: any;
-    pictureList: any[] = ['', '', '', '', '', '', '', ''];
+    pictureList: any[] = ['', ''];
     isPicUpload = false;
 
     constructor(
@@ -118,11 +118,11 @@ export class EditProductComponent extends BaseComponent {
       if (isNullOrEmpty(this.mainPicture) || isNullOrEmpty(this.pictureList)) {
           if (isNullOrEmpty(this.queryProductBySeqNoParam.mainPic) && isNullOrEmpty(this.queryProductBySeqNoParam.picList)) {
             this.toastService.warn("請上傳圖片");
+            return;
           }
-        return;
       }
-      // TODO 需要做一隻API For不更新圖片的
-      this.productService.editProduct(this.queryProductBySeqNoParam, this.mainPicture, this.pictureList)
+
+      this.productService.editProduct(this.queryProductBySeqNoParam, this.mainPicture, this.pictureList, this.isPicUpload)
       .subscribe({
         next: () => {
           // TODO 下面記得打開
@@ -138,13 +138,16 @@ export class EditProductComponent extends BaseComponent {
     previewPic(event: any): void {
       this.mainPictureUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
       this.mainPicture = event.target.files[0];
-
-      for (let i = 1; i <= 8; i ++) {
-        if (event.target.files[i] != null) {
-          this.pictureUrlList[i - 1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[i]));
-          this.pictureList[i - 1] = event.target.files[i];
-        }
-      }
+      this.pictureList[0] = event.target.files[0];
+      this.pictureUrlList[0] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
+      this.pictureList[1] = event.target.files[0];
+      this.pictureUrlList[1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
+      // for (let i = 1; i <= 8; i ++) {
+      //   if (event.target.files[i] != null) {
+      //     this.pictureUrlList[i - 1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[i]));
+      //     this.pictureList[i - 1] = event.target.files[i];
+      //   }
+      // }
 
       this.isPicUpload = true;
     }
