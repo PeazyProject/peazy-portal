@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ProductColorSizeBean } from 'src/app/core/models/product/product-color-size-bean';
 import { ProductService } from '../product-service';
 import { QueryProductBySeqNoParam } from 'src/app/core/models/product/query-product-by-seq-no-param';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'edit-product',
@@ -23,9 +24,9 @@ export class EditProductComponent extends BaseComponent {
     productSeqNo: string = this.routeStateService.getCurrent().data.productSeqNo;
     isEditMode = false;
     mainPictureUrl: any;
-    pictureUrlList: any[] = ['', ''];
+    pictureUrlList: any[] = ['', '', '' ,'', '', '', '', ''];
     mainPicture: any;
-    pictureList: any[] = ['', ''];
+    pictureList: any[] = ['', '', '' ,'', '', '', '', ''];
     isPicUpload = false;
 
     constructor(
@@ -34,22 +35,22 @@ export class EditProductComponent extends BaseComponent {
       private sanitizer: DomSanitizer) {
         super(injector);
         this.queryProductBySeqNoParam = {
-          productSeqNo: "",
-          productName: "",
+          productSeqNo: '',
+          productName: '',
           skuList: [],
           mpnList: [],
           sizeList: [],
           colorList: [],
           cost: 0,
           price: 0,
-          category: "",
-          productStatus: "",
-          productDesc: "",
-          mainPic: "",
-          picList: [],
+          category: '',
+          productStatus: 'AVAILABLE',
+          productDesc: '',
+          mainPic: '',
+          picList: ['', '', '' ,'', '', '', '', ''],
           productColorSizeList: [],
-          userId: "",
-          vendorSeqNo: ""
+          userId: '',
+          vendorSeqNo: ''
         }
      }
 
@@ -124,9 +125,23 @@ export class EditProductComponent extends BaseComponent {
 
       this.productService.editProduct(this.queryProductBySeqNoParam, this.mainPicture, this.pictureList, this.isPicUpload)
       .subscribe({
-        next: () => {
-          // TODO 下面記得打開
-          // this.routeStateService.navigateTo('/supplier/MainProduct',{});
+        next: resp => {
+
+          if (resp.type === HttpEventType.UploadProgress) {
+            // This is an upload progress event. Compute and show the % done:
+            // const percentDone = Math.round(100 * resp.loaded / resp.total);
+            // this.fileUpload.progress = percentDone;
+          }
+          if (resp.type === HttpEventType.Response) {
+            if (resp.status == 200) {
+              if (this.isEditMode) {
+                this.toastService.success("修改商品成功", false);
+              } else {
+                this.toastService.success("新增商品成功", false);
+              }
+              this.routeStateService.navigateTo('/supplier/MainProduct',{});
+            }
+          }
         }
       })
     }
@@ -138,16 +153,13 @@ export class EditProductComponent extends BaseComponent {
     previewPic(event: any): void {
       this.mainPictureUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
       this.mainPicture = event.target.files[0];
-      this.pictureList[0] = event.target.files[0];
-      this.pictureUrlList[0] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
-      this.pictureList[1] = event.target.files[0];
-      this.pictureUrlList[1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]));
-      // for (let i = 1; i <= 8; i ++) {
-      //   if (event.target.files[i] != null) {
-      //     this.pictureUrlList[i - 1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[i]));
-      //     this.pictureList[i - 1] = event.target.files[i];
-      //   }
-      // }
+
+      for (let i = 1; i <= 8; i ++) {
+        if (event.target.files[i] != null) {
+          this.pictureUrlList[i - 1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[i]));
+          this.pictureList[i - 1] = event.target.files[i];
+        }
+      }
 
       this.isPicUpload = true;
     }

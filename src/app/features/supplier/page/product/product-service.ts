@@ -59,9 +59,7 @@ export class ProductService {
       if (isPicUpload) {
         formData.append('mainPicFile', mainPicture);
         pictureList.forEach(file => formData.append('picFiles', file));
-        
-        console.log("-----")
-        console.log(formData);
+
         const url = `${environment.supplierApiUrl}/product/editProduct`;
         response = this.http.post(url, formData, { reportProgress: true, observe: 'events' });
       } else {
