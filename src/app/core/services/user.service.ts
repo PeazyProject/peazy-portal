@@ -81,7 +81,8 @@ export class UserService {
   }
 
   createCustomerUser(request: any): Observable<any> {
-    const url = `${environment.authUrl}/registerCustomerUser`;
+    // const url = `${environment.authUrl}/registerCustomerUser`;
+    const url = `${environment.authUrl}/user/createCustomerUser`;
     return this.http.post(url, request);
   }
 
