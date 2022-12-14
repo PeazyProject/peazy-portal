@@ -116,7 +116,7 @@ export class AuthenticationService {
   }
 
   register(request: any) {
-    return this.userService.createCustomerUser(request);
+    return this.userService.createUser(request);
   }
 
 }

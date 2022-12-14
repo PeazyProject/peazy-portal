@@ -80,9 +80,8 @@ export class UserService {
     return this.http.put(url, { preference: this.preference, userName: this.userInfo.name });
   }
 
-  createCustomerUser(request: any): Observable<any> {
-    // const url = `${environment.authUrl}/registerCustomerUser`;
-    const url = `${environment.authUrl}/user/createCustomerUser`;
+  public createUser(request: any): Observable<any> {
+    const url = `${environment.authUrl}/createUser`;
     return this.http.post(url, request);
   }
 
