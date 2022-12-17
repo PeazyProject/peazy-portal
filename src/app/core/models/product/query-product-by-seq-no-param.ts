@@ -12,8 +12,8 @@ export interface QueryProductBySeqNoParam {
   category: string;
   productStatus: string;
   productDesc: string;
-  mainPic: any;
-  picList: any[];
+  mainPicSnCode: any;
+  picSnCodeList: any[];
   productColorSizeList: ProductColorSizeBean[];
   userId: String;
   vendorSeqNo: String;

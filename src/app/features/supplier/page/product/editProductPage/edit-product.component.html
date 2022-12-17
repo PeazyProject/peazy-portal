@@ -103,7 +103,7 @@
 
     <div class="p-field p-col-12 p-md-8 p-lg-6">
       <img *ngIf="!isPicUpload" class="edit-main-img-border"
-        [src]="getImgUrl(queryProductBySeqNoParam.mainPic) | image | async"
+        [src]="getImgUrl(queryProductBySeqNoParam.mainPicSnCode) | image | async"
         onerror="this.src='assets/images/noImage.png'"/>
 
       <img *ngIf="isPicUpload" class="edit-main-img-border"
@@ -111,7 +111,7 @@
         onerror="this.src='assets/images/noImage.png'"/>
 
       <ng-container *ngIf="!isPicUpload">
-        <img *ngFor="let picture of queryProductBySeqNoParam.picList"
+        <img *ngFor="let picture of queryProductBySeqNoParam.picSnCodeList"
         class="edit-img-border" [src]="getImgUrl(picture) | image | async"
           onerror="this.src='assets/images/noImage.png'"/>
       </ng-container>

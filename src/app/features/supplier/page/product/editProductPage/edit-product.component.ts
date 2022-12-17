@@ -46,8 +46,8 @@ export class EditProductComponent extends BaseComponent {
           category: '',
           productStatus: 'AVAILABLE',
           productDesc: '',
-          mainPic: '',
-          picList: ['', '', '' ,'', '', '', '', ''],
+          mainPicSnCode: '',
+          picSnCodeList: ['', '', '' ,'', '', '', '', ''],
           productColorSizeList: [],
           userId: '',
           vendorSeqNo: ''
@@ -116,11 +116,12 @@ export class EditProductComponent extends BaseComponent {
 
     editProduct(): void {
       this.queryProductBySeqNoParam.userId = 'AlanLee';
-      if (isNullOrEmpty(this.mainPicture) || isNullOrEmpty(this.pictureList)) {
-          if (isNullOrEmpty(this.queryProductBySeqNoParam.mainPic) && isNullOrEmpty(this.queryProductBySeqNoParam.picList)) {
-            this.toastService.warn("請上傳圖片");
-            return;
-          }
+
+      if (this.isPicUpload) {
+        if (isNullOrEmpty(this.mainPicture) || isNullOrEmpty(this.pictureList[0])) {
+          this.toastService.warn("請上傳最少兩張圖片");
+          return;
+        }
       }
 
       this.productService.editProduct(this.queryProductBySeqNoParam, this.mainPicture, this.pictureList, this.isPicUpload)
@@ -135,6 +136,7 @@ export class EditProductComponent extends BaseComponent {
           if (resp.type === HttpEventType.Response) {
             if (resp.status == 200) {
               if (this.isEditMode) {
+                // TODO 要弄一下i18N
                 this.toastService.success("修改商品成功", false);
               } else {
                 this.toastService.success("新增商品成功", false);
@@ -159,6 +161,11 @@ export class EditProductComponent extends BaseComponent {
           this.pictureUrlList[i - 1] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[i]));
           this.pictureList[i - 1] = event.target.files[i];
         }
+      }
+
+      if (event.target.files.length < 2) {
+        this.pictureUrlList = ['', '', '', '', '', '', '', ''];
+        this.pictureList = ['', '', '', '', '', '', '', ''];
       }
 
       this.isPicUpload = true;
