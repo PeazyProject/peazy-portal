@@ -26,12 +26,9 @@ registerRequest!: RegisterRequest;
     this.formParams = this.fb.group({
       userAccount: this.createAccount(),
       userName: this.createUser(),
-      userPassword: "Password",
-      userAddress: null,
+      userPassword: "12345",
       userEmail: this.createEmail(),
-      createDt: null,
-      userPhoneNumber: null,
-      userStoreName: null,
+      userType: "Admin"
     });
    }
 

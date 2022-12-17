@@ -32,8 +32,8 @@ export class LoginComponent extends BaseComponent  implements OnInit {
       this.routeStateService.navigateTo('/');
     }
     this.loginForm = this.formBuilder.group({
-      username: [this.isProd ? '' : 'Jay', Validators.required],
-      password: [this.isProd ? '' : 'password', Validators.required]
+      username: [this.isProd ? '' : 'Admin', Validators.required],
+      password: [this.isProd ? '' : '12345', Validators.required]
     });
   }
 
