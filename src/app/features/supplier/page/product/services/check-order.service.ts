@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SupplierProduct } from 'src/app/core/models/common/supplier-product';
+import { ConfirmCheckOrderRequest } from 'src/app/core/models/request/confirm-check-order-request';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -39,5 +41,12 @@ export class CheckOrderService {
   queryAllCheckOrder(): Observable<any> {
     const url = `${environment.supplierApiUrl}/checkOrder/queryAllCheckOrder`;
     return this.http.post(url, null);
+  }
+
+  confirmCheckOrder(checkOrderDataItemList: ConfirmCheckOrderRequest): Observable<any> {
+    console.log("requset");
+    console.log(checkOrderDataItemList);
+    const url = `${environment.supplierApiUrl}/checkOrder/confirmCheckOrder`;
+    return this.http.post(url, checkOrderDataItemList);
   }
 }

@@ -50,8 +50,8 @@ export class CheckOrderComponent extends BaseComponent {
   ngOnInit(): void {
     this.queryAllCheckOrder();
     this.sortOptions = [
-      { label: 'Qty High to Low', value: '!productOrderedCnt' },
-      { label: 'Qty Low to High', value: 'productOrderedCnt' },
+      { label: '已叫貨數量 高至低排序', value: '!productOrderedCnt' },
+      { label: '已叫貨數量 低至高排序', value: 'productOrderedCnt' },
     ];
   }
 
@@ -93,8 +93,6 @@ export class CheckOrderComponent extends BaseComponent {
   showDialog(event: Event): void {}
 
   checkOrderItem(orderItem: any) {
-    console.log('checkOrderItem');
-    console.log(orderItem);
     this.isShowCheckOrderItem = true;
     this.checkOrder.queryCheckOrderItem(orderItem);
   }
@@ -110,6 +108,7 @@ export class CheckOrderComponent extends BaseComponent {
   closeDialog(display: any) {
     this.isShowCheckOrderItem = display;
     this.checkOrderList = [];
+    this.totalCheckOrderCnt = 0;
     this.queryAllCheckOrder();
   }
 

@@ -3,7 +3,7 @@
         <h1>{{ headerProductName }}-{{ headerProductSku }}</h1>
     </div>
 
-    <div *ngFor="let productItem of productItem">
+    <div *ngFor="let productItem of productItemList">
         <div class="p-col-12">
             <div class="order-check-item">
                 <div class="p-col-3">
@@ -14,24 +14,28 @@
                     <div class="p-grid p-mt-2">
                         <div class="float-label-padding p-col">
                             <span class="p-float-label">
-                                <p-inputNumber [disabled]="true" id="float-input"></p-inputNumber>
-                                <label for="float-input">{{ productItem.color }}</label>
+                                <input pInputText [disabled]="true" [(ngModel)]="productItem.color" id="float-input"/>
+                                <label for="float-input">顏色</label>
                             </span>
                         </div>
 
                         <div class="float-label-padding p-col">
                             <span class="p-float-label">
-                                <p-inputNumber [disabled]="true" id="float-input"></p-inputNumber>
-                                <label>{{ productItem.size }}</label>
+                                <input pInputText [disabled]="true" [(ngModel)]="productItem.size" id="float-input"/>
+                                <label>尺寸</label>
                             </span>
                         </div>
-
                         <div class="float-label-padding p-col">
                             <span class="p-float-label">
-                                <p-inputNumber id="float-input"></p-inputNumber>
+                                <p-inputNumber id="float-input" name="checkOrderCnt" [(ngModel)]="productItem.checkOrderCnt" [required]="true"
+                                    (ngModelChange)="checkOrderCntInput(productItem)"
+                                    [class]="productItem.checkOrderCnt == null ? ['ng-invalid', 'ng-dirty'] : []"></p-inputNumber>                               
                                 <label for="float-input">已點收數量</label>
+                                <small *ngIf="productItem.checkOrderCnt == null" class="p-invalid">需輸入數字</small>
                             </span>
+
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -45,7 +49,7 @@
         <div class="p-grid order-check-item-detail">
             <div class="p-col">總未點收數量 : {{ totalCheckOrderCnt }}</div>
             <div class="p-col p-mt-2">
-                <button (click)="confirmCheckOrderData($event)" pRipple pButton label="點收完成"
+                <button [disabled]="confirmBtn" (click)="confirmCheckOrderData(productItemList)" pRipple pButton label="點收完成"
                     class="p-button-raised p-ml-2"></button>
                 <button (click)="onClose()" pRipple pButton label="關閉視窗"
                     class="p-button-secondary p-button-raised p-ml-2"></button>
