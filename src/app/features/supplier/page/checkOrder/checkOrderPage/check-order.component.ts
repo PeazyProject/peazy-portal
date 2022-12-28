@@ -6,7 +6,7 @@ import { Dialog } from 'primeng/dialog';
 import { isNullOrEmpty } from 'src/app/core/utils/common-functions';
 import { BaseComponent } from 'src/app/shared/components/base.component';
 import { CheckOrderItemComponent } from '../checkOrderItem/check-order-item.component';
-import { ProductService } from '../product-service';
+import { ProductService } from '../../product/product-service';
 import { CheckOrderService } from '../services/check-order.service';
 
 @Component({
