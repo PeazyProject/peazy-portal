@@ -8,7 +8,10 @@ export const environment = {
   authUrl: 'https://peazy-auth.onrender.com/auth',
   // authUrl: 'http://localhost:8080/auth',
   supplierApiUrl: 'https://peazy-supplier.onrender.com/supplier',
-  // supplierApiUrl: 'http://localhost:8082/supplier',
+    // supplierApiUrl: 'http://localhost:8082/supplier',
+  customerApiUrl: 'https://peazy-csutomer.onrender.com/csutomer',
+  // customerApiUrl: 'http://localhost:8083/customer',
+
 };
 
 /*

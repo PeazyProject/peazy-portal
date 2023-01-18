@@ -16,7 +16,6 @@ import { HeaderComponent } from './layout/header/header.component';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { SideMenuComponent } from './layout/side-menu/side-menu.component';
-import { SupplierModule } from './features/supplier/supplier.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { LoggerModule } from 'ngx-logger';

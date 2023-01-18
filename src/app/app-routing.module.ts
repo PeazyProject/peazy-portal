@@ -23,6 +23,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('src/app/features/supplier/supplier.module')
             .then(module => module.SupplierModule)
+      },
+      {
+        path: 'customer',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('src/app/features/customer/customer.module')
+            .then(module => module.CustomerModule)
       }
     ]
   },

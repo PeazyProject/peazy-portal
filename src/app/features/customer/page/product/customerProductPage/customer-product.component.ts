@@ -1,23 +1,20 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import {SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
-import { ProductService } from '../product-service';
+import { CustomerProductService } from '../customer-product-service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { isNullOrEmpty } from 'src/app/core/utils/common-functions';
 import { finalize } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SessionBaseComponent } from 'src/app/shared/components/session.base.component';
+import { ProductService } from 'src/app/features/supplier/page/product/product-service';
 
 @Component({
-  selector: 'main-product',
-  templateUrl: './main-product.component.html',
-  styleUrls: ['./main-product.component.scss']
+  selector: 'customer-product',
+  templateUrl: './customer-product.component.html',
+  styleUrls: ['./customer-product.component.scss']
 })
-export class MainProductComponent extends SessionBaseComponent implements OnInit {
-
-    sortOptions: SelectItem[] = [];
-    sortOrder!: number;
-    sortField!: string;
+export class CustomerProductComponent extends SessionBaseComponent implements OnInit {
 
     isSearchFormOpen: boolean;
     searchForm: FormGroup;
@@ -30,6 +27,7 @@ export class MainProductComponent extends SessionBaseComponent implements OnInit
 
     constructor(
       injector: Injector,
+      private customerProductService: CustomerProductService,
       private productService: ProductService,
       private primengConfig: PrimeNGConfig,
       private fb: FormBuilder) {
@@ -49,29 +47,7 @@ export class MainProductComponent extends SessionBaseComponent implements OnInit
 
      override async ngOnInit(): Promise<void> {
       super.ngOnInit();
-
-      this.productService.getDropDownList("DropDownList", "IsStockOption").subscribe({
-        next: (result: any) => {
-          this.isStockOption = result
-        }
-      });
-      // this.userType = this.userProfile.email;
-      console.log("LOOK userType = " + this.userService.userInfo.type);
       this.searchBtnClick(true);
-
-    }
-
-    onSortChange(event: { value: any; }) {
-        let value = event.value;
-
-        if (value.indexOf('!') === 0) {
-            this.sortOrder = -1;
-            this.sortField = value.substring(1, value.length);
-        }
-        else {
-            this.sortOrder = 1;
-            this.sortField = value;
-        }
     }
 
     chipsAdd(event: any, fromControlName: any): void {
@@ -96,7 +72,7 @@ export class MainProductComponent extends SessionBaseComponent implements OnInit
         this.isSearchFormOpen = false;
       }
 
-      this.productService.queryProduct(this.searchForm.value)
+      this.customerProductService.queryCustomerProduct(this.searchForm.value)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: result => {
@@ -126,9 +102,8 @@ export class MainProductComponent extends SessionBaseComponent implements OnInit
       this.routeStateService.navigateTo('/supplier/EditProduct', {productSeqNo});
     }
 
-    // TODO 接下來要做購物車的畫面，或是思考一下是否要把客戶跟中盤商兩個商品畫面分開，因為要放購物車一定要選Size跟顏色，然後再做商品詳細畫面與購物車
     addShoppingCart(productSeqNo: any): void {
-      this.routeStateService.navigateTo('/customer/ShoppingCart', {productSeqNo});
+      // TODO 接下來修改這邊，讓User可以快速加入產品到購物車，要寫API在Customer那包
     }
 
     accordionTabOpen(): void {
