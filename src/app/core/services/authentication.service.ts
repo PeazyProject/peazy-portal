@@ -57,7 +57,7 @@ export class AuthenticationService {
           const userProfile = await lastValueFrom(this.userService.getUserProfile());
           const user: User = {
             id: userProfile.userProfile.uuid,
-            name: userProfile.userProfile.userName,
+            name: userProfile.userProfile.name,
             email: userProfile.userProfile.email,
             type: userProfile.userProfile.userType
           };
@@ -106,7 +106,7 @@ export class AuthenticationService {
   private getToken(username: string, password: string, loginType: string): Observable<any> {
       return loginType === 'loginWithUserName' ?
       this.http.post<any>(`${environment.authUrl}/authentication`, {
-        userEmail: null,
+        userEmail: username,
         userName: username,
         userPassword: password }) :
       this.http.post<any>(`${environment.authUrl}/authenticationByEmail`, {

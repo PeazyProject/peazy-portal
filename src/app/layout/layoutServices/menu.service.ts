@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { RouteStateService } from './route-state.service';
 import { GlobalConstants } from 'src/app/core/constants/globalConstants';
 import { PeazySettingService } from './peazy-setting.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class MenuService {
@@ -19,15 +20,14 @@ export class MenuService {
     this.toggleMenuBar = new BehaviorSubject<any>(null);
     this.menuItems = new BehaviorSubject<any[]>([]);
     // TODO 之後做Menu再打開
-    // this.getMenuData()
-    //   .subscribe({
-    //     next: (menus: any[]) => {
-    //       const root = menus.find(x => x.nodeType === 'Root');
-    //       const menuTree = this.convertToMenuItems(root, menus);
-    //       const menuItems = isNullOrEmpty(menuTree) ? [] : menuTree.items as any[];
-    //       this.menuItems.next(menuItems);
-    //     }
-    //   });
+    this.getMenuData().subscribe({
+      next: (menus: any[]) => {
+        const root = menus.find(x => x.nodeType === 'Root');
+        const menuTree = this.convertToMenuItems(root, menus);
+        const menuItems = isNullOrEmpty(menuTree) ? [] : menuTree.items as any[];
+        this.menuItems.next(menuItems);
+      }
+    });
   }
 
   convertToMenuItems(node: any, menuRawData: any[]): any {
@@ -54,13 +54,7 @@ export class MenuService {
         }
       }
     }
-
     return nodeItem;
-  }
-
-  private getMenuData(): Observable<any> {
-    const url = '/api/menu';
-    return this.http.get(url);
   }
 
   private getMenuLabelByLanguage(menu: any, lang: string): string {
@@ -72,5 +66,10 @@ export class MenuService {
       default:
         return '';
     }
+  }
+
+  private getMenuData(): Observable<any> {
+    const url = `${environment.authUrl}/menu/fetchMenu`;
+    return this.http.get<any>(url);
   }
 }

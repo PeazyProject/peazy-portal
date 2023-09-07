@@ -42,7 +42,7 @@ export class HeaderComponent extends SessionBaseComponent implements OnInit {
   override async ngOnInit(): Promise<void> {
     try {
       await super.ngOnInit();
-      this.userName = this.userProfile.userName;
+      this.userName = this.userProfile.name;
       this.email = this.userProfile.email;
       this.language = this.peazySetting.language;
       this.translateService.use(this.language);

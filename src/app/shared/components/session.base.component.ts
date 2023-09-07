@@ -54,7 +54,7 @@ export class SessionBaseComponent extends BaseComponent implements OnInit, After
       this.userService.getUserProfile().subscribe({
         next: (result) => {
           this.userProfile = result.userProfile;
-          console.log("userProfile", JSON.stringify(this.userProfile, null, "\t"));
+          console.log("session userProfile", JSON.stringify(this.userProfile, null, "\t"));
         },
         error: () => {
           console.log("session error and logouting...");
@@ -65,12 +65,12 @@ export class SessionBaseComponent extends BaseComponent implements OnInit, After
       });
     }
 
-    // // permission Codes
+    // permission Codes
     // this.permssionCodes = (Object.values(this.userProfile.roles)
     //   .reduce((c: any, i: any) => c.concat(i.permissions), []) as any).map((x: any) => {
     //     return x.permissionCode;
     //   });
-    // // data Scopes
+    // data Scopes
     // this.dataScope.tenantCodes = (Object.values(this.userProfile.roles)
     //   .reduce((c: any, i: any) => c.concat(i.scopes), []) as any).map((x: any) => {
     //     return x.tenantCode;

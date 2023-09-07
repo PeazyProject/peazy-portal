@@ -32,7 +32,7 @@ export class LoginComponent extends BaseComponent  implements OnInit {
       this.routeStateService.navigateTo('/');
     }
     this.loginForm = this.formBuilder.group({
-      username: [this.isProd ? '' : 'Admin', Validators.required],
+      username: [this.isProd ? '' : 'Admin@gmail.com', Validators.required],
       password: [this.isProd ? '' : '12345', Validators.required]
     });
   }
@@ -73,4 +73,9 @@ export class LoginComponent extends BaseComponent  implements OnInit {
         }
       });
   }
+
+  onLogout(): void {
+    this.authenticationService.logout();
+  }
+
 }

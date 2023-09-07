@@ -69,6 +69,9 @@ export class SideMenuComponent extends SessionBaseComponent implements OnInit, A
         menuItems.push(menu);
       }
     }
+    for (const menu of targetMenus) {
+      menuItems.push(menu);
+    }
 
     return menuItems;
   }
