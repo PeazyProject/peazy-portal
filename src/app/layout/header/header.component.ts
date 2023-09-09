@@ -51,7 +51,8 @@ export class HeaderComponent extends SessionBaseComponent implements OnInit {
       const userRefreshToken: UserRefreshToken = {
         language: this.peazySetting.language
       }
-      this.authenticationService.refreshTokenBy(userRefreshToken);
+      // TODO之後開啟
+      // this.authenticationService.refreshTokenBy(userRefreshToken);
     } catch (err) {
       console.log('baseSession Error');
     }

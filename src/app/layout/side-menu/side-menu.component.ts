@@ -30,10 +30,11 @@ export class SideMenuComponent extends SessionBaseComponent implements OnInit, A
     if (window.innerWidth <= 667) {
       this.menuDataService.toggleMenuBar.next(true);
     }
-
+    console.log("SideMenuComponent=");
     this.menuDataService.menuItems
       .subscribe({
         next: (menuItems: any[]) => {
+          console.log("menuItems=", JSON.stringify(menuItems));
           this.items = this.getVisibleMenus(menuItems, this.permssionCodes);
         }
       });
@@ -68,9 +69,6 @@ export class SideMenuComponent extends SessionBaseComponent implements OnInit, A
       if (menu.items.length > 0) {
         menuItems.push(menu);
       }
-    }
-    for (const menu of targetMenus) {
-      menuItems.push(menu);
     }
 
     return menuItems;

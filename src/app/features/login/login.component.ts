@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 import { BaseComponent } from 'src/app/shared/components/base.component';
 
 import { environment } from './../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -37,41 +38,42 @@ export class LoginComponent extends BaseComponent  implements OnInit {
     });
   }
 
-  get f() { return this.loginForm.controls; }
-
   onSubmit(): void {
-    console.log("do onSubmit() at login.component");
-    // this.submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
 
-    // if (this.loginForm.invalid) {
-    //   return;
-    // }
-
-    // this.loader.show();
-    // this.loading = true;
-    console.log("username=", this.f['username'].value, ", password=", this.f['password'].value);
-    this.authenticationService.login(this.f['username'].value, this.f['password'].value, 'loginWithUserName')
+    this.loader.show();
+    this.loading = true;
+    const formData = this.loginForm.value;
+    console.log("username=", formData.username, ", password=", formData.password);
+    const loginMethod = this.isEmail(formData.username) ? 'loginWithEmail' : 'loginWithAccount';
+    this.authenticationService.login(formData.username, formData.password, loginMethod)
       .pipe(
         finalize(() => {
-        // this.loader.hide();
-        // this.loading = false;
+        this.loader.hide();
+        this.loading = false;
       }))
       .subscribe({
         next: () => {
-          console.log("do login() next at login.component");
-          // this.routeStateService.navigateTo(this.returnUrl);
+          console.log("Login Successful");
+          this.routeStateService.navigateTo('/');
         },
         error: err => {
-          console.log("do login() error at login.component");
-          // if(err.error){
-          //   this.toastErrorMessage(err.error);
-          // }else{
-          //   this.errorMsg = err || err.message;
-          //   this.toastService.error('login failed');
-          //   this.logger.error(err);
-          // }
+          console.log("Login Error");
+          if (err?.error) {
+            this.toastErrorMessage(err.error);
+          } else {
+            const errorMsg = err || err.message;
+            this.logger.error(errorMsg);
+          }
         }
       });
+  }
+
+  isEmail(email: string): boolean {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
   }
 
   onLogout(): void {

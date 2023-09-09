@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { from, lastValueFrom, Observable } from 'rxjs';
+import { from, lastValueFrom, Observable, switchMap, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { GlobalConstants } from '../constants/globalConstants';
@@ -45,7 +45,30 @@ export class AuthenticationService {
     this.localStorageService.setItem(GlobalConstants.currentToken, token);
   }
 
-  login(username: string, password: string, loginType: string): Observable<any> {
+  login(username: string, password: string, loginType: string): Observable<void> {
+    return this.getToken(username, password, loginType).pipe(
+      switchMap(result => {
+        if (!result) {
+          throw new Error('jwt authenticaton fail...');
+        }
+        this.currentToken = result.jwtToken;
+        return this.userService.getUserProfile();
+      }),
+      tap((userProfile: any) => {
+        const user: User = {
+          id: userProfile.userProfile.uuid,
+          name: userProfile.userProfile.name,
+          email: userProfile.userProfile.email,
+          type: userProfile.userProfile.userType
+        };
+        this.userService.userInfo = user;
+        // Here you can also process userPreference if necessary.
+
+      })
+    );
+  }
+
+  xlogin(username: string, password: string, loginType: string): Observable<any> {
 
     const promise = new Promise<void>(async (resolve, reject) => {
       try {
@@ -62,7 +85,6 @@ export class AuthenticationService {
             type: userProfile.userProfile.userType
           };
           this.userService.userInfo = user;
-
 
           // const userPreference = await lastValueFrom(this.userService.getUserPreference());
 
@@ -99,17 +121,17 @@ export class AuthenticationService {
     const jwtResp = await this.getToken(
       this.userService.userInfo.email,
       'password',
-      'loginWithUserName').toPromise()
+      'loginWithEmail').toPromise()
     this.currentToken = jwtResp.token
   }
 
   private getToken(username: string, password: string, loginType: string): Observable<any> {
-      return loginType === 'loginWithUserName' ?
+      return loginType === 'loginWithEmail' ?
       this.http.post<any>(`${environment.authUrl}/authentication`, {
         userEmail: username,
         userName: username,
         userPassword: password }) :
-      this.http.post<any>(`${environment.authUrl}/authenticationByEmail`, {
+      this.http.post<any>(`${environment.authUrl}/authenticationByAccount`, {
         userEmail: username,
         userName: null,
         userPassword: password });

@@ -51,25 +51,26 @@ export class SessionBaseComponent extends BaseComponent implements OnInit, After
     this.logger.info(`${this.constructor.name}->SessionBaseComponent onInit.`);
 
     if (isNullOrEmpty(this.userProfile)) {
-      this.userService.getUserProfile().subscribe({
-        next: (result) => {
+
+      try {
+        const result = await lastValueFrom(this.userService.getUserProfile());
+        if (!isNullOrEmpty(result)) {
           this.userProfile = result.userProfile;
-          console.log("session userProfile", JSON.stringify(this.userProfile, null, "\t"));
-        },
-        error: () => {
-          console.log("session error and logouting...");
-          this.authenticationService.logout();
-          this.routeStateService.navigateTo('/login');
-          return Promise.resolve();
         }
-      });
+        console.log("session userProfile", JSON.stringify(this.userProfile, null, "\t"));
+      } catch (error) {
+        console.log("session error and logouting...");
+        this.authenticationService.logout();
+        this.routeStateService.navigateTo('/login');
+        return Promise.resolve();
+      }
     }
 
     // permission Codes
-    // this.permssionCodes = (Object.values(this.userProfile.roles)
-    //   .reduce((c: any, i: any) => c.concat(i.permissions), []) as any).map((x: any) => {
-    //     return x.permissionCode;
-    //   });
+    this.permssionCodes = (Object.values(this.userProfile.roles)
+      .reduce((c: any, i: any) => c.concat(i.permissions), []) as any).map((x: any) => {
+        return x.permissionCode;
+      });
     // data Scopes
     // this.dataScope.tenantCodes = (Object.values(this.userProfile.roles)
     //   .reduce((c: any, i: any) => c.concat(i.scopes), []) as any).map((x: any) => {
