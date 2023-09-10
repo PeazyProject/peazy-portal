@@ -17,4 +17,8 @@ export class CustomerProductService {
       return this.http.post(url, param);
     }
 
+    addShoppingCart(param: any): Observable<any> {
+      const url = `${environment.customerApiUrl}/product/addShoppingCart`;
+      return this.http.post(url, param);
+    }
 }

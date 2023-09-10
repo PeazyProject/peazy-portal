@@ -5,9 +5,10 @@ import { CustomerProductService } from '../customer-product-service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { isNullOrEmpty } from 'src/app/core/utils/common-functions';
 import { finalize } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { SessionBaseComponent } from 'src/app/shared/components/session.base.component';
 import { ProductService } from 'src/app/features/supplier/page/product/product-service';
+import { AddShoppingCartRequest } from 'src/app/core/models/request/add-shopping-cart-request';
 
 @Component({
   selector: 'customer-product',
@@ -22,6 +23,7 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
     isLoading: boolean = false;
     productList: any[] = [];
     isStockOption: any[] = [];
+    addShoppingCartRequest: AddShoppingCartRequest;
 
     userType!: string;
 
@@ -43,6 +45,15 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
 
         this.isSearchFormOpen = true;
         this.userType = '';
+
+        this.addShoppingCartRequest = {
+          productSeqNo: '',
+          sizeSeqNo: '',
+          colorSeqNo: '',
+          productQty: '',
+          userUUID: '',
+          userId: ''
+        }
      }
 
      override async ngOnInit(): Promise<void> {
@@ -102,8 +113,24 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
       this.routeStateService.navigateTo('/supplier/EditProduct', {productSeqNo});
     }
 
-    addShoppingCart(productSeqNo: any): void {
-      // TODO 接下來修改這邊，讓User可以快速加入產品到購物車，要寫API在Customer那包
+    addShoppingCart(productSeqNo: any, colorSeqNo: any, sizeSeqNo: any, productQty: any): void {
+      this.addShoppingCartRequest.productSeqNo = productSeqNo;
+      this.addShoppingCartRequest.colorSeqNo = colorSeqNo;
+      this.addShoppingCartRequest.sizeSeqNo = sizeSeqNo;
+      this.addShoppingCartRequest.productQty = productQty;
+      this.addShoppingCartRequest.userUUID = this.userProfile.uuid;
+      this.addShoppingCartRequest.userId = this.userProfile.name;
+      this.customerProductService.addShoppingCart(this.addShoppingCartRequest)
+      .subscribe({
+        next: resp => {
+          if (resp.type === HttpEventType.Response) {
+            if (resp.status == 200) {
+              // TODO 要弄一下i18N
+              this.toastService.success("新增購物車成功", false);
+            }
+          }
+        }
+      })
     }
 
     accordionTabOpen(): void {

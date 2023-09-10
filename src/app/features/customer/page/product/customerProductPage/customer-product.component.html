@@ -92,18 +92,21 @@
                     <div class="product-description">{{productList.sku}}</div>
                     <div class="product-description">上架日期：{{productList.createDt | date:'yyyy-MM-dd'}}</div>
                     <div class="product-description">
-                      <p-dropdown [options]="productList.colorList" placeholder="顏色" optionLabel="label" optionValue="value"></p-dropdown>
-                      <p-dropdown [options]="productList.sizeList" placeholder="尺寸" optionLabel="label" optionValue="value"></p-dropdown>
+                      <p-dropdown [options]="productList.colorList" placeholder="顏色" optionLabel="label" optionValue="value"
+                        [(ngModel)]="productList.colorSeqNo"></p-dropdown>
+                      <p-dropdown [options]="productList.sizeList" placeholder="尺寸" optionLabel="label" optionValue="value"
+                        [(ngModel)]="productList.sizeSeqNo"></p-dropdown>
                     </div>
                     <div class="product-description">
-                      <p-inputNumber id="float-input" style="padding-top: 10px" placeholder="數量"></p-inputNumber>
+                      <p-inputNumber id="float-input" style="padding-top: 10px" placeholder="數量" [(ngModel)]="productList.productQty"></p-inputNumber>
                     </div>
                   </div>
 
                   <div class="product-grid-item-bottom">
                       <span class="product-price">${{productList.price}}</span>
                       <p-button icon="pi pi-shopping-cart"
-                        (click)="addShoppingCart(productList.productSeqNo)" [disabled]="productList.productStatus == 'OUT_OF_STOCK'"></p-button>
+                        (click)="addShoppingCart(productList.productSeqNo, productList.colorSeqNo, productList.sizeSeqNo, productList.productQty)"
+                          [disabled]="productList.productStatus == 'OUT_OF_STOCK'"></p-button>
                   </div>
               </div>
           </div>
