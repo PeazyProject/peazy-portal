@@ -2,13 +2,14 @@ import {Component, Injector, OnInit} from '@angular/core';
 import {SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { CustomerProductService } from '../customer-product-service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isNullOrEmpty } from 'src/app/core/utils/common-functions';
 import { finalize } from 'rxjs';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { SessionBaseComponent } from 'src/app/shared/components/session.base.component';
 import { ProductService } from 'src/app/features/supplier/page/product/product-service';
 import { AddShoppingCartRequest } from 'src/app/core/models/request/add-shopping-cart-request';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'customer-product',
@@ -24,6 +25,8 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
     productList: any[] = [];
     isStockOption: any[] = [];
     addShoppingCartRequest: AddShoppingCartRequest;
+    submitted: boolean = false;
+    productForm: FormGroup;
 
     userType!: string;
 
@@ -32,6 +35,7 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
       private customerProductService: CustomerProductService,
       private productService: ProductService,
       private primengConfig: PrimeNGConfig,
+      private translate: TranslateService,
       private fb: FormBuilder) {
 
         super(injector);
@@ -54,6 +58,20 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
           userUUID: '',
           userId: ''
         }
+
+        this.productForm = this.fb.group({
+          productSeqNo: '',
+          sizeSeqNo: ['', Validators.required],
+          colorSeqNo: ['', Validators.required],
+          productQty: ['', Validators.required],
+          userUUID: '',
+          userId: ''
+        });
+
+        this.translate.onLangChange.subscribe((e: Event) => {
+          this.submitted = false;
+        });
+
      }
 
      override async ngOnInit(): Promise<void> {
@@ -113,28 +131,64 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
       this.routeStateService.navigateTo('/supplier/EditProduct', {productSeqNo});
     }
 
-    addShoppingCart(productSeqNo: any, colorSeqNo: any, sizeSeqNo: any, productQty: any): void {
-      this.addShoppingCartRequest.productSeqNo = productSeqNo;
-      this.addShoppingCartRequest.colorSeqNo = colorSeqNo;
-      this.addShoppingCartRequest.sizeSeqNo = sizeSeqNo;
-      this.addShoppingCartRequest.productQty = productQty;
+    addShoppingCart(): void {
+      console.log("TESTSETSE  =",this.productForm);
+
+      this.submitted = true;
+      if (isNullOrEmpty(this.productForm.value.colorSeqNo) || isNullOrEmpty(this.productForm.value.sizeSeqNo) || isNullOrEmpty(this.productForm.value.productQty)) {
+        return;
+      }
+
+      this.addShoppingCartRequest.productSeqNo = this.productForm.value.productSeqNo;
+      this.addShoppingCartRequest.colorSeqNo = this.productForm.value.colorSeqNo;
+      this.addShoppingCartRequest.sizeSeqNo = this.productForm.value.sizeSeqNo;
+      this.addShoppingCartRequest.productQty = this.productForm.value.productQty;
       this.addShoppingCartRequest.userUUID = this.userProfile.uuid;
       this.addShoppingCartRequest.userId = this.userProfile.name;
       this.customerProductService.addShoppingCart(this.addShoppingCartRequest)
       .subscribe({
-        next: resp => {
-          if (resp.type === HttpEventType.Response) {
-            if (resp.status == 200) {
-              // TODO 要弄一下i18N
-              this.toastService.success("新增購物車成功", false);
-            }
-          }
+        next: () => {
+          // TODO 要家一下i18N
+          this.toastService.success("新增購物車成功", false);
         }
       })
     }
 
+    // addShoppingCart(productSeqNo: any, colorSeqNo: any, sizeSeqNo: any, productQty: any): void {
+
+    //   this.submitted = true;
+    //   if (isNullOrEmpty(colorSeqNo) || isNullOrEmpty(sizeSeqNo) || isNullOrEmpty(productQty)) {
+    //     return;
+    //   }
+
+    //   this.addShoppingCartRequest.productSeqNo = productSeqNo;
+    //   this.addShoppingCartRequest.colorSeqNo = colorSeqNo;
+    //   this.addShoppingCartRequest.sizeSeqNo = sizeSeqNo;
+    //   this.addShoppingCartRequest.productQty = productQty;
+    //   this.addShoppingCartRequest.userUUID = this.userProfile.uuid;
+    //   this.addShoppingCartRequest.userId = this.userProfile.name;
+    //   this.customerProductService.addShoppingCart(this.addShoppingCartRequest)
+    //   .subscribe({
+    //     next: () => {
+    //       // TODO 要家一下i18N
+    //       this.toastService.success("新增購物車成功", false);
+    //     }
+    //   })
+    // }
+
     accordionTabOpen(): void {
       this.isSearchFormOpen = true;
     }
+
+    showValidationMessage(param: any, submitted: boolean): boolean {
+      console.log("LOOK param = " + param);
+      if (isNullOrEmpty(param) && submitted) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    get f() { return this.productForm.controls; }
 
 }

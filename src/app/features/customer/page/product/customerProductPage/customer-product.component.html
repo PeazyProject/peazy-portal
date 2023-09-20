@@ -61,6 +61,7 @@
                 </div>
 
                 <div class="product-list-detail">
+                  <!--TODO 下次先來處理這邊的錯誤訊息紅色框 可以參考Login畫面或是laas-protal  -->
                   <p-dropdown [options]="productList.colorList" placeholder="顏色" optionLabel="label" optionValue="value"></p-dropdown>
                   <p-dropdown [options]="productList.sizeList" placeholder="尺寸" optionLabel="label" optionValue="value"></p-dropdown>
                 </div>
@@ -77,39 +78,61 @@
           </div>
       </ng-template>
 
-      <ng-template let-productList pTemplate="gridItem">
-          <div class="col-12 md:col-4">
-              <div class="product-grid-item card">
-                  <div class="product-grid-item-top">
-                      <div>
-                          <i class="pi pi-tag product-category-icon"></i>
-                          <span class="product-category">{{productList.category}}</span>
-                      </div>
-                  </div>
-                  <div class="product-grid-item-content">
-                    <img [src]="getImgUrl(productList.snCode) | image | async" alt="Product photo"/>
-                    <div class="product-name">{{productList.productName}}</div>
-                    <div class="product-description">{{productList.sku}}</div>
-                    <div class="product-description">上架日期：{{productList.createDt | date:'yyyy-MM-dd'}}</div>
-                    <div class="product-description">
-                      <p-dropdown [options]="productList.colorList" placeholder="顏色" optionLabel="label" optionValue="value"
-                        [(ngModel)]="productList.colorSeqNo"></p-dropdown>
-                      <p-dropdown [options]="productList.sizeList" placeholder="尺寸" optionLabel="label" optionValue="value"
-                        [(ngModel)]="productList.sizeSeqNo"></p-dropdown>
-                    </div>
-                    <div class="product-description">
-                      <p-inputNumber id="float-input" style="padding-top: 10px" placeholder="數量" [(ngModel)]="productList.productQty"></p-inputNumber>
-                    </div>
-                  </div>
+        <ng-template let-productList let-rowIndex="rowIndex" pTemplate="gridItem">
+        <form [formGroup]="productForm" (ngSubmit)="addShoppingCart()">
 
-                  <div class="product-grid-item-bottom">
-                      <span class="product-price">${{productList.price}}</span>
-                      <p-button icon="pi pi-shopping-cart"
-                        (click)="addShoppingCart(productList.productSeqNo, productList.colorSeqNo, productList.sizeSeqNo, productList.productQty)"
-                          [disabled]="productList.productStatus == 'OUT_OF_STOCK'"></p-button>
-                  </div>
-              </div>
-          </div>
-      </ng-template>
+            <div class="col-12 md:col-4">
+                <div class="product-grid-item card">
+                    <div class="product-grid-item-top">
+                        <div>
+                            <i class="pi pi-tag product-category-icon"></i>
+                            <span class="product-category">{{productList.category}}</span>
+                        </div>
+                    </div>
+                    <div class="product-grid-item-content">
+                      <img [src]="getImgUrl(productList.snCode) | image | async" alt="Product photo"/>
+                      <div class="product-name">{{productList.productName}}</div>
+                      <div class="product-description">{{productList.sku}}</div>
+                      <div class="product-description">上架日期：{{productList.createDt | date:'yyyy-MM-dd'}}</div>
+                      <div class="product-description">
+
+                        <p-dropdown  [options]="productList.colorList" placeholder="顏色" optionLabel="label" optionValue="value"
+                          [(ngModel)]="productList.colorSeqNo" formControlName="colorSeqNo"
+                          [class]="showValidationMessage(productList.colorSeqNo, submitted) ? ['ng-invalid', 'ng-dirty'] : []"></p-dropdown>
+                        <div *ngIf="showValidationMessage(productList.colorSeqNo, submitted)">
+                          <!-- TODO 下次繼續處理這個BUG，可能要換寫法-->
+                          <small class="p-invalid">必填欄位</small>
+                        </div>
+
+                        <p-dropdown  [options]="productList.sizeList" placeholder="尺寸" optionLabel="label" optionValue="value"
+                          [(ngModel)]="productList.sizeSeqNo" formControlName="sizeSeqNo"
+                          [class]="showValidationMessage(productList.sizeSeqNo, submitted) ? ['ng-invalid', 'ng-dirty'] : []"></p-dropdown>
+                        <div *ngIf="showValidationMessage(productList.sizeSeqNo, submitted)">
+                          <small class="p-invalid">必填欄位</small>
+                        </div>
+                      </div>
+
+                      <div class="product-description">
+                        <p-inputNumber  id="float-input" placeholder="數量" [(ngModel)]="productList.productQty"
+                        [class]="showValidationMessage(productList.productQty, submitted) ? ['ng-invalid', 'ng-dirty'] : []"
+                        formControlName="productQty"></p-inputNumber>
+                        <div *ngIf="showValidationMessage(productList.productQty, submitted)">
+                          <small class="p-invalid">必填欄位</small>
+                        </div>
+                      </div>
+
+                      <div class="product-grid-item-bottom">
+                        <span class="product-price">${{productList.price}}</span>
+                        <p-button icon="pi pi-shopping-cart" type="submit" [disabled]="productList.productStatus == 'OUT_OF_STOCK'"></p-button>
+                    </div>
+                    </div>
+
+
+                </div>
+            </div>
+                  </form>
+
+        </ng-template>
+
   </p-dataView>
 </div>
