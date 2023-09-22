@@ -78,8 +78,8 @@
           </div>
       </ng-template>
 
-        <ng-template let-productList let-rowIndex="rowIndex" pTemplate="gridItem">
-        <form [formGroup]="productForm" (ngSubmit)="addShoppingCart()">
+      <ng-template let-productList let-rowIndex="rowIndex" pTemplate="gridItem">
+        <form [formGroup]="productForm[rowIndex]">
 
             <div class="col-12 md:col-4">
                 <div class="product-grid-item card">
@@ -98,39 +98,38 @@
 
                         <p-dropdown  [options]="productList.colorList" placeholder="顏色" optionLabel="label" optionValue="value"
                           [(ngModel)]="productList.colorSeqNo" formControlName="colorSeqNo"
-                          [class]="showValidationMessage(productList.colorSeqNo, submitted) ? ['ng-invalid', 'ng-dirty'] : []"></p-dropdown>
-                        <div *ngIf="showValidationMessage(productList.colorSeqNo, submitted)">
-                          <!-- TODO 下次繼續處理這個BUG，可能要換寫法-->
+                          [class]="selectedProductIndex === rowIndex && showValidationMessage(rowIndex, submitted,'colorSeqNo') ? ['ng-invalid', 'ng-dirty'] : []"></p-dropdown>
+                        <div *ngIf="selectedProductIndex === rowIndex && showValidationMessage(rowIndex, submitted,'colorSeqNo')">
                           <small class="p-invalid">必填欄位</small>
                         </div>
 
                         <p-dropdown  [options]="productList.sizeList" placeholder="尺寸" optionLabel="label" optionValue="value"
                           [(ngModel)]="productList.sizeSeqNo" formControlName="sizeSeqNo"
-                          [class]="showValidationMessage(productList.sizeSeqNo, submitted) ? ['ng-invalid', 'ng-dirty'] : []"></p-dropdown>
-                        <div *ngIf="showValidationMessage(productList.sizeSeqNo, submitted)">
+                          [class]="selectedProductIndex === rowIndex && showValidationMessage(rowIndex, submitted, 'sizeSeqNo') ? ['ng-invalid', 'ng-dirty'] : []"></p-dropdown>
+                        <div *ngIf="selectedProductIndex === rowIndex && showValidationMessage(rowIndex, submitted, 'sizeSeqNo')">
                           <small class="p-invalid">必填欄位</small>
                         </div>
                       </div>
 
                       <div class="product-description">
                         <p-inputNumber  id="float-input" placeholder="數量" [(ngModel)]="productList.productQty"
-                        [class]="showValidationMessage(productList.productQty, submitted) ? ['ng-invalid', 'ng-dirty'] : []"
+                        [class]="selectedProductIndex === rowIndex && showValidationMessage(rowIndex, submitted, 'productQty') ? ['ng-invalid', 'ng-dirty'] : []"
                         formControlName="productQty"></p-inputNumber>
-                        <div *ngIf="showValidationMessage(productList.productQty, submitted)">
+                        <div *ngIf="selectedProductIndex === rowIndex && showValidationMessage(rowIndex, submitted, 'productQty')">
                           <small class="p-invalid">必填欄位</small>
                         </div>
                       </div>
 
                       <div class="product-grid-item-bottom">
                         <span class="product-price">${{productList.price}}</span>
-                        <p-button icon="pi pi-shopping-cart" type="submit" [disabled]="productList.productStatus == 'OUT_OF_STOCK'"></p-button>
+                        <p-button icon="pi pi-shopping-cart" (click)="addShoppingCart(rowIndex)" [disabled]="productList.productStatus == 'OUT_OF_STOCK'"></p-button>
                     </div>
                     </div>
 
 
                 </div>
             </div>
-                  </form>
+          </form>
 
         </ng-template>
 

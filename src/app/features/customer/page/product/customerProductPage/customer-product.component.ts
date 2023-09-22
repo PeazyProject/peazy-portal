@@ -26,7 +26,8 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
     isStockOption: any[] = [];
     addShoppingCartRequest: AddShoppingCartRequest;
     submitted: boolean = false;
-    productForm: FormGroup;
+    productForm: FormGroup[] = [];
+    selectedProductIndex: number | undefined;
 
     userType!: string;
 
@@ -59,14 +60,21 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
           userId: ''
         }
 
-        this.productForm = this.fb.group({
-          productSeqNo: '',
-          sizeSeqNo: ['', Validators.required],
+        this.productForm = this.productList.map(() => this.fb.group({
+          productSeqNo: [''],
           colorSeqNo: ['', Validators.required],
-          productQty: ['', Validators.required],
-          userUUID: '',
-          userId: ''
-        });
+          sizeSeqNo: ['', Validators.required],
+          productQty: ['', Validators.required]
+        }));
+
+        // this.productForm = this.fb.group({
+        //   productSeqNo: '',
+        //   sizeSeqNo: ['', Validators.required],
+        //   colorSeqNo: ['', Validators.required],
+        //   productQty: ['', Validators.required],
+        //   userUUID: '',
+        //   userId: ''
+        // });
 
         this.translate.onLangChange.subscribe((e: Event) => {
           this.submitted = false;
@@ -111,6 +119,14 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
             this.isSearchFormOpen = false;
           }
           this.productList = result.queryProductList;
+          this.productList.forEach((product: any) => {
+            this.productForm.push(this.fb.group({
+                productSeqNo: [product.productSeqNo],
+                sizeSeqNo: [product.sizeSeqNo, Validators.required],
+                colorSeqNo: [product.colorSeqNo, Validators.required],
+                productQty: [product.productQty, Validators.required]
+            }));
+          });
         },
         error: (err: HttpErrorResponse) => {
           this.toastErrorMessage(err.error);
@@ -131,18 +147,17 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
       this.routeStateService.navigateTo('/supplier/EditProduct', {productSeqNo});
     }
 
-    addShoppingCart(): void {
-      console.log("TESTSETSE  =",this.productForm);
-
+    addShoppingCart(rowIndex: any): void {
+      this.selectedProductIndex = rowIndex;
       this.submitted = true;
-      if (isNullOrEmpty(this.productForm.value.colorSeqNo) || isNullOrEmpty(this.productForm.value.sizeSeqNo) || isNullOrEmpty(this.productForm.value.productQty)) {
+      if (isNullOrEmpty(this.productForm[rowIndex].value.colorSeqNo) || isNullOrEmpty(this.productForm[rowIndex].value.sizeSeqNo) || isNullOrEmpty(this.productForm[rowIndex].value.productQty)) {
         return;
       }
 
-      this.addShoppingCartRequest.productSeqNo = this.productForm.value.productSeqNo;
-      this.addShoppingCartRequest.colorSeqNo = this.productForm.value.colorSeqNo;
-      this.addShoppingCartRequest.sizeSeqNo = this.productForm.value.sizeSeqNo;
-      this.addShoppingCartRequest.productQty = this.productForm.value.productQty;
+      this.addShoppingCartRequest.productSeqNo = this.productForm[rowIndex].value.productSeqNo;
+      this.addShoppingCartRequest.colorSeqNo = this.productForm[rowIndex].value.colorSeqNo;
+      this.addShoppingCartRequest.sizeSeqNo = this.productForm[rowIndex].value.sizeSeqNo;
+      this.addShoppingCartRequest.productQty = this.productForm[rowIndex].value.productQty;
       this.addShoppingCartRequest.userUUID = this.userProfile.uuid;
       this.addShoppingCartRequest.userId = this.userProfile.name;
       this.customerProductService.addShoppingCart(this.addShoppingCartRequest)
@@ -154,41 +169,14 @@ export class CustomerProductComponent extends SessionBaseComponent implements On
       })
     }
 
-    // addShoppingCart(productSeqNo: any, colorSeqNo: any, sizeSeqNo: any, productQty: any): void {
-
-    //   this.submitted = true;
-    //   if (isNullOrEmpty(colorSeqNo) || isNullOrEmpty(sizeSeqNo) || isNullOrEmpty(productQty)) {
-    //     return;
-    //   }
-
-    //   this.addShoppingCartRequest.productSeqNo = productSeqNo;
-    //   this.addShoppingCartRequest.colorSeqNo = colorSeqNo;
-    //   this.addShoppingCartRequest.sizeSeqNo = sizeSeqNo;
-    //   this.addShoppingCartRequest.productQty = productQty;
-    //   this.addShoppingCartRequest.userUUID = this.userProfile.uuid;
-    //   this.addShoppingCartRequest.userId = this.userProfile.name;
-    //   this.customerProductService.addShoppingCart(this.addShoppingCartRequest)
-    //   .subscribe({
-    //     next: () => {
-    //       // TODO 要家一下i18N
-    //       this.toastService.success("新增購物車成功", false);
-    //     }
-    //   })
-    // }
-
     accordionTabOpen(): void {
       this.isSearchFormOpen = true;
     }
 
-    showValidationMessage(param: any, submitted: boolean): boolean {
-      console.log("LOOK param = " + param);
-      if (isNullOrEmpty(param) && submitted) {
-        return true;
-      } else {
-        return false;
-      }
+    showValidationMessage(rowIndex: any, submitted: boolean,field:string): boolean {
+      const dropdownControl = this.productForm[rowIndex].get(field);
+      console.log("LOOK XXXX = " + dropdownControl?.invalid);
+      return !!dropdownControl?.invalid && submitted;
     }
-
-    get f() { return this.productForm.controls; }
 
 }
